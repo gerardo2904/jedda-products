@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
-use APP\Product;
+use App\Product;
+
+Use Session;
+Use Redirect;
 
 class CategoryController extends Controller
 {
@@ -90,13 +93,24 @@ class CategoryController extends Controller
     
     public function destroy($id)
     {
-        //$product = Product::find($id)->count();
-
         // registrar nuevo producto en la bd
         //dd($request->all());   //imprime lo solicitado y termina ejecucion.
         $category = Category::find($id);
-        $category->delete(); //delete en tabla productos
-            
-        return back();
+        $nomcat = $category->name;
+
+        $prod = Product::where('category_id',$id)->count();
+
+        if($prod == 0){
+            $category->delete(); //delete en tabla productos
+            Session::flash('message','Se ha borrado exitosamente la categoria '.$nomcat.'.');
+            return redirect('/admin/categories')->with('status', 'exito');
+        }
+        else {
+            Session::flash('message','La categoria '.$nomcat.' no se puede borrar porque tiene productos asignados.');
+            return redirect('/admin/categories')->with('status', 'noexito');
+        }
+
+        
+        
     }
 }
