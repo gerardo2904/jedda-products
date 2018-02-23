@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
+use App\CategoryImage;
 use App\Product;
+use File;
 
 Use Session;
 Use Redirect;
@@ -50,8 +52,11 @@ class CategoryController extends Controller
         $category->description       = $request->input('description');
 
         $category->save(); //insert en tabla categories
+
+        Session::flash('message','La categoria '.$category->name.' se ha agregado con exito.');
             
-        return redirect('/admin/categories');
+        //return redirect('/admin/categories');
+        return redirect('/admin/categories')->with('status', 'exito');
     }
     
     public function edit($id)
@@ -86,8 +91,11 @@ class CategoryController extends Controller
         $category->name              = $request->input('name');
         $category->description       = $request->input('description');
         $category->save(); //update en tabla categories
+
+        Session::flash('message','La categoria '.$category->name.' se ha modificado con exito.');
             
-        return redirect('/admin/categories');
+        //return redirect('/admin/categories');
+        return redirect('/admin/categories')->with('status', 'exito');
     }
     
     
@@ -97,10 +105,36 @@ class CategoryController extends Controller
         //dd($request->all());   //imprime lo solicitado y termina ejecucion.
         $category = Category::find($id);
         $nomcat = $category->name;
+        $images = CategoryImage::where('category_id',$id);
+        $imagenes = CategoryImage::where('category_id',$id)->count();
 
         $prod = Product::where('category_id',$id)->count();
 
+        
+
         if($prod == 0){
+            if($imagenes > 0){
+
+                $images->each(function ($images){
+                if (substr($images->image,0,4)==="http")  // Si empieza con http o sea que es link
+                {
+                    $deleted = true;
+                 }else {
+                    if ($images->image ==="default.png"){
+                         $deleted = true;
+                    }else{
+                            $fullPath = public_path() . '/images/categories/' . $images->image;
+                         $deleted = File::delete($fullPath);
+                    }
+                }
+
+                });
+
+                $images->where('category_id',$id)->delete();
+
+            }
+
+
             $category->delete(); //delete en tabla productos
             Session::flash('message','Se ha borrado exitosamente la categoria '.$nomcat.'.');
             return redirect('/admin/categories')->with('status', 'exito');

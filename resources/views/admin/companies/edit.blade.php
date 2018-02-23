@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
-@section('title','Empresas')
+@section('title','Bienvenidos a App Shop')
 
 @section('body-class', 'product-page')
 
 @section('content')
 
-<div class="header header-filter" style="background-image: url('https://images.unsplash.com/photo-1423655156442-ccc11daa4e99?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450');">
+<div class="header header-filter" style="background-image: url('/img/imagen_principal2.png');">
             
         </div>
 
-		<div class="main main-raised">
-			<div class="container">
-		     	<div class="section">
+        <div class="main main-raised">
+            <div class="container">
+                <div class="section">
 	                <h2 class="title text-center">Editar empresa seleccionada</h2>
                     
                     @if ($errors->any())
@@ -42,7 +42,8 @@
                                 <input type="text" class="form-control" name="rfc" value= "{{old('rfc',$company->rfc)}}">
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Dirección</label>
@@ -56,7 +57,8 @@
                                 <input type="text" class="form-control" name="city" value= "{{old('city',$company->city)}}">
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">C.P.</label>
@@ -70,7 +72,8 @@
                                 <input type="text" class="form-control" name="tel" value= "{{old('tel',$company->tel)}}">
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Email</label>
@@ -84,7 +87,7 @@
                                 <input type="text" class="form-control" name="contact" value= "{{old('contact',$company->contact)}}">
                             </div>
                         </div>
-
+                    </div>
                         <div class="form-group label-gloating checkbox">
                             <label>
                                 <input type="checkbox" id="activo" name="activo"  {{ Is_null(old('activo',$company->activo)) ? "value=0":"value=1" }}  {{ $company->activo == 0 ? " ":"checked" }}>Activo

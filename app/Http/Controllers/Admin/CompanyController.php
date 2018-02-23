@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Company;
+use App\CompanyImage;
+use File;
+
+Use Session;
+Use Redirect;
 
 class CompanyController extends Controller
 {
@@ -120,7 +125,39 @@ class CompanyController extends Controller
         // registrar nueva compañia en la bd
         //dd($request->all());   //imprime lo solicitado y termina ejecucion.
         $company = Company::find($id);
+
+        $nomcom = $company->name;
+        $images = CompanyImage::where('company_id',$id);
+        $imagenes = CompanyImage::where('company_id',$id)->count();
+
+        
+            if($imagenes > 0){
+
+                $images->each(function ($images){
+                if (substr($images->image,0,4)==="http")  // Si empieza con http o sea que es link
+                {
+                    $deleted = true;
+                 }else {
+                    if ($images->image ==="company-default.png"){
+                         $deleted = true;
+                    }else{
+                            $fullPath = public_path() . '/images/companies/' . $images->image;
+                         $deleted = File::delete($fullPath);
+                    }
+                }
+
+                });
+
+                $images->where('company_id',$id)->delete();
+            }
+
+            
+
         $company->delete(); //delete en tabla Companies
+
+        Session::flash('message','Se ha borrado exitosamente la compañia '.$nomcom.'.');
+        return redirect('/admin/companies')->with('status', 'exito');
+
             
         return back();
     }}

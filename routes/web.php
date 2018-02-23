@@ -22,6 +22,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/products/{id}','ProductController@show');  
+Route::get('/categories/{id}','CategoryController@show');  
+Route::get('/companies/{id}','CompanyController@show');  
 
 Route::post('/cart','CartDetailController@store');
 Route::delete('/cart','CartDetailController@destroy');
@@ -46,7 +48,13 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
         Route::post('/products/{id}/edit','ProductController@update');  //Actualizar
         Route::delete('/products/{id}','ProductController@destroy');  //Form para eliminar
 		
+        Route::get('/products/{id}/images','ImageController@index');  // Listado y formulario
+        Route::post('/products/{id}/images', 'ImageController@store'); //Registrar nuevas fotos
+        Route::delete('/products/{id}/images','ImageController@destroy');  //Form para eliminar
+        Route::get('/products/{id}/images/select/{image}','ImageController@select'); //destacar imagen
 
+
+        
         Route::get('/categories','CategoryController@index');  //listado
         Route::get('/categories/create','CategoryController@create');  //Formulario de nuevas categorias
         Route::post('/categories','CategoryController@store');  //Registra nuevas categorias
@@ -54,10 +62,10 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
         Route::post('/categories/{id}/edit','CategoryController@update');  //Actualizar
         Route::delete('/categories/{id}','CategoryController@destroy');  //Form para eliminar
 
-		Route::get('/products/{id}/images','ImageController@index');  // Listado y formulario
-		Route::post('/products/{id}/images', 'ImageController@store'); //Registrar nuevas fotos
-		Route::delete('/products/{id}/images','ImageController@destroy');  //Form para eliminar
-		Route::get('/products/{id}/images/select/{image}','ImageController@select'); //destacar imagen
+        Route::get('/categories/{id}/images','ImageCategoryController@index');  // Listado y formulario
+        Route::post('/categories/{id}/images', 'ImageCategoryController@store'); //Registrar nuevas fotos
+        Route::delete('/categories/{id}/images','ImageCategoryController@destroy');  //Form para eliminar
+        Route::get('/categories/{id}/images/select/{image}','ImageCategoryController@select'); //destacar imagen		
 
     
     	Route::get('/companies','CompanyController@index');  //listado
@@ -66,6 +74,13 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
         Route::get('/companies/{id}/edit','CompanyController@edit');  //Formulario edicion
         Route::post('/companies/{id}/edit','CompanyController@update');  //Actualizar
         Route::delete('/companies/{id}','CompanyController@destroy');  //Form para eliminar
+
+        Route::get('/companies/{id}/images','ImageCompanyController@index');  // Listado y formulario
+        Route::post('/companies/{id}/images', 'ImageCompanyController@store'); //Registrar nuevas fotos
+        Route::delete('/companies/{id}/images','ImageCompanyController@destroy');  //Form para eliminar
+        Route::get('/companies/{id}/images/select/{image}','ImageCompanyController@select'); //destacar imagen
+
+
 
 
         Route::get('/users','UserController@index');  //listado

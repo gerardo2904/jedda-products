@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\ProductImage;
 use App\Category;
+use File;
+Use Session;
+Use Redirect;
 
 class ProductController extends Controller
 {
@@ -66,8 +70,12 @@ class ProductController extends Controller
         else
             $company->activo = 0;   
         $product->save(); //insert en tabla productos
+
+
+        Session::flash('message','El producto '.$product->name.' se ha agregado con exito.');
             
-        return redirect('/admin/products');
+                  
+        return redirect('/admin/products')->with('status', 'exito');
     }
     
     public function edit($id)
@@ -117,8 +125,13 @@ class ProductController extends Controller
         else            
             $product->activo = 1;
         $product->save(); //update en tabla productos
+
+
+        Session::flash('message','El producto '.$product->name.' se ha modificado con exito.');
             
-        return redirect('/admin/products');
+
+            
+        return redirect('/admin/products')->with('status', 'exito');
     }
     
     
@@ -127,7 +140,36 @@ class ProductController extends Controller
         // registrar nuevo producto en la bd
         //dd($request->all());   //imprime lo solicitado y termina ejecucion.
         $product = Product::find($id);
+        $nomprod = $product->name;
+        
+        $images = ProductImage::where('product_id',$id);
+        $imagenes = ProductImage::where('product_id',$id)->count();
+
+        if($imagenes > 0){
+
+                $images->each(function ($images){
+                if (substr($images->image,0,4)==="http")  // Si empieza con http o sea que es link
+                {
+                    $deleted = true;
+                 }else {
+                    if ($images->image ==="default.png"){
+                         $deleted = true;
+                    }else{
+                         $fullPath = public_path() . '/images/products/' . $images->image;
+                         $deleted = File::delete($fullPath);
+                    }
+                }
+
+                });
+
+                $images->where('product_id',$id)->delete();
+
+            }
+
         $product->delete(); //delete en tabla productos
+
+        Session::flash('message','Se ha borrado exitosamente el producto '.$nomprod.'.');
+        return redirect('/admin/products')->with('status', 'exito');
             
         return back();
     }

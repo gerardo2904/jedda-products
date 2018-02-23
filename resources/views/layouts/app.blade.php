@@ -6,7 +6,7 @@
 	<link rel="icon" type="image/png" href="../assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>@yield('title','App Shop')</title>
+	<title>@yield('title','Jedda Producción')</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
@@ -45,33 +45,62 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    ADMINISTRACION <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu">
-								 <li>
-									<a href=" {{ url('/home') }}">Dashboard</a>
-								 </li>
-								
+								 								
                                  @if (auth()->user()->permisos == '0')
+
+
                                     <li>
-                                        <a href="{{ url('/admin/categories')}}">Gestionar categorias</a>
+                                        <a href="{{ url('/admin/categories')}}">Gestionar categorías</a>
                                     </li>
+                                    <li>
+                                        <a href="{{ url('/admin/products')}}">Gestionar productos</a>
+                                    </li>
+
+                                    <hr />
 
                                     <li>
                                         <a href="{{ url('/admin/companies')}}">Gestionar empresas</a>
                                     </li>
 
-                                    <li>
-                                        <a href="{{ url('/admin/products')}}">Gestionar productos</a>
-                                    </li>
+                                    <hr />
 
                                     <li>
                                         <a href="{{ url('/admin/users')}}">Gestionar usuarios</a>
                                     </li>
+                                    <li>
+                                        <a href="{{ url('/admin/users')}}">Gestionar clientes/proveedores</a>
+                                    </li>
 
                                  @endif
                                     
+                                </ul>
+                            </li>
+
+
+
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                 <li>
+                                    <a href=" {{ url('/home') }}">Dashboard</a>
+                                 </li>
+                                
+                                 @if (auth()->user()->permisos == '0')
+                                
+                                    <li>
+                                        <a href="#">Perfil</a>
+                                    </li>
+
+                                 @endif
+
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -85,6 +114,7 @@
                                     </li>
                                 </ul>
                             </li>
+
                         @endguest
                     <!--
 		            <li>

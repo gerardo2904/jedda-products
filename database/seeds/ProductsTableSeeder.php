@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Product;
 use App\Category;
 use App\ProductImage;
+use App\CategoryImage;
 
 class ProductsTableSeeder extends Seeder
 {
@@ -22,9 +23,13 @@ class ProductsTableSeeder extends Seeder
         
         // Para crear 20 productos por cada categoria de manera aleatoria.
         $categories = factory(Category::class,4)->create();
+
         $categories->each(function ($category){
             $products = factory(Product::class, 5)->make();
             $category->products()->saveMany($products);
+
+            $imagescat = factory(CategoryImage::class,3)->make();
+            $category->images()->saveMany($imagescat);
             
             // Cada producto tendra 5 imagenes de manera aleatoria
             $products->each(function ($p) {

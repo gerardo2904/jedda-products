@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 
 use App\Company;
+use App\CompanyImage;
 
 class CompanyTableSeeder extends Seeder
 {
@@ -24,6 +25,11 @@ class CompanyTableSeeder extends Seeder
            'email'    => 'luis.ramirez@jedda.com',
            'contact'  => 'Jose Ramirez',
            'activo'   => true,
+        ]);
+
+        CompanyImage::create([
+            'image' => 'company-default.png',
+            'company_id' => 1,
         ]);
 
     }

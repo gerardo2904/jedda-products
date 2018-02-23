@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Company;
+use App\Category;
 
-class CompanyController extends Controller
+class CategoryController extends Controller
 {
-    public function show($id){
-		$company = Company::find($id);
-		$images  = $company->images;
+     public function show($id){
+		$category = Category::find($id);
+		$images  = $category->images;
 		
 		$imagesLeft  = collect();   //crea un array
 		$imagesRight = collect();   //crea un array
@@ -22,6 +22,6 @@ class CompanyController extends Controller
 		}
 		
 		
-		return view('companies.show')->with(compact('company','imagesLeft','imagesRight'));
+		return view('categories.show')->with(compact('category','imagesLeft','imagesRight'));
 	}
 }

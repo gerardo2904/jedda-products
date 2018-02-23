@@ -24,6 +24,7 @@ class ImageController extends Controller
 		// guardar la imagen en nuestro proyecto
 		$file  = $request->file('photo');
 		$path = public_path() . '/images/products';
+		//$path = public_path();
 		$fileName = uniqid() . $file->getClientOriginalName();
 		$moved = $file->move($path, $fileName);
 		
@@ -47,8 +48,12 @@ class ImageController extends Controller
 		{
 			$deleted = true;
 		}else {
+			if ($productImage->image ==="default.png"){
+				$deleted = true;
+			}else{
 			$fullPath = public_path() . '/images/products/' . $productImage->image;
 			$deleted = File::delete($fullPath);
+			}
 		}
 		
 		

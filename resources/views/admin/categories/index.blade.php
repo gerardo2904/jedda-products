@@ -4,9 +4,10 @@
 
 @section('body-class', 'product-page')
 
+
 @section('content')
 
-<div class="header header-filter" style="background-image: url('https://images.unsplash.com/photo-1423655156442-ccc11daa4e99?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450');">
+<div class="header header-filter" style="background-image: url('/img/imagen_principal2.png');">
           
 </div>
 		<div class="main main-raised">
@@ -15,10 +16,13 @@
 
                     @if(Session::has('message'))
                         <div class="alert {{ (Session::get('status') == 'exito')?'alert-success':'alert-danger' }} alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             {{Session::get('message')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            
                         </div>
                     @endif
+
+
 
 	                <h2 class="title">Categorias disponibles</h2>
 
@@ -43,7 +47,7 @@
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         
-                                        <a href="#" rel="tooltip" title="Ver Categoría" class="btn btn-info btn-simple btn-xs">
+                                        <a href="{{url('/categories/'.$category->id)}}" rel="tooltip" title="Ver Categoría" class="btn btn-info btn-simple btn-xs">
                                             <i class="fa fa-info"></i>
                                         </a>
                                             

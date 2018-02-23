@@ -28,7 +28,7 @@
 
 @section('content')
 
-<div class="header header-filter" style="background-image: url('/img/ribbon.jpg');">
+<div class="header header-filter" style="background-image: url('/img/imagen_principal.png');">
             <div class="container">
                 <div class="row">
 					<div class="col-md-6">
