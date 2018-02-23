@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\UserImage;
 
 class UsersTableSeeder extends Seeder
 {
@@ -19,5 +20,11 @@ class UsersTableSeeder extends Seeder
             'permisos'   => 0,
             'empresa_id'  => 0,
         ]);
+
+        UserImage::create([
+            'image' => 'user-default.png',
+            'user_id' => 1,
+        ]);
+
     }
 }

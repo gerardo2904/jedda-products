@@ -72,7 +72,7 @@
                                         <a href="{{ url('/admin/users')}}">Gestionar usuarios</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('/admin/users')}}">Gestionar clientes/proveedores</a>
+                                        <a href="{{ url('/admin/clients')}}">Gestionar clientes/proveedores</a>
                                     </li>
 
                                  @endif

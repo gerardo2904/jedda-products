@@ -24,6 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/products/{id}','ProductController@show');  
 Route::get('/categories/{id}','CategoryController@show');  
 Route::get('/companies/{id}','CompanyController@show');  
+Route::get('/clients/{id}','ClientController@show');  
+Route::get('/users/{id}','UserController@show');  
 
 Route::post('/cart','CartDetailController@store');
 Route::delete('/cart','CartDetailController@destroy');
@@ -89,6 +91,24 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
         Route::get('/users/{id}/edit','UserController@edit');  //Formulario edicion
         Route::post('/users/{id}/edit','UserController@update');  //Actualizar
         Route::delete('/users/{id}','UserController@destroy');  //Form para eliminar
+
+        Route::get('/users/{id}/images','ImageUserController@index');  // Listado y formulario
+        Route::post('/users/{id}/images', 'ImageUserController@store'); //Registrar nuevas fotos
+        Route::delete('/users/{id}/images','ImageUserController@destroy');  //Form para eliminar
+        Route::get('/users/{id}/images/select/{image}','ImageUserController@select'); //destacar imagen
+
+
+        Route::get('/clients','ClientController@index');  //listado
+        Route::get('/clients/create','ClientController@create');  //Formulario de nuevos clientes
+        Route::post('/clients','ClientController@store');  //Registra nuevos usuarios
+        Route::get('/clients/{id}/edit','ClientController@edit');  //Formulario edicion
+        Route::post('/clients/{id}/edit','ClientController@update');  //Actualizar
+        Route::delete('/clients/{id}','ClientController@destroy');  //Form para eliminar
+
+        Route::get('/clients/{id}/images','ImageClientController@index');  // Listado y formulario
+        Route::post('/clients/{id}/images', 'ImageClientController@store'); //Registrar nuevas fotos
+        Route::delete('/clients/{id}/images','ImageClientController@destroy');  //Form para eliminar
+        Route::get('/clients/{id}/images/select/{image}','ImageClientController@select'); //destacar imagen
 
 });
 

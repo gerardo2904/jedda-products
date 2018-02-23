@@ -4,19 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\User;
 
-class UserController extends Controller
+use App\Client;
+use App\ClientImage;
+use File;
+
+Use Session;
+Use Redirect;
+
+
+class ClientController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(10);
-        return view('admin.users.index')->with(compact('users'));   // listado  
+        $clients = Client::paginate(10);
+        return view('admin.clients.index')->with(compact('clients'));   // listado  
     }
     
     public function create()
     {
-        return view('admin.users.create');   // formulario
+        return view('admin.clients.create');   // formulario
     }
     
     public function store(Request $request)
@@ -43,28 +50,25 @@ class UserController extends Controller
         
         $this->validate($request,$rules,$messages);  
         
-        $user = new User();
-        $user->name          = $request->input('name');
-        $user->email         = $request->input('email');
-        $user->password      = bcrypt($request->input('password'));
-        $user->permisos      = $request->input('permisos');
-        $user->empresa_id    = $request->input('empresa_id');
-        
+        $client = new Client();
+        $client->name          = $request->input('name');
+        $client->email         = $request->input('email');
+                
         if ($request->input('activo') == 1)
-        	$user->activo    = $request->input('activo');
+        	$client->activo    = $request->input('activo');
         else
-        	$user->activo = 0;
+        	$client->activo = 0;
 
-        $user->save(); //insert en tabla productos
+        $client->save(); //insert en tabla productos
             
-        return redirect('/admin/users');
+        return redirect('/admin/clients');
     }
     
     public function edit($id)
     {
         
-        $user = User::find($id);
-        return view('admin.users.edit')->with(compact('user'));   // formulario
+        $client = Client::find($id);
+        return view('admin.clients.edit')->with(compact('client'));   // formulario
     }
     
     public function update(Request $request, $id)
@@ -98,26 +102,23 @@ class UserController extends Controller
         $this->validate($request,$rules,$messages);  
         
         
-        $user = User::find($id);
-        $user->name          = $request->input('name');
-        $user->email         = $request->input('email');
-        $user->password      = $request->input('password');
-        $user->permisos      = $request->input('permisos');
-        $user->empresa_id    = $request->input('empresa_id');
+        $client = User::find($id);
+        $client->name          = $request->input('name');
+        $client->email         = $request->input('email');
         
-		$user->activo    = $request->input('activo');
+		$client->activo    = $request->input('activo');
 
-		if ($user->activo <> 1)
-			$user->activo = 0;
+		if ($client->activo <> 1)
+			$client->activo = 0;
 		else			
-			$user->activo = 1;
+			$client->activo = 1;
 
         //$company->activo    = $request->input('activo');
-        $user->save(); //update en tabla productos
+        $client->save(); //update en tabla productos
 
 
             
-        return redirect('/admin/users');
+        return redirect('/admin/clients');
     }
     
     
@@ -125,11 +126,11 @@ class UserController extends Controller
     {
         // registrar nueva compañia en la bd
         //dd($request->all());   //imprime lo solicitado y termina ejecucion.
-        $user = User::find($id);
+        $client = Client::find($id);
 
-        $nomusr = $user->name;
-        $images = UserImage::where('user_id',$id);
-        $imagenes = UserImage::where('user_id',$id)->count();
+        $nomcli = $client->name;
+        $images = ClientImage::where('client_id',$id);
+        $imagenes = ClientImage::where('client_id',$id)->count();
 
         
             if($imagenes > 0){
@@ -142,20 +143,20 @@ class UserController extends Controller
                     if ($images->image ==="user-default.png"){
                          $deleted = true;
                     }else{
-                            $fullPath = public_path() . '/images/users/' . $images->image;
+                            $fullPath = public_path() . '/images/clients/' . $images->image;
                          $deleted = File::delete($fullPath);
                     }
                 }
 
                 });
 
-                $images->where('user_id',$id)->delete();
+                $images->where('client_id',$id)->delete();
             }
 
-        $user->delete(); //delete en tabla Users
+        $client->delete(); //delete en tabla Clients
 
-        Session::flash('message','Se ha borrado exitosamente el usuario '.$nomusr.'.');
-        return redirect('/admin/users')->with('status', 'exito');
+        Session::flash('message','Se ha borrado exitosamente el cliente '.$nomcli.'.');
+        return redirect('/admin/clients')->with('status', 'exito');
 
             
         return back();

@@ -36,6 +36,24 @@ class User extends Authenticatable
         return $this->belongsTo(Company::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(UserImage::class);
+    }
+
+    public function getFeaturedImageUrlAttribute(){
+		$featuredImage = $this->images()->where('featured', true)->first();
+		if (!$featuredImage){
+			$featuredImage = $this->images()->first();
+		}
+		
+		if ($featuredImage){
+			return $featuredImage->url;
+		}
+		
+		//default
+		return '/images/users/user-default.png';
+	}
 
 	public function carts(){
 		return $this->hasMany(Cart::class);
