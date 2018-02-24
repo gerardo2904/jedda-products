@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Empresas')
+@section('title','Usuarios')
 
 @section('body-class', 'product-page')
 
@@ -13,7 +13,7 @@
 		<div class="main main-raised">
 			<div class="container">
 		     	<div class="section">
-	                <h2 class="title text-center">Editar empresa seleccionada</h2>
+	                <h2 class="title text-center">Editar usuario seleccionado</h2>
                     
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -25,74 +25,74 @@
                         </div>
                     @endif
                     
-                    <form method="post" action="{{ url('admin/companies/'.$company->id.'/edit')}}">
+                    <form method="post" action="{{ url('admin/users/'.$user->id.'/edit')}}">
                         {{ csrf_field() }}
                         
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
-                                <label class="control-label">Nombre de compañia</label>
-                                <input type="text" class="form-control" name="name" value= "{{old('name',$company->name)}}">
+                                <label class="control-label">Nombre de usuario</label>
+                                <input type="text" class="form-control" name="name" value= "{{old('name',$user->name)}}">
                             </div>
                         </div>
                         
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
-                                <label class="control-label">RFC</label>
-                                <input type="text" class="form-control" name="rfc" value= "{{old('rfc',$company->rfc)}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Dirección</label>
-                                <input type="text" class="form-control" name="address" value= "{{old('address',$company->address)}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Ciudad</label>
-                                <input type="text" class="form-control" name="city" value= "{{old('city',$company->city)}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">C.P.</label>
-                                <input type="text" class="form-control" name="cp" value= "{{old('cp',$company->cp)}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Telefono</label>
-                                <input type="text" class="form-control" name="tel" value= "{{old('tel',$company->tel)}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group label-floating">
                                 <label class="control-label">Email</label>
-                                <input type="text" class="form-control" name="email" value= "{{old('email',$company->email)}}">
+                                <input type="email" class="form-control" name="email" value="{{old('email',$user->email)}}">
                             </div>
                         </div>
+                    </div>
 
+                    <div class="row">   
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
-                                <label class="control-label">Contacto</label>
-                                <input type="text" class="form-control" name="contact" value= "{{old('contact',$company->contact)}}">
+                                <label class="control-label">Perfil</label>
+                                <select class="form-control" name="permisos">
+                                    @foreach ($lospermisos as $permiso)
+                                        <option value="{{ $permiso->id }}" @if($permiso->id == old('permisos',$user->permisos)) selected @endif>
+                                         {{ $permiso->name }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
                             </div>
                         </div>
+                        
+                        <div class="col-sm-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Empresa</label>
+                                <select class="form-control" name="empresa_id">
+                                    @foreach ($lasempresas as $empresa)
+                                        <option value="{{ $empresa->id }}" @if($empresa->id == old('empresa_id',$user->empresa_id)) selected @endif>
+                                         {{ $empresa->name }}
+                                        </option>
+                                    @endforeach
 
-                        <div class="form-group label-gloating checkbox">
-                            <label>
-                                <input type="checkbox" id="activo" name="activo"  {{ Is_null(old('activo',$company->activo)) ? "value=0":"value=1" }}  {{ $company->activo == 0 ? " ":"checked" }}>Activo
-                            </label>
-                        </div> 
-                       
-                        <button class="btn btn-primary">Guardar cambios</button>
-                        <a href="{{ url('/admin/companies')}}" class="btn btn-default">Cancelar</a>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+
+                    
+
+
+                    <div class="row">   
+                        <div class="col-sm-6"> 
+                            <div class="form-group label-gloating checkbox">
+                                <label>
+                                    <input type="checkbox" id="activo" name="activo"  {{ Is_null(old('activo',$user->activo)) ? "value=0":"value=1" }}  {{ $user->activo == 0 ? " ":"checked" }}>Activo
+                                </label>
+                            </div> 
+                        </div>
+                    </div>
+                     
+                    <input type="hidden" name="password" value="old('password',$user->password)">
+
+                    <button class="btn btn-primary">Guardar cambios</button>
+                    <a href="{{ url('/admin/users')}}" class="btn btn-default">Cancelar</a>
                         
                     </form>
 					

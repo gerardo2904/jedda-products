@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Empresas')
+@section('title','Clientes')
 
 @section('body-class', 'product-page')
 
@@ -42,7 +42,8 @@
                                 <input type="text" class="form-control" name="rfc" value= "{{old('rfc',$client->rfc)}}">
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Dirección</label>
@@ -56,7 +57,8 @@
                                 <input type="text" class="form-control" name="city" value= "{{old('city',$client->city)}}">
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">C.P.</label>
@@ -70,7 +72,8 @@
                                 <input type="text" class="form-control" name="tel" value= "{{old('tel',$client->tel)}}">
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Email</label>
@@ -85,6 +88,7 @@
                                 <input type="checkbox" id="activo" name="activo"  {{ Is_null(old('activo',$client->activo)) ? "value=0":"value=1" }}  {{ $client->activo == 0 ? " ":"checked" }}>Activo
                             </label>
                         </div> 
+                    </div>
                        
                         <button class="btn btn-primary">Guardar cambios</button>
                         <a href="{{ url('/admin/clients')}}" class="btn btn-default">Cancelar</a>

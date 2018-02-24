@@ -35,12 +35,13 @@ class ClientController extends Controller
         
         $messages = [
             'name.required' => 'Es necesario ingresar el nombre',
-            'name.min' => 'El nombre de usuario debe tener al menos 3 caracteres'
+            'name.min' => 'El nombre de usuario debe tener al menos 3 caracteres',
+            'email.unique'=>'El email ya esta dado de alta en la base de datos'
         ];
         
         $rules = [
         	'name' => 'required|string|min:3|max:255',
-            'email' => 'required|string|email|max:255|unique:users'
+            'email' => 'required|string|email|max:255|unique:clients'
 
 
         /*    'description' => 'required|max:200',
@@ -52,6 +53,11 @@ class ClientController extends Controller
         
         $client = new Client();
         $client->name          = $request->input('name');
+        $client->rfc           = $request->input('rfc');
+        $client->address       = $request->input('address');
+        $client->city          = $request->input('city');
+        $client->cp            = $request->input('cp');
+        $client->tel           = $request->input('tel');
         $client->email         = $request->input('email');
                 
         if ($request->input('activo') == 1)
@@ -73,6 +79,7 @@ class ClientController extends Controller
     
     public function update(Request $request, $id)
     {
+        $client = Client::find($id);
         // Editar producto en la bd
         //dd($request->all());   //imprime lo solicitado y termina ejecucion.
         
@@ -80,18 +87,16 @@ class ClientController extends Controller
         
         $messages = [
             'name.required' => 'Es necesario ingresar el nombre',
-            'name.min' => 'El nombre de usuario debe tener al menos 3 caracteres'
-        /*    'description.required' => 'La descripción corta es un campo obligatorio',
-            'description.max' => 'La descripción corta solo admite hasta 200 caracteres',
-            'price.required' => 'Es obligatorio definir precio del producto',
-            'price.numeric' => 'Ingrese un precio válido',
-            'price.min' => 'No se admiten valores negativos'
-          */  
+            'name.min' => 'El nombre de usuario debe tener al menos 3 caracteres',
+            'email.unique'=>'El email ya esta dado de alta en la base de datos'
         ];
         
         $rules = [
         	'name' => 'required|string|min:3|max:255',
-            'email' => 'required|string|email|max:255|unique:users'
+            'email' => 'required|string|email|max:255|unique:clients,email,'. $client->id,  //para evitar 
+                                                                                        // confictos con
+                                                                                        // edicion cuando
+                                                                                        // un campo es unique 
 
 
         /*    'description' => 'required|max:200',
@@ -102,8 +107,13 @@ class ClientController extends Controller
         $this->validate($request,$rules,$messages);  
         
         
-        $client = User::find($id);
+        
         $client->name          = $request->input('name');
+        $client->rfc           = $request->input('rfc');
+        $client->address       = $request->input('address');
+        $client->city          = $request->input('city');
+        $client->cp            = $request->input('cp');
+        $client->tel           = $request->input('tel');
         $client->email         = $request->input('email');
         
 		$client->activo    = $request->input('activo');

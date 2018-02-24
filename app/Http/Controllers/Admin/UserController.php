@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\UserImage;
+use App\Permiso;
+use File;
+Use Session;
+Use Redirect;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -16,7 +22,9 @@ class UserController extends Controller
     
     public function create()
     {
-        return view('admin.users.create');   // formulario
+        $lospermisos = DB::table('permisos')->orderBy('id')->get();
+        $lasempresas = DB::table('companies')->orderBy('id')->get();
+        return view('admin.users.create')->with(compact('lospermisos','lasempresas'));   // formulario
     }
     
     public function store(Request $request)
@@ -28,7 +36,8 @@ class UserController extends Controller
         
         $messages = [
             'name.required' => 'Es necesario ingresar el nombre',
-            'name.min' => 'El nombre de usuario debe tener al menos 3 caracteres'
+            'name.min' => 'El nombre de usuario debe tener al menos 3 caracteres',
+            'email.unique'=>'El email ya esta dado de alta en la base de datos'
         ];
         
         $rules = [
@@ -64,11 +73,15 @@ class UserController extends Controller
     {
         
         $user = User::find($id);
-        return view('admin.users.edit')->with(compact('user'));   // formulario
+        $lospermisos = DB::table('permisos')->orderBy('id')->get();
+        $lasempresas = DB::table('companies')->orderBy('id')->get();
+        return view('admin.users.edit')->with(compact('user','lospermisos','lasempresas'));   // formulario
     }
     
     public function update(Request $request, $id)
     {
+
+        $user = User::find($id);
         // Editar producto en la bd
         //dd($request->all());   //imprime lo solicitado y termina ejecucion.
         
@@ -76,31 +89,27 @@ class UserController extends Controller
         
         $messages = [
             'name.required' => 'Es necesario ingresar el nombre',
-            'name.min' => 'El nombre de usuario debe tener al menos 3 caracteres'
-        /*    'description.required' => 'La descripción corta es un campo obligatorio',
-            'description.max' => 'La descripción corta solo admite hasta 200 caracteres',
-            'price.required' => 'Es obligatorio definir precio del producto',
-            'price.numeric' => 'Ingrese un precio válido',
-            'price.min' => 'No se admiten valores negativos'
-          */  
+            'name.min' => 'El nombre de usuario debe tener al menos 3 caracteres',
+            'email.unique'=>'El email ya esta dado de alta en la base de datos'
         ];
         
         $rules = [
         	'name' => 'required|string|min:3|max:255',
-            'email' => 'required|string|email|max:255|unique:users'
-
-
-        /*    'description' => 'required|max:200',
-            'price' => 'required|numeric|min:0'  */
-            
+            'email' => 'required|string|email|max:255|unique:users,email,'. $user->id,  //para evitar 
+                                                                                        // confictos con
+                                                                                        // edicion cuando
+                                                                                        // un campo es unique          
         ];
         
         $this->validate($request,$rules,$messages);  
         
         
-        $user = User::find($id);
+        
+        
         $user->name          = $request->input('name');
-        $user->email         = $request->input('email');
+           // $user->email         = $request->input('email');
+
+
         $user->password      = $request->input('password');
         $user->permisos      = $request->input('permisos');
         $user->empresa_id    = $request->input('empresa_id');

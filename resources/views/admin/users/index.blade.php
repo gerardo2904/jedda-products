@@ -38,14 +38,14 @@
                                     if ($user->permisos == 0) 
                                         echo 'Administrador';
                                     if ($user->permisos == 1) 
-                                        echo 'Sistema';
+                                        echo 'Compras/Ventas';
                                     if ($user->permisos == 2) 
                                         echo 'Producción';
                                     if ($user->permisos == 3) 
                                         echo 'Reportes';
 
                                     ?></td>
-                                    <td>{{ $user->activo == 1 ?'Sí':'' }}</td>
+                                    <td>{{ $user->activo == 1 ?'Sí':'No' }}</td>
                                     
                                     
                                     <td class="td-actions text-right">

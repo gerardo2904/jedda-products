@@ -33,7 +33,7 @@
                                     <td>{{ $client->name }}</td>
                                     <td>{{ $client->rfc }}</td>
                                     <td>{{ $client->email }}</td>
-                                    <td>{{ $client->activo == 1 ?'Sí':'' }}</td>
+                                    <td>{{ $client->activo == 1 ?'Sí':'No' }}</td>
                                     
                                     
                                     <td class="td-actions text-right">

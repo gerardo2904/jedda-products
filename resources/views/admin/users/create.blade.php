@@ -43,32 +43,46 @@
                             </div>
                         </div>
                     </div>
-                        
+                    <div class="row">    
+                        <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Password</label>
                                 <input id="password" type="password" class="form-control" name="password"  required>
                             </div>
-                        
-                        
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Perfil</label>
-                                <input type="text" class="form-control" name="permisos" value="{{ old('permisos')}}">
+                                <select class="form-control" name="permisos">
+                                    @foreach ($lospermisos as $permiso)
+                                        <option value="{{ $permiso->id }}">{{ $permiso->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-
+                        </div>
+                    </div>
+                        
+                    <div class="row"> 
+                        <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Empresa</label>
-                                <input type="text" class="form-control" name="empresa_id" value="{{ old('empresa_id')}}">
+                                <select class="form-control" name="empresa_id">
+                                    @foreach ($lasempresas as $empresa)
+                                        <option value="{{ $empresa->id }}">{{ $empresa->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                        </div>
 
+                        <div class="col-sm-6">
                             <div class="form-group label-gloating checkbox">
                                 <label>
                                     <input type="checkbox" name="activo" {{ old('activo',1) ? 'value=1 checked' : 'value=0' }}>Activo 
                                 </label>
                             </div> 
+                        </div>
+                    </div>
 
-
-                           
-                        
                         <button class="btn btn-primary">Registro del usuario</button>
                         <a href="{{url('/admin/users')}}" class="btn btn-default">Cancelar</a>
                         

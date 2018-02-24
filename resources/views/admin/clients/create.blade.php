@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Usuarios')
+@section('title','Clientes')
 
 @section('body-class', 'product-page')
 
@@ -42,8 +42,8 @@
                                 <input type="text" class="form-control" name="rfc" value= "{{old('rfc')}}">
                             </div>
                         </div>
-
-                                
+                    </div>
+                    <div class="row">            
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Dirección</label>
@@ -57,7 +57,8 @@
                                 <input type="text" class="form-control" name="city" value= "{{old('city')}}">
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">C.P.</label>
@@ -71,7 +72,8 @@
                                 <input type="text" class="form-control" name="tel" value= "{{old('tel')}}">
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Email</label>
@@ -84,7 +86,7 @@
                                     <input type="checkbox" name="activo" {{ old('activo',1) ? 'value=1 checked' : 'value=0' }}>Activo 
                                 </label>
                             </div> 
-
+                    </div>
                                                       
                         
                         <button class="btn btn-primary">Registro del cliente</button>

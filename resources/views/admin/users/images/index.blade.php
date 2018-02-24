@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Imagenes de productos.')
+@section('title','Imagenes de usuarios.')
 
 @section('body-class', 'product-page')
 
@@ -13,12 +13,12 @@
 		<div class="main main-raised">
 			<div class="container">
 		    	<div class="section text-center">
-	                <h2 class="title">Imagenes del Producto "{{$product->name}}"</h2>
+	                <h2 class="title">Imagenes del Usuario "{{$user->name}}"</h2>
 					<form method="post" action="" enctype="multipart/form-data">
 					{{ csrf_field()}}
 						<input type="file" name="photo" required>
 						<button type="submit" class="btn btn-primary btn-round">Subir nueva imagen</button>
-						<a href="{{ url('/admin/products') }}" class="btn btn-default btn-round">Volver al listado de productos</a>
+						<a href="{{ url('/admin/users') }}" class="btn btn-default btn-round">Volver al listado de usuarios</a>
 					</form>
 					
 					<hr>
@@ -35,11 +35,11 @@
 									<input type="hidden" name="image_id" value="{{ $image->id }}">
 										<button type="submit" class="btn btn-danger btn-round">Eliminar imagen</button>
 										@if ($image->featured)
-											<button type="button" class="btn btn-info btn-fab btn-fab-mini btn-round" rel="tooltip" title="Imagen destacada de este producto">
+											<button type="button" class="btn btn-info btn-fab btn-fab-mini btn-round" rel="tooltip" title="Imagen destacada de este usuario">
 												<i class="material-icons">favorite</i>
 											</button>
 										@else
-											<a href="{{url('/admin/products/'.$product->id.'/images/select/'.$image->id)}}" class="btn btn-primary btn-fab btn-fab-mini btn-round">
+											<a href="{{url('/admin/users/'.$user->id.'/images/select/'.$image->id)}}" class="btn btn-primary btn-fab btn-fab-mini btn-round">
 												<i class="material-icons">favorite</i>
 											</a>
 										@endif
