@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateDetalleIngresoTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('detalle_ingreso', function (Blueprint $table) {
+            $table->increments('iddetalle_ingreso');
+            $table->integer('idingreso');
+            $table->integer('id_empresa');
+            $table->integer('id_articulo');
+            $table->float('cantidad');
+            $table->float('precioc');
+            $table->integer('id_unidad_prod');
+            $table->float('cantidad_prod');
+            $table->string('etiqueta');
+            $table->timestamps();
+
+           
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('detalle_ingreso');
+    }
+}
