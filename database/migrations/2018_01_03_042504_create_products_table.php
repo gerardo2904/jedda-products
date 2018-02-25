@@ -18,7 +18,10 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->text('long_description')->nullable();
-            $table->float('price');
+            //$table->float('price');
+            $table->integer('id_unidad_prod');
+            $table->float('cantidad_prod');
+            $table->string('etiqueta_prod')->nullable();
             $table->boolean('activo')->default(true);
             
             $table->integer('category_id')->unsigned()->nullable();

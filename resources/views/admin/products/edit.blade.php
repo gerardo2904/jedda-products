@@ -35,13 +35,14 @@
                                 <input type="text" class="form-control" name="name" value= "{{old('name',$product->name)}}">
                             </div>
                         </div>
-                                
+
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
-                                <label class="control-label">Precio del producto</label>
-                                <input type="number" step="0.01" class="form-control" name="price" value= "{{old('price',$product->price)}}">
+                                <label class="control-label">Etiqueta del producto</label>
+                                <input type="text" class="form-control" name="etiqueta_prod" value="{{ old('etiqueta_prod',$product->etiqueta_prod)}}">
                             </div>
                         </div>
+
                     </div>
                         
                             
@@ -68,7 +69,27 @@
                             </div>
                         </div>
 
-                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Unidad de producción</label>
+                                    <select class="form-control" name="id_unidad_prod">
+                                        @foreach ($unidades as $unidad)
+                                            <option value="{{ $unidad->id }}"@if($unidad->id == old('id_unidad_prod',$product->id_unidad_prod)) selected @endif>{{ $unidad->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Cantidad de producción</label>
+                                <input type="number" class="form-control" name="cantidad_prod" value="{{ old('cantidad_prod',$product->cantidad_prod)}}">
+                            </div>
+                        </div>
+
+                        </div>
+
                             <textarea class="form-control" placeholder="Descrición extensa del producto" rows="5" name="long_description">{{old('long_description',$product->long_description)}}</textarea>
                             
                             <div class="form-group label-gloating checkbox">

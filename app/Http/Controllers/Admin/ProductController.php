@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\ProductImage;
 use App\Category;
+use App\Unit;
 use File;
 Use Session;
 Use Redirect;
@@ -23,7 +24,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::orderBy('id')->get();
-        return view('admin.products.create')->with(compact('categories'));   // formulario
+        $unidades = Unit::orderBy('id')->get();
+        return view('admin.products.create')->with(compact('categories','unidades'));   // formulario
     }
     
     public function store(Request $request)
@@ -38,16 +40,15 @@ class ProductController extends Controller
             'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
             'description.required' => 'La descripción corta es un campo obligatorio',
             'description.max' => 'La descripción corta solo admite hasta 200 caracteres',
-            'price.required' => 'Es obligatorio definir precio del producto',
-            'price.numeric' => 'Ingrese un precio válido',
-            'price.min' => 'No se admiten valores negativos'
+            'unique' => 'Información repetida'
             
         ];
         
         $rules = [
             'name' => 'required|min:3',
             'description' => 'required|max:200',
-            'price' => 'required|numeric|min:0'
+            'name','id_unidad_prod','cantidad_prod','etiqueta_prod' => 'unique:products'
+            
             
         ];
         
@@ -56,9 +57,12 @@ class ProductController extends Controller
         $product = new Product();
         $product->name              = $request->input('name');
         $product->description       = $request->input('description');
-        $product->price             = $request->input('price');
+        //$product->price             = $request->input('price');
         $product->long_description  = $request->input('long_description');
-        //$product->category_id       = $request->input('category_id');
+        $product->id_unidad_prod    = $request->input('id_unidad_prod');
+        $product->cantidad_prod    = $request->input('cantidad_prod');
+        $product->etiqueta_prod    = $request->input('etiqueta_prod');
+
 
         if (is_null($request->input('category_id')))
             $product->category_id = 1;
@@ -81,9 +85,10 @@ class ProductController extends Controller
     public function edit($id)
     {
         $categories = Category::orderBy('id')->get();
+        $unidades = Unit::orderBy('id')->get();
 
         $product = Product::find($id);
-        return view('admin.products.edit')->with(compact('product','categories'));   // formulario
+        return view('admin.products.edit')->with(compact('product','categories','unidades'));   // formulario
     }
     
     public function update(Request $request, $id)
@@ -97,17 +102,15 @@ class ProductController extends Controller
             'name.required' => 'Es necesario ingresar el nombre del producto',
             'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
             'description.required' => 'La descripción corta es un campo obligatorio',
-            'description.max' => 'La descripción corta solo admite hasta 200 caracteres',
-            'price.required' => 'Es obligatorio definir precio del producto',
-            'price.numeric' => 'Ingrese un precio válido',
-            'price.min' => 'No se admiten valores negativos'
+            'description.max' => 'La descripción corta solo admite hasta 200 caracteres'
+            
             
         ];
         
         $rules = [
             'name' => 'required|min:3',
-            'description' => 'required|max:200',
-            'price' => 'required|numeric|min:0'
+            'description' => 'required|max:200'
+          
             
         ];
         
@@ -116,8 +119,13 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->name              = $request->input('name');
         $product->description       = $request->input('description');
-        $product->price             = $request->input('price');
+//        $product->price             = $request->input('price');
         $product->long_description  = $request->input('long_description');
+
+        $product->id_unidad_prod    = $request->input('id_unidad_prod');
+        $product->cantidad_prod    = $request->input('cantidad_prod');
+        $product->etiqueta_prod    = $request->input('etiqueta_prod');
+
         $product->category_id       = $request->input('category_id');
         $product->activo            = $request->input('activo');
         if ($product->activo <> 1)

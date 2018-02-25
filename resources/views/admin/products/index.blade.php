@@ -38,9 +38,9 @@
                                 <tr>
                                     <!-- <th class="text-center">#</th> -->
                                     <th class="col-md-2 text-center">Nombre</th>
-                                    <th class="col-md-5 text-center">Descripción</th>
+                                    <th class="col-md-2 text-center">Etiqueta</th>
+                                    <th class="col-md-4 text-center">Descripción</th>
                                     <th class="text-center">Categoría</th>
-                                    <th class="text-right">Precio</th>
                                     <th class="text-right">Activo</th>
                                     <th class="text-right">Opciones</th>
                                 </tr>
@@ -50,9 +50,9 @@
                                 <tr>
                                     <!-- <td class="text-center">{{ $product->id }}</td> -->
                                     <td>{{ $product->name }}</td>
+                                    <td>{{ $product->etiqueta_prod }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td>{{ $product->category ? $product->category->name : 'General' }}</td>
-                                    <td class="text-right">&euro; {{ $product->price }}</td>
                                     <td>{{ $product->activo ? 'Sí' : 'No' }}</td>
                                     <td class="td-actions text-right">
                                        <form method="post" action="{{ url('/admin/products/'.$product->id )}}">
