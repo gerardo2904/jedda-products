@@ -163,6 +163,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        'Collective\Html\HtmlServiceProvider',  // Se agrego para que las vistas acepten Form
 
         /*
          * Package Service Providers...
@@ -225,6 +226,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Form' => 'Collective\Html\FormFacade',   // Se agrego para que las vistas acepten Form
+        'Html' => 'Collective\Html\HtmlFacade',   // Se agrego para que las vistas acepten Html
 
     ],
 

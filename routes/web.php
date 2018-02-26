@@ -32,6 +32,8 @@ Route::delete('/cart','CartDetailController@destroy');
 
 Route::post('/order','CartController@update');
 
+Route::resource('compras/ingreso','IngresoController');
+
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
     
         //con prefix('admin') se elimina el /admin/ antes del nombre de las rutas de abajo...
