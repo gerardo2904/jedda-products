@@ -60,10 +60,15 @@
                                     <td>{{ $ing->total }}</td>
                                     <td>{{ $ing->estado }}</td>
 
-                                    <td>
-                                        <a href="{{URL::action('IngresoController@show',$ing->idingreso)}}"><button class="btn btn-info btn-xs">Detalles</button></a>
+                                    <td class="td-actions text-right">
 
-                                        <a href="" data-target="#modal-delete-{{$ing->idingreso}}" data-toggle="modal"><button class="btn btn-danger btn-xs">Anular</button></a>
+                                        <a href="{{URL::action('IngresoController@show',$ing->idingreso)}}" rel="tooltip" title="Detalles" class="btn btn-info btn-simple btn-xs">
+                                                <i class="fa fa-info"></i>
+                                            </a>
+
+                                           
+
+                                        <a href="" data-target="#modal-delete-{{$ing->idingreso}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
                                     </td>
 
 

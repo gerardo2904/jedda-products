@@ -91,16 +91,16 @@
 
 
                                     <li>
-                                        <a href="{{ url('/admin/categories')}}">Ordenes de compra</a>
+                                        <a href="{{ url('/compras/ingreso')}}">Ordenes de compra</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('/admin/products')}}">Ordenes de venta</a>
+                                        <a href="{{ url('/ventas/ingreso')}}">Ordenes de venta</a>
                                     </li>
 
                                     <hr />
 
                                     <li>
-                                        <a href="{{ url('/admin/companies')}}">Ordenes de producción</a>
+                                        <a href="{{ url('/produccion/ingreso')}}">Ordenes de producción</a>
                                     </li>
 
                                  @endif
