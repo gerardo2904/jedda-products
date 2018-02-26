@@ -18,6 +18,7 @@
 	<!-- CSS Files -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{asset('css/material-kit.css')}}"  rel="stylesheet"/>
+    <link href="{{asset('css/bootstrap-select.min.css')}}"  rel="stylesheet"/>
 	@yield('styles')
 
 </head>
@@ -174,6 +175,7 @@
 	<script src="{{asset('js/jquery.min.js')}}" type="text/javascript"></script>
 	<script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
 	<script src="{{asset('js/material.min.js')}}"></script>
+    <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
 
 	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
 	<script src="{{asset('js/nouislider.min.js')}}" type="text/javascript"></script>

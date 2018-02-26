@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Bienvenidos a App Shop')
+@section('title','Jedda')
 
 @section('body-class', 'product-page')
 
@@ -8,12 +8,12 @@
 
 <div class="header header-filter" style="background-image: url('/img/imagen_principal2.png');">
             
-        </div>
+</div>
 
 		<div class="main main-raised">
 			<div class="container">
 		     	<div class="section">
-	                <h2 class="title text-center">Registrar nuevo producto</h2>
+	                <h2 class="title text-center">Registrar nueva orden de compra</h2>
                     
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -25,81 +25,94 @@
                         </div>
                     @endif
                     
-                    <form method="post" action="{{ url('admin/products')}}">
+                    <form method="post" action="{{ url('admin/ingreso')}}">
                         {{ csrf_field() }}
                         
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Nombre del producto</label>
-                                <input type="text" class="form-control" name="name" value="{{ old('name')}}">
-                            </div>
-                        </div>
-                                
-                        <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Etiqueta del producto</label>
-                                <input type="text" class="form-control" name="etiqueta_prod" value="{{ old('etiqueta_prod')}}">
-                            </div>
-                        </div>
-                    </div>
-                        
-                        <div class="row">
-                            <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Descripción corta</label>
-                                <input type="text" class="form-control" name="description" value="{{ old('description')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Categoría del producto</label>
-                                <select class="form-control" name="category_id">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
+                        <div class="col-sm-12">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Unidad de producción</label>
-                                    <select class="form-control" name="id_unidad_prod">
-                                        @foreach ($unidades as $unidad)
-                                            <option value="{{ $unidad->id }}">{{ $unidad->name }}</option>
+                                    <label class="control-label">Proveedor</label>
+                                    <select class="form-control selectpicker" name="idproveedor" id="idproveedor" data-live-search="true" data-style="btn-info">
+                                        @foreach ($clientes as $cliente)
+                                            <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                        </div>
+                    </div>
+                        
+                    <div class="row">
 
-                            <div class="col-sm-6">
+                        <div class="col-sm-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Tipo de comprobante</label>
+                                    <select class="form-control" name="tipo_comporbante">
+                                        <option value="Factura">Factura</option>
+                                        <option value="Recibo">Recibo</option>
+                                    </select>
+                                </div>
+                        </div>
+
+                        <div class="col-sm-4">
                             <div class="form-group label-floating">
-                                <label class="control-label">Cantidad de producción</label>
-                                <input type="number" class="form-control" name="cantidad_prod" value="{{ old('cantidad_prod')}}">
+                                <label class="control-label">Serie de comprobante</label>
+                                <input type="text" class="form-control" name="serie_comprobante" value="{{ old('serie_comprobante')}}">
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Número de comprobante</label>
+                                <input type="text" class="form-control" name="num_comprobante" required value="{{ old('num_comprobante')}}">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                                <div class="col-sm-3">
+                                    <div class="form-group label-floating">
+                                    <label class="control-label">Artículo</label>
+                                    <select class="form-control selectpicker " name="pidarticulo" id="pidarticulo" data-live-search="true" data-style="btn-info">
+                                        @foreach ($products as $articulo)
+                                            <option value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
+                                        @endforeach
+                                    </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Cantidad</label>
+                                        <input type="number" class="form-control" name="pcantidad" id="pcantidad" required >
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">precio de compra</label>
+                                        <input type="number" class="form-control" name="pprecioc" id="pprecioc" required >
+                                    </div>
+                                </div>
+                                    
+                                <div class="col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
 
+                         <div class="col-sm-6">
+                            <div class="form-group label-floating">  
+                                <button class="btn btn-primary">Registro de la orden de compra</button>
+                                <a href="{{url('/compras/ingreso')}}" class="btn btn-default">Cancelar</a>
+                            </div>
                         </div>
-
-                            <textarea class="form-control" placeholder="Descrición extensa del producto" rows="5" name="long_description">{{old('long_description')}}</textarea>
-
-                            
-
-                            
-
-                            <div class="form-group label-gloating checkbox">
-                                <label>
-                                    <input type="checkbox" name="activo" {{ old('activo',1) ? 'value=1 checked' : 'value=0' }}>Activo 
-                                </label>
-                            </div> 
-                            
-
-                        <button class="btn btn-primary">Registro del producto</button>
-                        <a href="{{url('/admin/products')}}" class="btn btn-default">Cancelar</a>
+                    </div>
                         
                     </form>
 					
