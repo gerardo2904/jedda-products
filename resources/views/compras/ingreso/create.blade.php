@@ -102,11 +102,35 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+                                        <thead style="background-color:#A9D0F5">
+                                            <th>Opciones</th>
+                                            <th>Artículo</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio de compra</th>
+                                            <th>Subtotal</th>
+                                        </thead>
+                                        <tfoot>
+                                            <th>TOTAL</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th><h4 id="total">$ 0.00</h4></th>
+                                        </tfoot>
+                                        <tbody>
+                                            
+
+                                        </tbody>    
+                                        
+                                    </table>
+                                </div>
+
 
                             </div>
                         </div>
 
-                         <div class="col-sm-6">
+                         <div class="col-sm-6" id="guardar">
                             <div class="form-group label-floating">  
                                 <button class="btn btn-primary">Registro de la orden de compra</button>
                                 <a href="{{url('/compras/ingreso')}}" class="btn btn-default">Cancelar</a>
@@ -123,5 +147,69 @@
 		</div>
 
 	    @include('includes.footer')
+
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        $('#bt_add').click(function(){
+            agregar();
+        });
+    });
+
+    var cont=0;
+    total=0;
+    subtotal=[];
+    $("#guardar").hide();
+
+    function agregar(){
+        idarticulo=$("#pidarticulo").val();
+        articulo=$("#pidarticulo option selected").text();
+        cantidad=$("#pcantidad").val();
+        precioc=$("#pprecioc").val();
+
+        if(idarticulo!="" && cantidad!="" && cantidad>0 && precioc!="")
+        {
+            subtotal[cont]=(cantidad*precioc);
+            total=total+subtotal[cont];
+
+            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precioc[]" value="'+precioc+'"></td><td>'+subtotal[cont]+'</td></tr>';
+            cont++;
+            limpiar();
+            $("#total").html("$ "+total);
+            evaluar();
+            $('#detalles').append(fila);
+        }
+        else
+        {
+            alert("Error al ingresar la información del producto, favor de revisar.");
+        }
+
+    }
+
+
+    function limpiar(){
+        $("#pcantidad").val("");
+        $("#pprecioc").val("");
+    }
+
+    function evaluar(){
+        if (total>0)
+        {
+            $("#guardar").show();
+        }
+        else
+        {
+            $("#guardar").hide();   
+        }
+    } 
+
+    function eliminar(index){
+        total=total-subtotal[index];
+        $("#total").html("$ "+total);
+        $("#fila" + index).remove();
+        evaluar();
+    }
+</script>
+@endpush
 
 @endsection
