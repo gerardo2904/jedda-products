@@ -25,7 +25,7 @@
                         </div>
                     @endif
                     
-                    <form method="post" action="{{ url('admin/ingreso')}}">
+                    <form method="post" action="{{ url('compras/ingreso')}}">
                         {{ csrf_field() }}
                         
                     <div class="row">
@@ -46,7 +46,7 @@
                         <div class="col-sm-4">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Tipo de comprobante</label>
-                                    <select class="form-control" name="tipo_comporbante">
+                                    <select class="form-control" name="tipo_comprobante">
                                         <option value="Factura">Factura</option>
                                         <option value="Recibo">Recibo</option>
                                     </select>
@@ -76,7 +76,7 @@
                                     <label class="control-label">Artículo</label>
                                     <select class="form-control selectpicker " name="pidarticulo" id="pidarticulo" data-live-search="true" data-style="btn-info">
                                         @foreach ($products as $articulo)
-                                            <option value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
+                                            <option value="{{ $articulo->id }}">{{ $articulo->name }}</option>
                                         @endforeach
                                     </select>
                                     </div>
@@ -85,14 +85,14 @@
                                 <div class="col-sm-3">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Cantidad</label>
-                                        <input type="number" class="form-control" name="pcantidad" id="pcantidad" required >
+                                        <input type="number" class="form-control" name="pcantidad" id="pcantidad"  >
                                     </div>
                                 </div>
 
                                 <div class="col-sm-3">
                                     <div class="form-group label-floating">
                                         <label class="control-label">precio de compra</label>
-                                        <input type="number" class="form-control" name="pprecioc" id="pprecioc" required >
+                                        <input type="number" class="form-control" name="pprecioc" id="pprecioc"  >
                                     </div>
                                 </div>
                                     
@@ -103,6 +103,7 @@
                                 </div>
 
                                 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                <div class="form-group label-floating">
                                     <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
                                         <thead style="background-color:#A9D0F5">
                                             <th>Opciones</th>
@@ -125,6 +126,7 @@
                                         
                                     </table>
                                 </div>
+                                </div>
 
 
                             </div>
@@ -132,7 +134,7 @@
 
                          <div class="col-sm-6" id="guardar">
                             <div class="form-group label-floating">  
-                                <button class="btn btn-primary">Registro de la orden de compra</button>
+                                <button class="btn btn-primary" >Registro de la orden de compra</button>
                                 <a href="{{url('/compras/ingreso')}}" class="btn btn-default">Cancelar</a>
                             </div>
                         </div>
@@ -163,7 +165,7 @@
 
     function agregar(){
         idarticulo=$("#pidarticulo").val();
-        articulo=$("#pidarticulo option selected").text();
+        articulo=$("#pidarticulo option:selected").text();
         cantidad=$("#pcantidad").val();
         precioc=$("#pprecioc").val();
 
@@ -172,7 +174,7 @@
             subtotal[cont]=(cantidad*precioc);
             total=total+subtotal[cont];
 
-            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precioc[]" value="'+precioc+'"></td><td>'+subtotal[cont]+'</td></tr>';
+            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precioc[]" value="'+precioc+'"></td><td>'+subtotal[cont]+'</td> <td><input type="hidden" name="id_unidad_prod[]" value="'+'1'+'"></td> <td><input type="hidden" name="cantidad_prod[]" value="'+'1'+'"></td> </tr>';
             cont++;
             limpiar();
             $("#total").html("$ "+total);

@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+Use Illuminate\Http\Request;
+Use App\Http\Requests\IngresoFormRequest;
 Use Session;
 Use Redirect;
 Use Input;
 Use App\Ingreso;
 Use App\DetalleIngreso;
-use App\Http\Request\IngresoFormRequest;
-use DB;
 
-use Carbon\Carbon;
-use Response;
-use Illuminate\Support\Collection;
+Use DB;
+
+Use Carbon\Carbon;
+Use Response;
+Use Illuminate\Support\Collection;
 
 class IngresoController extends Controller
 {
@@ -45,7 +46,7 @@ class IngresoController extends Controller
     	//$clientes = DB::table('clients')->where('tipo_persona','=','Proveedor')->get();
     	$clientes =  DB::table('clients')->get();
     	$articulos = DB::table('products as art')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name')
     	  ->where('art.activo','=','1')
     	  ->get();
     	return view('compras.ingreso.create',["clientes" => $clientes, "products" => $articulos]);
@@ -56,7 +57,8 @@ class IngresoController extends Controller
     	try{
     		DB::beginTransaction();
     		$ingreso = new Ingreso;
-    		$ingreso->idproveedor 		= $request->get('idproveedor');
+    		//$ingreso->idproveedor 		= $request->get('idproveedor');
+    		$ingreso->idproveedor 		= '1';
     		$ingreso->tipo_comprobante 	= $request->get('tipo_comprobante');
     		$ingreso->serie_comprobante	= $request->get('serie_comprobante');
     		$ingreso->num_comprobante 	= $request->get('num_comprobante');
@@ -69,9 +71,15 @@ class IngresoController extends Controller
     		$id_articulo 				= $request->get('id_articulo');
     		$cantidad 					= $request->get('cantidad');
     		$precioc	 				= $request->get('precioc');
-    		$id_unidad_prod				= $request->get('id_unidad_prod');
-    		$cantidad_prod				= $request->get('cantidad_prod');
-    		$etiqueta					= $request->get('etiqueta');
+
+    		//$id_unidad_prod				= $request->get('id_unidad_prod');
+    		$id_unidad_prod				= '1';
+    		
+    		//$cantidad_prod				= $request->get('cantidad_prod');
+    		$cantidad_prod				= '1';
+
+    		//$etiqueta					= $request->get('etiqueta');
+    		$etiqueta					= '';
     		
     		$cont = 0;
 

@@ -35,4 +35,19 @@ class IngresoFormRequest extends FormRequest
             'cantidad_prod' => 'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'idproveedor.required' => 'Proveedor es requerido',
+            'tipo_comprobante.required' => 'Tipo de comprobante requerido',
+            'serie_comprobante.required' => 'Serie de comprobante requerido',
+            'num_comprobante.required' => 'Numero de comprobante requerido',
+            'id_articulo.required' => 'Articulo requerido',
+            'cantidad.required' => 'Cantidad requerido',
+            'precioc.required' => 'Precio de compra requerido',
+            'id_unidad_prod.required' => 'Unidad de produccion requerido',
+            'cantidad_prod.required' => 'Cantidad de produccion requerido'
+        ];
+    }
 }
