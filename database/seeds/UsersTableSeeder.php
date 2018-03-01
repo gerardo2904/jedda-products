@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
            'email'    => 'geranegocios29@gmail.com',
            'password' => bcrypt('123456'),
             'permisos'   => 0,
-            'empresa_id'  => 0,
+            'empresa_id'  => 1,
         ]);
 
         UserImage::create([

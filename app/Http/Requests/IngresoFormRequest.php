@@ -25,14 +25,13 @@ class IngresoFormRequest extends FormRequest
     {
         return [
             'idproveedor' => 'required',
+            'id_empresa' => 'required',
             'tipo_comprobante' => 'required|max:20',
             'serie_comprobante' => 'required|max:7',
             'num_comprobante' => 'required|max:10',
             'id_articulo' => 'required',
             'cantidad' => 'required',
-            'precioc' => 'required',
-            'id_unidad_prod' => 'required',
-            'cantidad_prod' => 'required'
+            'precioc' => 'required'
         ];
     }
 
@@ -40,14 +39,13 @@ class IngresoFormRequest extends FormRequest
     {
         return [
             'idproveedor.required' => 'Proveedor es requerido',
+            'id_empresa.required' => 'Empresa es requerido',
             'tipo_comprobante.required' => 'Tipo de comprobante requerido',
             'serie_comprobante.required' => 'Serie de comprobante requerido',
             'num_comprobante.required' => 'Numero de comprobante requerido',
             'id_articulo.required' => 'Articulo requerido',
             'cantidad.required' => 'Cantidad requerido',
-            'precioc.required' => 'Precio de compra requerido',
-            'id_unidad_prod.required' => 'Unidad de produccion requerido',
-            'cantidad_prod.required' => 'Cantidad de produccion requerido'
+            'precioc.required' => 'Precio de compra requerido'
         ];
     }
 }

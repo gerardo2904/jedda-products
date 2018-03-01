@@ -16,13 +16,10 @@ class CreateDetalleIngresoTable extends Migration
         Schema::create('detalle_ingreso', function (Blueprint $table) {
             $table->increments('iddetalle_ingreso');
             $table->integer('idingreso');
-            $table->integer('id_empresa');
             $table->integer('id_articulo');
             $table->float('cantidad');
             $table->float('precioc');
-            $table->integer('id_unidad_prod');
-            $table->float('cantidad_prod');
-            $table->string('etiqueta');
+            $table->string('etiqueta')->nullable();
             $table->timestamps();
 
            

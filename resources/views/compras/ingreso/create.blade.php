@@ -27,23 +27,25 @@
                     
                     <form method="post" action="{{ url('compras/ingreso')}}">
                         {{ csrf_field() }}
+
                         
                     <div class="row">
                         <div class="col-sm-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Proveedor</label>
-                                    <select class="form-control selectpicker" name="idproveedor" id="idproveedor" data-live-search="true" data-style="btn-info">
+                                    <select class="form-control selectpicker" name="idproveedor" id="idproveedor" data-live-search="true" data-style="btn-primary">
                                         @foreach ($clientes as $cliente)
                                             <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="id_empresa" id="id_empresa" value="{{ auth()->user()->empresa_id}}">
                                 </div>
                         </div>
                     </div>
                         
                     <div class="row">
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Tipo de comprobante</label>
                                     <select class="form-control" name="tipo_comprobante">
@@ -53,19 +55,27 @@
                                 </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <div class="form-group label-floating">
                                 <label class="control-label">Serie de comprobante</label>
                                 <input type="text" class="form-control" name="serie_comprobante" value="{{ old('serie_comprobante')}}">
                             </div>
                         </div>
                         
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <div class="form-group label-floating">
                                 <label class="control-label">Número de comprobante</label>
                                 <input type="text" class="form-control" name="num_comprobante" required value="{{ old('num_comprobante')}}">
                             </div>
                         </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Impuesto</label>
+                                <input type="number" class="form-control" name="impuesto" id="impuesto" required value="{{ old('impuesto','16')}}">
+                            </div>
+                        </div>
+
                     </div>
                     
                     <div class="row">
@@ -74,7 +84,7 @@
                                 <div class="col-sm-3">
                                     <div class="form-group label-floating">
                                     <label class="control-label">Artículo</label>
-                                    <select class="form-control selectpicker " name="pidarticulo" id="pidarticulo" data-live-search="true" data-style="btn-info">
+                                    <select class="form-control selectpicker " name="pidarticulo" id="pidarticulo" data-live-search="true" data-style="btn-primary">
                                         @foreach ($products as $articulo)
                                             <option value="{{ $articulo->id }}">{{ $articulo->name }}</option>
                                         @endforeach
@@ -91,11 +101,12 @@
 
                                 <div class="col-sm-3">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">precio de compra</label>
+                                        <label class="control-label">Precio</label>
                                         <input type="number" class="form-control" name="pprecioc" id="pprecioc"  >
                                     </div>
                                 </div>
-                                    
+                                
+     
                                 <div class="col-sm-3">
                                     <div class="form-group label-floating">
                                         <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
@@ -113,11 +124,31 @@
                                             <th>Subtotal</th>
                                         </thead>
                                         <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>SUB-TOTAL</th>
+                                            <th><h4 id="subtot">$ 0.00</h4></th>
+                                        </tr>
+                                            
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>IMPUESTO</th>
+                                            <th><h4 id="tax">$ 0.00</h4></th>
+                                        </tr>
+
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
                                             <th>TOTAL</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th><h4 id="total">$ 0.00</h4></th>
+                                            <th><h4 id="gt">$ 0.00</h4></th>
+                                        </tr>
+
+
                                         </tfoot>
                                         <tbody>
                                             
@@ -160,7 +191,10 @@
 
     var cont=0;
     total=0;
+    tax=0;
     subtotal=[];
+    subtot=0;
+    gt=0;
     $("#guardar").hide();
 
     function agregar(){
@@ -168,16 +202,26 @@
         articulo=$("#pidarticulo option:selected").text();
         cantidad=$("#pcantidad").val();
         precioc=$("#pprecioc").val();
+        
+        
 
         if(idarticulo!="" && cantidad!="" && cantidad>0 && precioc!="")
         {
             subtotal[cont]=(cantidad*precioc);
+            subtot=subtot+subtotal[cont];
             total=total+subtotal[cont];
 
-            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precioc[]" value="'+precioc+'"></td><td>'+subtotal[cont]+'</td> <td><input type="hidden" name="id_unidad_prod[]" value="'+'1'+'"></td> <td><input type="hidden" name="cantidad_prod[]" value="'+'1'+'"></td> </tr>';
+            tax=tax+(($("#impuesto").val()*0.01)*subtotal[cont]);
+            
+            gt=subtot+tax;
+
+            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precioc[]" value="'+precioc+'"></td> <td>'+subtotal[cont]+'</td> ';
+            
             cont++;
             limpiar();
-            $("#total").html("$ "+total);
+            $("#gt").html("$ "+gt);
+            $("#subtot").html("$ "+subtot);
+            $("#tax").html("$ "+tax);
             evaluar();
             $('#detalles').append(fila);
         }
@@ -206,8 +250,22 @@
     } 
 
     function eliminar(index){
+
+        
+
+
         total=total-subtotal[index];
-        $("#total").html("$ "+total);
+        
+        subtot=subtot-subtotal[index];
+        
+        tax=tax-(($("#impuesto").val()*0.01)*subtotal[index]);
+            
+        gt=subtot+tax;
+        
+        $("#gt").html("$ "+gt);
+        $("#subtot").html("$ "+subtot);
+        $("#tax").html("$ "+tax);
+
         $("#fila" + index).remove();
         evaluar();
     }
