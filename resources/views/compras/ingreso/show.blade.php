@@ -13,7 +13,7 @@
 			<div class="row">
 				<div class="profile">
 					<div class="avatar">
-						<img src="{{ 'images/compras/compras.png' }}" alt="Circle Image" class="img-circle img-responsive img-raised">
+						<img src="{{ '/images/clients/'.$ingreso->image }}" alt="Circle Image" class="img-circle img-responsive img-raised">
 					</div>
 					
 					
@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			<div class="description text-center">
-				<p>{{ $ingreso->tipo_comprobante }}</p>
+				<p>{{ $ingreso->tipo_comprobante.'-'.$ingreso->serie_comprobante.'-'.$ingreso->num_comprobante }}</p>
 			</div>
 			
 			@if (session('notification'))
@@ -37,7 +37,6 @@
                                 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                     <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
                                         <thead style="background-color:#A9D0F5">
-                                            <th>Opciones</th>
                                             <th>Artículo</th>
                                             <th>Cantidad</th>
                                             <th>Precio de compra</th>
@@ -45,29 +44,14 @@
                                         </thead>
                                         <tfoot>
                                         <tr>
-                                            <th></th>
+
                                             <th></th>
                                             <th></th>
                                             <th>SUB-TOTAL</th>
-                                            <th><h4 id="subtot">$ 0.00</h4></th>
+                                            <th><h4 id="total">{{$ingreso->total}}</h4></th>
                                         </tr>
                                             
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>IMPUESTO</th>
-                                            <th><h4 id="tax">$ 0.00</h4></th>
-                                        </tr>
-
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>TOTAL</th>
-                                            <th><h4 id="gt">$ 0.00</h4></th>
-                                        </tr>
-
+                                        
 
                                         </tfoot>
                                         <tbody>
@@ -76,6 +60,7 @@
                                             		<td>{{$det->articulo}}</td>
                                             		<td>{{$det->cantidad}}</td>
                                             		<td>{{$det->precioc}}</td>
+                                                    <td>{{$det->cantidad*$det->precioc}}</td>
                                             	</tr>
                                             @endforeach
 

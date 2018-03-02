@@ -13,6 +13,7 @@ use App\User;
 use App\Product;
 use App\Unit;
 use App\almproducts;
+use App\Client;
 
 Use DB;
 
@@ -149,10 +150,11 @@ class IngresoController extends Controller
     {
     	$ingreso = DB::table('ingreso as i')
     		 ->join('clients as p','i.idproveedor','=','p.id')
+             ->join('client_images as ci','i.idproveedor','=','ci.client_id')
     		 ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-    		 ->select('i.idingreso','i.fecha_hora','p.name','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precioc) as total'))
+    		 ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precioc) as total'))
     		 ->where('i.idingreso','=',$id)
-             ->groupBy('i.idingreso','i.fecha_hora','p.name','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
+             ->groupBy('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
     		 ->first();
 
     	$detalles = DB::table('detalle_ingreso as d')
