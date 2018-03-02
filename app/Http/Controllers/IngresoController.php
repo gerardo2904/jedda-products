@@ -12,6 +12,7 @@ Use App\DetalleIngreso;
 use App\User;
 use App\Product;
 use App\Unit;
+use App\almproducts;
 
 Use DB;
 
@@ -66,8 +67,6 @@ class IngresoController extends Controller
 
 
     		$ingreso = new Ingreso;
-
-    		//$ingreso->idproveedor 		= $request->get('idproveedor');
     		$ingreso->idproveedor 		= $request->get('idproveedor');
     		$ingreso->id_empresa 		= $request->get('id_empresa');
     		$ingreso->tipo_comprobante 	= $request->get('tipo_comprobante');
@@ -77,7 +76,6 @@ class IngresoController extends Controller
     		$ingreso->fecha_hora		= $mytime->toDateTimeString();
     		$ingreso->impuesto			= '16';
     		$ingreso->estado			= 'A';
-    		//$em 						= $request->get('id_empresa');
     		$ingreso->save();
 
     		$id_articulo 				= $request->get('id_articulo');
@@ -97,19 +95,51 @@ class IngresoController extends Controller
     			$detalle->precioc 		= $precioc[$cont];
     			$detalle->etiqueta 		= $etiqueta[$cont];
     			$detalle->save();
+
+                
+                $cantproductos = almproducts::where('id_product',$id_articulo[$cont])->count();
+
+                if ($cantproductos > 0){
+                    $productos = almproducts::find($id_articulo[$cont]);
+                    $exis=$productos->existencia;
+                    //dd($productos->all());
+
+                    
+                    $productos->existencia    = $exis+$cantidad[$cont];
+                    //$productos->precioc       = $precioc[$cont];
+                    $productos->save(); 
+                }
+                else {
+                    $productos = new almproducts();
+                    $productos->id_company    = $request->get('id_empresa');
+                    $productos->id_product    = $id_articulo[$cont];
+                    $productos->existencia    = $cantidad[$cont];
+                    $productos->precioc       = $precioc[$cont];
+                    $productos->preciov       = '0';
+                    $productos->id_unidad_prod= '1';
+                    $productos->cantidad_prod = '1';
+                    $productos->etiqueta      = 'A';
+                    $productos->save();
+                }
+
+
     			$cont = $cont + 1;
 
     		}
-    		
+    		  
     		DB::commit();
             Session::flash('message','Se ha realizado exitosamente la insercion de la orden de compra');
             return redirect('/compras/ingreso')->with('status', 'exito');;
 
+
     	}catch(\Exception $e)
     	{
-    		DB::rollback();
+            //return $e;
+            
+            DB::rollback();
             Session::flash('message','Ha ocurrido un error...');
             return redirect('/compras/ingreso');
+
     	}
 
     	return Redirect::to('compras/ingreso')->with('status', 'noexito');;
@@ -122,6 +152,7 @@ class IngresoController extends Controller
     		 ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
     		 ->select('i.idingreso','i.fecha_hora','p.name','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precioc) as total'))
     		 ->where('i.idingreso','=',$id)
+             ->groupBy('i.idingreso','i.fecha_hora','p.name','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
     		 ->first();
 
     	$detalles = DB::table('detalle_ingreso as d')

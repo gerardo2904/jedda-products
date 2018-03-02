@@ -20,4 +20,24 @@ class almproducts extends Model
     {
         return $this->hasMany(Unit::class);
     }
+
+    protected $table = 'almproducts';
+
+    protected $primaryKey = 'id';
+
+    public $timestamps = false;
+
+    protected $fillable = [
+            'id_company',
+            'id_product',
+            'existencia',
+            'precioc',
+            'preciov',
+            'id_unidad_prod',
+            'cantidad_prod'
+    ];
+
+    protected $guarded = [
+    ];
+
 }
