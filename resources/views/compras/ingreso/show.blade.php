@@ -49,6 +49,13 @@
                                             <th></th>
                                             <th>SUB-TOTAL</th>
                                             <th><h4 id="total">{{$ingreso->total}}</h4></th>
+                                            <tr>
+                                            <th></th>
+                                            <th></th>    
+                                            <th>IMPUESTO</th>
+                                            <th><h4 id="impuesto">{{$ingreso->total*$ingreso->impuesto*0.01}}</h4></th>
+                                            
+                                        </tr>
                                         </tr>
                                             
                                         
