@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 Use Illuminate\Http\Request;
 Use App\Http\Requests\VentaFormRequest;
+Use Auth;
+
 Use Session;
 Use Redirect;
 Use Input;
@@ -38,7 +40,7 @@ class VentaController extends Controller
     		 ->join('clients as p','v.idcliente','=','p.id')
     		 ->join('companies as c','v.id_empresa','=','c.id')
     		 ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
-    		 ->select('v.idventa','v.fecha_hora','p.name','c.name as compan','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','total_venta'))
+    		 ->select('v.idventa','v.fecha_hora','p.name','c.name as compan','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','total_venta')
     		 ->where('v.num_comprobante','LIKE','%'.$query.'%')
     		 ->orderBy('v.idventa','desc')
     		 ->groupBy('v.idventa','v.fecha_hora','p.name','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
@@ -51,17 +53,23 @@ class VentaController extends Controller
     public function create()
     {
     	//$clientes = DB::table('clients')->where('tipo_persona','=','Proveedor')->get();
+
+    	$iu = Auth::user()->empresa_id; 
+
     	$clientes =  DB::table('clients')->get();
     	$units =  DB::table('units')->get();
     	$articulos = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name','ap.preciov','ap.existencia')
     	  ->where('art.activo','=','1')
+    	  ->where('ap.id_company','=',$iu)
+    	  ->where('ap.existencia','>','0')
+    	  ->groupBy('articulo','art.id','ap.preciov', 'ap.existencia')
     	  ->get();
     	return view('ventas.venta.create',["clientes" => $clientes, "products" => $articulos, "units" => $units]);
     }
 
-    public function store(IngresoFormRequest $request)
+    public function store(VentaFormRequest $request)
     {
     	try{
 
@@ -69,21 +77,23 @@ class VentaController extends Controller
     		DB::beginTransaction();
 
 
-    		$ingreso = new Ingreso;
-    		$ingreso->idproveedor 		= $request->get('idproveedor');
-    		$ingreso->id_empresa 		= $request->get('id_empresa');
-    		$ingreso->tipo_comprobante 	= $request->get('tipo_comprobante');
-    		$ingreso->serie_comprobante	= $request->get('serie_comprobante');
-    		$ingreso->num_comprobante 	= $request->get('num_comprobante');
+    		$venta = new Venta;
+    		$venta->idcliente	 		= $request->get('idcliente');
+    		$venta->id_empresa 			= $request->get('id_empresa');
+    		$venta->tipo_comprobante 	= $request->get('tipo_comprobante');
+    		$venta->serie_comprobante	= $request->get('serie_comprobante');
+    		$venta->num_comprobante 	= $request->get('num_comprobante');
+    		$venta->total_venta			= $request->get('total_venta');
     		$mytime						= Carbon::now('America/Tijuana');
-    		$ingreso->fecha_hora		= $mytime->toDateTimeString();
-    		$ingreso->impuesto			= '16';
-    		$ingreso->estado			= 'A';
-    		$ingreso->save();
+    		$venta->fecha_hora			= $mytime->toDateTimeString();
+    		$venta->impuesto			= '16';
+    		$venta->estado				= 'A';
+    		$venta->save();
 
     		$id_articulo 				= $request->get('id_articulo');
     		$cantidad 					= $request->get('cantidad');
-    		$precioc	 				= $request->get('precioc');
+    		$preciov	 				= $request->get('preciov');
+    		$descuento	 				= $request->get('descuento');
 
 
     		$etiqueta					= $request->get('etiqueta');
@@ -91,11 +101,12 @@ class VentaController extends Controller
     		$cont = 0;
 
     		while ($cont < count($id_articulo)){
-    			$detalle = new DetalleIngreso();
-    			$detalle->idingreso  	= $ingreso->idingreso;
+    			$detalle = new DetalleVenta();
+    			$detalle->idventa  		= $ingreso->idventa;
                 $detalle->id_articulo 	= $id_articulo[$cont];
     			$detalle->cantidad 		= $cantidad[$cont];
-    			$detalle->precioc 		= $precioc[$cont];
+    			$detalle->preciov 		= $preciov[$cont];
+    			$detalle->descuento 	= $descuento[$cont];
     			$detalle->etiqueta 		= $etiqueta[$cont];
     			$detalle->save();
 
@@ -108,11 +119,11 @@ class VentaController extends Controller
                     //dd($productos->all());
 
                     
-                    $productos->existencia    = $exis+$cantidad[$cont];
+                    $productos->existencia    = $exis-$cantidad[$cont];
                     //$productos->precioc       = $precioc[$cont];
                     $productos->save(); 
                 }
-                else {
+               /* else {
                     $productos = new almproducts();
                     $productos->id_company    = $request->get('id_empresa');
                     $productos->id_product    = $id_articulo[$cont];
@@ -124,15 +135,15 @@ class VentaController extends Controller
                     $productos->etiqueta      = 'A';
                     $productos->save();
                 }
-
+				*/
 
     			$cont = $cont + 1;
 
     		}
     		  
     		DB::commit();
-            Session::flash('message','Se ha realizado exitosamente la insercion de la orden de compra');
-            return redirect('/compras/ingreso')->with('status', 'exito');;
+            Session::flash('message','Se ha realizado exitosamente la insercion de la orden de venta');
+            return redirect('/ventas/venta')->with('status', 'exito');;
 
 
     	}catch(\Exception $e)
@@ -141,38 +152,38 @@ class VentaController extends Controller
             
             DB::rollback();
             Session::flash('message','Ha ocurrido un error...');
-            return redirect('/compras/ingreso');
+            return redirect('/ventas/venta');
 
     	}
 
-    	return Redirect::to('compras/ingreso')->with('status', 'noexito');;
+    	return Redirect::to('ventas/venta')->with('status', 'noexito');;
     }
 
     public function show($id)
     {
-    	$ingreso = DB::table('ingreso as i')
+    	$venta = DB::table('venta as v')
     		 ->join('clients as p','i.idproveedor','=','p.id')
-             ->join('client_images as ci','i.idproveedor','=','ci.client_id')
-    		 ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-    		 ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precioc) as total'))
-    		 ->where('i.idingreso','=',$id)
-             ->groupBy('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
+             ->join('client_images as ci','v.idcliente','=','ci.client_id')
+    		 ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
+    		 ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.total_venta')
+    		 ->where('v.idventa','=',$id)
+             ->groupBy('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
     		 ->first();
 
-    	$detalles = DB::table('detalle_ingreso as d')
+    	$detalles = DB::table('detalle_venta as d')
     	  ->join('products as a','d.id_articulo','=','a.id')
-    	  ->select('a.name as articulo','d.cantidad','d.precioc','d.etiqueta')
-    	  ->where('d.idingreso','=',$id)
+    	  ->select('a.name as articulo','d.cantidad','d.preciov','d.descuento','d.etiqueta')
+    	  ->where('d.idventa','=',$id)
     	  ->get();
 
-    	return view('compras.ingreso.show',["ingreso"=>$ingreso,"detalles"=>$detalles]);
+    	return view('ventas.venta.show',["venta"=>$venta,"detalles"=>$detalles]);
     }
 
     public function destroy($id)
     {
-    	$ingreso  = Ingreso::findOrFail($id);
-    	$ingreso->estado = 'C';
-    	$ingreso->update();
-    	return Redirect::to('compras/ingreso');
+    	$venta  = Venta::findOrFail($id);
+    	$venta->estado = 'C';
+    	$venta->update();
+    	return Redirect::to('ventas/venta');
     }
 }

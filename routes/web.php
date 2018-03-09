@@ -33,6 +33,7 @@ Route::delete('/cart','CartDetailController@destroy');
 Route::post('/order','CartController@update');
 
 Route::resource('compras/ingreso','IngresoController');
+Route::resource('ventas/venta','VentaController');
 
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
     
