@@ -83,10 +83,19 @@
 
                             <div class="form-group label-gloating checkbox">
                                 <label>
+                                    <input type="checkbox" name="es_proveedor" {{ old('es_proveedor',0) ? 'value=1 checked' : 'value=0' }}>Es proveedor 
+                                </label>
+                            </div> 
+                    </div>
+
+                    <div class="row">
+                            <div class="form-group label-gloating checkbox">
+                                <label>
                                     <input type="checkbox" name="activo" {{ old('activo',1) ? 'value=1 checked' : 'value=0' }}>Activo 
                                 </label>
                             </div> 
                     </div>
+
                                                       
                         
                         <button class="btn btn-primary">Registro del cliente</button>

@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             //$table->float('price');
             $table->integer('id_unidad_prod');
             $table->float('cantidad_prod');
+            $table->float('ancho_prod')->nullable();
             $table->string('etiqueta_prod')->nullable();
             $table->boolean('activo')->default(true);
             

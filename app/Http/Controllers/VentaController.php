@@ -56,7 +56,7 @@ class VentaController extends Controller
 
     	$iu = Auth::user()->empresa_id; 
 
-    	$clientes =  DB::table('clients')->get();
+    	$clientes =  DB::table('clients')->where('es_proveedor','=','0')->get();
     	$units =  DB::table('units')->get();
     	$articulos = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')

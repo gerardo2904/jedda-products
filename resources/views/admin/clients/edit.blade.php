@@ -81,14 +81,21 @@
                             </div>
                         </div>
 
-                        
+                        <div class="form-group label-gloating checkbox">
+                            <label>
+                                <input type="checkbox" id="es_proveedor" name="es_proveedor"  {{ Is_null(old('es_proveedor',$client->es_proveedor)) ? "value=0":"value=1" }}  {{ $client->es_proveedor == 0 ? " ":"checked" }}>Es Proveedor
+                            </label>
+                        </div> 
+                    </div>
 
+                    <div class="row">
                         <div class="form-group label-gloating checkbox">
                             <label>
                                 <input type="checkbox" id="activo" name="activo"  {{ Is_null(old('activo',$client->activo)) ? "value=0":"value=1" }}  {{ $client->activo == 0 ? " ":"checked" }}>Activo
                             </label>
                         </div> 
                     </div>
+
                        
                         <button class="btn btn-primary">Guardar cambios</button>
                         <a href="{{ url('/admin/clients')}}" class="btn btn-default">Cancelar</a>

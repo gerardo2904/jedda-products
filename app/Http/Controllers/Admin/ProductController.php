@@ -61,6 +61,7 @@ class ProductController extends Controller
         $product->long_description  = $request->input('long_description');
         $product->id_unidad_prod    = $request->input('id_unidad_prod');
         $product->cantidad_prod    = $request->input('cantidad_prod');
+        $product->ancho_prod        = $request->input('ancho_prod');
         $product->etiqueta_prod    = $request->input('etiqueta_prod');
 
 
@@ -124,6 +125,7 @@ class ProductController extends Controller
 
         $product->id_unidad_prod    = $request->input('id_unidad_prod');
         $product->cantidad_prod    = $request->input('cantidad_prod');
+        $product->ancho_prod       = $request->input('ancho_prod');
         $product->etiqueta_prod    = $request->input('etiqueta_prod');
 
         $product->category_id       = $request->input('category_id');

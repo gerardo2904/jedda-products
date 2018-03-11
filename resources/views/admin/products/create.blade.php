@@ -36,12 +36,7 @@
                             </div>
                         </div>
                                 
-                        <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Etiqueta del producto</label>
-                                <input type="text" class="form-control" name="etiqueta_prod" value="{{ old('etiqueta_prod')}}">
-                            </div>
-                        </div>
+                        
                     </div>
                         
                         <div class="row">
@@ -64,11 +59,11 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" style="background: #E0F2F7;">
                             <div class="col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Unidad de producción</label>
-                                    <select class="form-control" name="id_unidad_prod">
+                                    <select class="form-control" id="id_unidad_prod" name="id_unidad_prod">
                                         @foreach ($unidades as $unidad)
                                             <option value="{{ $unidad->id }}">{{ $unidad->name }}</option>
                                         @endforeach
@@ -77,15 +72,33 @@
                             </div>
 
                             <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Cantidad de producción</label>
-                                <input type="number" class="form-control" name="cantidad_prod" value="{{ old('cantidad_prod')}}">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Cantidad de producción (Length)</label>
+                                    <input type="number" step="0.01" class="form-control" id="cantidad_prod" name="cantidad_prod" value="{{ old('cantidad_prod')}}">
+                                </div>
                             </div>
                         </div>
 
+                        <div class="row"  style="background: #E0F2F7;" >
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ancho(Width)</label>
+                                    <input type="number" step="0.01" class="form-control" id="ancho_prod" name="ancho_prod" value="{{ old('ancho_prod')}}">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <input type="text"  disabled class="form-control" id="total_medida" name="total_medida" value="{{ old('total_medida')}}">
+                                </div>
+                            </div>
+
                         </div>
 
-                            <textarea class="form-control" placeholder="Descrición extensa del producto" rows="5" name="long_description">{{old('long_description')}}</textarea>
+                        </div>
+
+                            <textarea class="form-control form-group" placeholder="Descripción extensa del producto" rows="2" id="long_description" name="long_description">{{old('long_description')}}</textarea>
 
                             
 
@@ -110,5 +123,28 @@
 		</div>
 
 	    @include('includes.footer')
+
+@push('scripts')
+<script>
+    $("#cantidad_prod").change(mostrarValores);
+    $("#ancho_prod").change(mostrarValores);
+    $("#total_medida").change(mostrarValores);
+
+    function mostrarValores()
+    {
+        unidad=$("#id_unidad_prod option:selected").text();
+        ancho=$("#ancho_prod").val();
+        largo=$("#cantidad_prod").val();
+        total=ancho*largo;
+        total_texto=total.toString()+' '+unidad+'²';
+
+        $("#total_medida").val(total_texto);
+
+        
+        
+    }
+</script>
+@endpush
+
 
 @endsection

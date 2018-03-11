@@ -50,7 +50,7 @@ class IngresoController extends Controller
     public function create()
     {
     	//$clientes = DB::table('clients')->where('tipo_persona','=','Proveedor')->get();
-    	$clientes =  DB::table('clients')->get();
+    	$clientes =  DB::table('clients')->where('es_proveedor','=','1')->get();
     	$units =  DB::table('units')->get();
     	$articulos = DB::table('products as art')
     	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name')

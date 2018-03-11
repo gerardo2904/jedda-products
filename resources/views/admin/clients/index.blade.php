@@ -24,6 +24,7 @@
                                     <th class="col-md-2 text-center">Nombre</th>
                                     <th class="text-right">RFC</th>
                                     <th class="text-right">Email</th>
+                                    <th class="text-right">Es proveedor</th>
                                     <th class="text-right">Activo</th>
                                 </tr>
                             </thead>
@@ -33,6 +34,7 @@
                                     <td>{{ $client->name }}</td>
                                     <td>{{ $client->rfc }}</td>
                                     <td>{{ $client->email }}</td>
+                                    <td>{{ $client->es_proveedor == 1 ?'Sí':'No' }}</td>
                                     <td>{{ $client->activo == 1 ?'Sí':'No' }}</td>
                                     
                                     

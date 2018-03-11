@@ -16,12 +16,13 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('rfc');
+            $table->string('rfc')->nullable();
             $table->string('address');
             $table->string('city');
             $table->string('cp');
             $table->string('tel');
             $table->string('email');
+            $table->boolean('es_proveedor')->default(false);
             $table->boolean('activo')->default(true);
             $table->timestamps();
         });

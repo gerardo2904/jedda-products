@@ -26,5 +26,18 @@ class UsersTableSeeder extends Seeder
             'user_id' => 1,
         ]);
 
+        User::insert([
+           'name'     => 'Jose Ramirez', 
+           'email'    => 'jose@bajasys.net',
+           'password' => bcrypt('123456'),
+            'permisos'   => 0,
+            'empresa_id'  => 2,
+        ]);
+
+        UserImage::insert([
+            'image' => 'user-default.png',
+            'user_id' => 2,
+        ]);
+
     }
 }

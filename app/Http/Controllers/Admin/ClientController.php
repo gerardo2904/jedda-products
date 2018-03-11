@@ -59,6 +59,12 @@ class ClientController extends Controller
         $client->cp            = $request->input('cp');
         $client->tel           = $request->input('tel');
         $client->email         = $request->input('email');
+
+        if ($request->input('es_proveedor') == 1)
+            $client->es_proveedor    = $request->input('es_proveedor');
+        else
+            $client->es_proveedor = 0;
+
                 
         if ($request->input('activo') == 1)
         	$client->activo    = $request->input('activo');
@@ -116,6 +122,14 @@ class ClientController extends Controller
         $client->tel           = $request->input('tel');
         $client->email         = $request->input('email');
         
+        $client->es_proveedor  = $request->input('es_proveedor');
+
+        if ($client->es_proveedor <> 1)
+            $client->es_proveedor = 0;
+        else            
+            $client->es_proveedor = 1;
+
+
 		$client->activo    = $request->input('activo');
 
 		if ($client->activo <> 1)

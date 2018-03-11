@@ -32,5 +32,22 @@ class CompanyTableSeeder extends Seeder
             'company_id' => 1,
         ]);
 
+        Company::insert([
+           'name'     => 'Bajasys LLC', 
+           'rfc'      => '', 
+       'address'  => '9923 Via de la Amistad, Suite  105', 
+       'city'     => 'San Diego, CA.', 
+       'cp'       => '92154', 
+       'tel'      => '16196610748', 
+           'email'    => 'jose@bajasys.net',
+           'contact'  => 'Jose Ramirez',
+           'activo'   => true,
+        ]);
+
+        CompanyImage::insert([
+            'image' => 'company-default.png',
+            'company_id' => 1,
+        ]);
+
     }
 }
