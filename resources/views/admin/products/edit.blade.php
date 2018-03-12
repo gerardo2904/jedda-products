@@ -133,7 +133,12 @@
         ancho=$("#ancho_prod").val();
         largo=$("#cantidad_prod").val();
         total=ancho*largo;
+        if(total==0){
+            total_texto='';
+        }
+        else{
         total_texto=total.toString()+' '+unidad+'²';
+        }
 
         $("#total_medida").val(total_texto);
 

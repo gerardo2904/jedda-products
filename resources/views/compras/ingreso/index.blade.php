@@ -66,9 +66,7 @@
 
                                         <a href="{{URL::action('IngresoController@show',$ing->idingreso)}}" rel="tooltip" title="Detalles" class="btn btn-info btn-simple btn-xs">
                                                 <i class="fa fa-info"></i>
-                                            </a>
-
-                                           
+                                        </a>
 
                                         <a href="" data-target="#modal-delete-{{$ing->idingreso}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
                                     </td>
