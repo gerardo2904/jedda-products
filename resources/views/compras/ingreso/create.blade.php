@@ -196,6 +196,7 @@
     subtot=0;
     gt=0;
     $("#guardar").hide();
+    
 
     function agregar(){
         idarticulo=$("#pidarticulo").val();

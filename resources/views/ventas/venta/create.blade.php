@@ -33,7 +33,7 @@
                         <div class="col-sm-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Cliente</label>
-                                    <select class="form-control selectpicker" name="idpcliente" id="idcliente" data-live-search="true" data-style="btn-primary">
+                                    <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-primary">
                                         @foreach ($clientes as $cliente)
                                             <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
                                         @endforeach
@@ -95,28 +95,28 @@
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Cantidad</label>
-                                        <input type="number" class="form-control" name="pcantidad" id="pcantidad"  >
+                                        <input type="number" step="0.01" class="form-control" name="pcantidad" id="pcantidad"  >
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Existencia</label>
-                                        <input type="number" disabled class="form-control" name="pexistencia" id="pexistencia"  >
+                                        <input type="number" step="0.01" disabled class="form-control" name="pexistencia" id="pexistencia"  >
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Precio</label>
-                                        <input type="number" class="form-control" name="ppreciov" id="ppreciov"  >
+                                        <input type="number" step="0.01" class="form-control" name="ppreciov" id="ppreciov"  >
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Descuento</label>
-                                        <input type="number" class="form-control" name="pdescuento" id="pdescuento"  >
+                                        <input type="number" step="0.01" class="form-control" name="pdescuento" id="pdescuento"  >
                                     </div>
                                 </div>
                                 
@@ -212,12 +212,14 @@
     gt=0;
     $("#guardar").hide();
     $("#pidarticulo").change(mostrarValores);
+    $("#pidarticulo").click(mostrarValores);
+    $(document).ready(mostrarValores);
 
     function mostrarValores()
     {
         datosArticulo=document.getElementById('pidarticulo').value.split('_');
-        $("#ppreciov").val(datosArticulo[2]);
         $("#pexistencia").val(datosArticulo[1]);
+        $("#ppreciov").val(datosArticulo[2]);
     }
 
     function agregar(){
@@ -243,7 +245,7 @@
                 
                 gt=subtot+tax;
 
-                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="preciov[]" value="'+preciov+'"></td> </td><td><input type="number" name="descuento[]" value="'+descuento+'"></td> <td>'+subtotal[cont]+'</td> ';
+                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" step="0.01" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" step="0.01" name="preciov[]" value="'+preciov+'"></td> </td><td><input type="number" step="0.01" name="descuento[]" value="'+descuento+'"></td> <td>'+subtotal[cont]+'</td> ';
                 
                 cont++;
                 limpiar();

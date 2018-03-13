@@ -101,7 +101,8 @@ class IngresoController extends Controller
                 $cantproductos = almproducts::where('id_product',$id_articulo[$cont])->count();
 
                 if ($cantproductos > 0){
-                    $productos = almproducts::find($id_articulo[$cont]);
+                    //$productos = almproducts::find($id_articulo[$cont]);
+                    $productos = almproducts::where('id_product',$id_articulo[$cont])->first();
                     $exis=$productos->existencia;
                     //dd($productos->all());
 

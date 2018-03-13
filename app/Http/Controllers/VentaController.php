@@ -102,7 +102,7 @@ class VentaController extends Controller
 
     		while ($cont < count($id_articulo)){
     			$detalle = new DetalleVenta();
-    			$detalle->idventa  		= $ingreso->idventa;
+    			$detalle->idventa  		= $venta->idventa;
                 $detalle->id_articulo 	= $id_articulo[$cont];
     			$detalle->cantidad 		= $cantidad[$cont];
     			$detalle->preciov 		= $preciov[$cont];
@@ -114,7 +114,8 @@ class VentaController extends Controller
                 $cantproductos = almproducts::where('id_product',$id_articulo[$cont])->count();
 
                 if ($cantproductos > 0){
-                    $productos = almproducts::find($id_articulo[$cont]);
+                    //$productos = almproducts::find($id_articulo[$cont]);
+                    $productos = almproducts::where('id_product',$id_articulo[$cont])->first();
                     $exis=$productos->existencia;
                     //dd($productos->all());
 
