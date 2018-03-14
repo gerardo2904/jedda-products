@@ -57,10 +57,12 @@ class VentaController extends Controller
     	$iu = Auth::user()->empresa_id; 
 
     	$clientes =  DB::table('clients')->where('es_proveedor','=','0')->get();
+
     	$units =  DB::table('units')->get();
+
     	$articulos = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name','ap.preciov','ap.existencia')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','ap.id_product','art.name','ap.preciov','ap.existencia')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
@@ -153,7 +155,7 @@ class VentaController extends Controller
             
             DB::rollback();
             Session::flash('message','Ha ocurrido un error...');
-            return redirect('/ventas/venta');
+            return redirect('/ventas/venta')->with('status', 'noexito');;
 
     	}
 

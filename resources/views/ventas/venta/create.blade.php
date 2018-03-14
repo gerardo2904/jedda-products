@@ -231,11 +231,9 @@
         descuento=$("#pdescuento").val();
         existencia=$("#pexistencia").val();
         
-        
-
         if(idarticulo!="" && cantidad!="" && cantidad>0 && preciov!="")
         {
-            if (existencia>=cantidad)
+            if (parseFloat(existencia) >= parseFloat(cantidad))
             {
                 subtotal[cont]=(cantidad*preciov-descuento);
                 subtot=subtot+subtotal[cont];
@@ -255,6 +253,7 @@
                 $("#tax").html("$ "+tax);
                 evaluar();
                 $('#detalles').append(fila);
+
             }
             else {
                 alert("La cantidad que se quiere vender supera la existencia.");
