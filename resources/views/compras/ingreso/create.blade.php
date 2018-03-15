@@ -92,20 +92,27 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Cantidad</label>
                                         <input type="number" class="form-control" name="pcantidad" id="pcantidad"  >
                                     </div>
                                 </div>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Precio</label>
                                         <input type="number" class="form-control" name="pprecioc" id="pprecioc"  >
                                     </div>
                                 </div>
                                 
+                                <div class="col-sm-2">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Etiqueta (lote)</label>
+                                        <input type="text" class="form-control" name="petiqueta" id="petiqueta"  >
+                                    </div>
+                                </div>
+
      
                                 <div class="col-sm-3">
                                     <div class="form-group label-floating">
@@ -203,6 +210,7 @@
         articulo=$("#pidarticulo option:selected").text();
         cantidad=$("#pcantidad").val();
         precioc=$("#pprecioc").val();
+        etiqueta=$("#petiqueta").val();
         
         
 
@@ -216,7 +224,7 @@
             
             gt=subtot+tax;
 
-            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precioc[]" value="'+precioc+'"></td> <td>'+subtotal[cont]+'</td> ';
+            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precioc[]" value="'+precioc+'"></td> <td><input type="text" name="etiqueta[]" value="'+etiqueta+'"></td>  <td>'+subtotal[cont]+'</td> ';
             
             cont++;
             limpiar();

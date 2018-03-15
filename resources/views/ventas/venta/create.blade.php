@@ -230,7 +230,8 @@
         preciov=$("#ppreciov").val();
         descuento=$("#pdescuento").val();
         existencia=$("#pexistencia").val();
-        
+
+                
         if(idarticulo!="" && cantidad!="" && cantidad>0 && preciov!="")
         {
             if (parseFloat(existencia) >= parseFloat(cantidad))
@@ -264,6 +265,11 @@
             alert("Error al ingresar la información del producto, favor de revisar.");
         }
 
+        /*var nueva_existencia=existencia-cantidad;
+        datosArticulo[1] = datosArticulo[1].replace(existencia,nueva_existencia);
+        $("#pexistencia").val(nueva_existencia);
+        $(document).ready(mostrarValores);
+        */
     }
 
 

@@ -98,7 +98,13 @@ class IngresoController extends Controller
     			$detalle->save();
 
                 
-                $cantproductos = almproducts::where('id_product',$id_articulo[$cont])->count();
+                //$cantproductos = almproducts::where('id_product',$id_articulo[$cont])->count();
+                $cantproductos = almproducts::where([['id_product', '=', $id_articulo[$cont]],
+                                                    ['etiqueta', '=', $etiqueta[$cont]],
+                ])->count();
+                
+    
+
 
                 if ($cantproductos > 0){
                     //$productos = almproducts::find($id_articulo[$cont]);
@@ -120,7 +126,7 @@ class IngresoController extends Controller
                     $productos->preciov       = '0';
                     $productos->id_unidad_prod= '1';
                     $productos->cantidad_prod = '1';
-                    $productos->etiqueta      = 'A';
+                    $productos->etiqueta      = $etiqueta[$cont];
                     $productos->save();
                 }
 

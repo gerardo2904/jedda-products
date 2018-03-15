@@ -74,6 +74,7 @@ class VentaController extends Controller
     public function store(VentaFormRequest $request)
     {
     	try{
+            $msj="Ha ocurrido un error...";
 
 
     		DB::beginTransaction();
@@ -123,8 +124,17 @@ class VentaController extends Controller
 
                     
                     $productos->existencia    = $exis-$cantidad[$cont];
-                    //$productos->precioc       = $precioc[$cont];
-                    $productos->save(); 
+                    
+                    if($productos->existencia>=0){
+                        $productos->save();     
+                    }else {
+                        DB::rollback();
+                        //Session::flash('message','Un producto excede la cantidad que se puede vender...');
+                        return redirect('/ventas/venta')->with('status', 'noexito');
+                        
+                    }
+
+                    
                 }
                /* else {
                     $productos = new almproducts();
@@ -154,7 +164,7 @@ class VentaController extends Controller
             //return $e;
             
             DB::rollback();
-            Session::flash('message','Ha ocurrido un error...');
+            Session::flash('message',$msj);
             return redirect('/ventas/venta')->with('status', 'noexito');;
 
     	}
