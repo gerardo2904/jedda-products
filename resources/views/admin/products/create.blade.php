@@ -36,26 +36,49 @@
                             </div>
                         </div>
                                 
-                        
-                    </div>
-                        
-                        <div class="row">
-                            <div class="col-sm-6">
+                        <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Descripción corta</label>
                                 <input type="text" class="form-control" name="description" value="{{ old('description')}}">
                             </div>
                         </div>
+
+                    </div>
                         
-                        <div class="col-sm-6">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Categoría del producto</label>
-                                <select class="form-control" name="category_id">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Categoría del producto</label>
+                                    <select class="form-control" name="category_id">
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Sub Categoría del producto</label>
+                                    <select class="form-control" name="subcategory_id">
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="background: #E0F2F7;">
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Roll del producto</label>
+                                    <select class="form-control" name="roll_id">
+                                        @foreach ($roles as $roll)
+                                            <option value="{{ $roll->id }}">{{ $roll->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
 

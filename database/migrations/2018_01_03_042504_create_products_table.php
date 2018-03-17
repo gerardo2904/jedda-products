@@ -26,7 +26,11 @@ class CreateProductsTable extends Migration
             $table->boolean('activo')->default(true);
             
             $table->integer('category_id')->unsigned()->nullable();
+            $table->integer('subcategory_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
+            
+
+            $table->integer('roll_id')->unsigned()->nullable();
 
             $table->timestamps();
         });

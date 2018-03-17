@@ -36,18 +36,18 @@
                                 <input type="text" class="form-control" name="name" value= "{{old('name',$product->name)}}">
                             </div>
                         </div>
-                    </div>
-                        
-                            
-                        
-                        <div class="row">
-                            <div class="col-sm-6">
+
+                        <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Descripción corta</label>
                                 <input type="text" class="form-control" name="description" value= "{{old('description',$product->description)}}">
                             </div>
                         </div>
+                    </div>
                         
+                            
+                        
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Categoría del producto</label>
@@ -59,10 +59,36 @@
                                     @endforeach
                                 </select>
                             </div>
+                        </div>
+                        
+                        <div class="col-sm-6">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Sub Categoría del producto</label>
+                                <select class="form-control" name="subcategory_id">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" @if($category->id == old('subcategory_id',$product->subcategory_id)) selected @endif>
+                                         {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="row" style="background: #E0F2F7;">
+                    <div class="row" style="background: #E0F2F7;">
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Roll de producción</label>
+                                    <select class="form-control" id="roll_id"  name="roll_id">
+                                        @foreach ($roles as $roll)
+                                            <option value="{{ $roll->id }}"@if($roll->id == old('roll_id',$product->roll_id)) selected @endif>{{ $roll->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="row" style="background: #E0F2F7;">
                             <div class="col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Unidad de producción</label>
@@ -80,7 +106,7 @@
                                     <input type="number" class="form-control" id="cantidad_prod" name="cantidad_prod" value="{{ old('cantidad_prod',$product->cantidad_prod)}}">
                                 </div>
                             </div>
-                        </div>
+                    </div>
 
                         <div class="row"  style="background: #E0F2F7;" >
                             <div class="col-sm-6">

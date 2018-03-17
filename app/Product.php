@@ -12,6 +12,12 @@ class Product extends Model
         return $this->belongsTo(Unit::class);    
     }
 
+    // $product->roll_product
+    public function roll_product()
+    {
+        return $this->belongsTo(RollProduct::class);    
+    }
+
     // $product->category
     
     public function category()

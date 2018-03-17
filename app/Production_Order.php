@@ -13,6 +13,7 @@ class Production_Order extends Model
     public $timestamps = true;
 
     protected $fillable = [
+    		'production_order',
     		'id_producto_mp',
             'etiqueta_mp',
             'id_producto_core',

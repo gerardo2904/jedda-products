@@ -9,6 +9,7 @@ use App\Product;
 use App\ProductImage;
 use App\Category;
 use App\Unit;
+use App\RollProduct;
 use File;
 Use Session;
 Use Redirect;
@@ -24,8 +25,10 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::orderBy('id')->get();
+        $subcategories = Category::orderBy('id')->get();
         $unidades = Unit::orderBy('id')->get();
-        return view('admin.products.create')->with(compact('categories','unidades'));   // formulario
+        $roles = RollProduct::orderBy('id')->get();
+        return view('admin.products.create')->with(compact('categories','subcategories','unidades','roles'));   // formulario
     }
     
     public function store(Request $request)
@@ -68,7 +71,19 @@ class ProductController extends Controller
         if (is_null($request->input('category_id')))
             $product->category_id = 1;
         else
-            $product->category_id       = $request->input('category_id');                    
+            $product->category_id       = $request->input('category_id');      
+
+        if (is_null($request->input('subcategory_id')))
+            $product->subcategory_id = 1;
+        else
+            $product->subcategory_id       = $request->input('subcategory_id');      
+
+        if (is_null($request->input('roll_id')))
+            $product->roll_id = 1;
+        else
+            $product->roll_id       = $request->input('roll_id');      
+
+
 
         if ($request->input('activo') == 1)
             $product->activo    = $request->input('activo');
@@ -86,10 +101,12 @@ class ProductController extends Controller
     public function edit($id)
     {
         $categories = Category::orderBy('id')->get();
+        $subcategories = Category::orderBy('id')->get();
         $unidades = Unit::orderBy('id')->get();
+        $roles = RollProduct::orderBy('id')->get();
 
         $product = Product::find($id);
-        return view('admin.products.edit')->with(compact('product','categories','unidades'));   // formulario
+        return view('admin.products.edit')->with(compact('product','categories','subcategories','unidades','roles'));   // formulario
     }
     
     public function update(Request $request, $id)
@@ -129,6 +146,8 @@ class ProductController extends Controller
         $product->etiqueta_prod    = $request->input('etiqueta_prod');
 
         $product->category_id       = $request->input('category_id');
+        $product->subcategory_id    = $request->input('subcategory_id');
+        $product->roll_id           = $request->input('roll_id');
         $product->activo            = $request->input('activo');
         if ($product->activo <> 1)
             $product->activo = 0;
