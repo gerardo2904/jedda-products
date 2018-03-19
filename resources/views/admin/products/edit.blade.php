@@ -86,6 +86,14 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Formula</label>
+                                    <input type="text" class="form-control" name="formula" value= "{{old('formula',$product->formula)}}">
+                                </div>
+                            </div>
+
                     </div>
 
                     <div class="row" style="background: #E0F2F7;">

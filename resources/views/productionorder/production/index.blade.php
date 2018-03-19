@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Listado de ventas.')
+@section('title','Listado de Ordenes de Producción.')
 
 @section('body-class', 'product-page')
 
@@ -28,60 +28,52 @@
                         </div>
                     @endif
                     
-	                <h2 class="title">Ordenes de venta</h2>
-                    @include('ventas.venta.search')  
+	                <h2 class="title">Ordenes de Producción</h2>
+                    @include('productionorder.production.search')  
 
 
 
 					<div class="team">
 						<div class="row">
-                          <a href="{{url('/ventas/venta/create')}}" class="btn btn-primary btn-round">Nueva orden de venta</a>
+                          <a href="{{url('/productionorder/production/create')}}" class="btn btn-primary btn-round">Nueva orden de producción</a>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th class="text-center">Fecha</th>
                                     <th class="text-center">Cliente</th>
                                     <th class="text-center">Compañia</th>
-                                    <th class="text-center">Comprobante</th>
-                                    <th class="text-right">Impuesto</th>
-                                    <th class="text-right">Total</th>
                                     <th class="text-right">Estado</th>
                                     <th class="text-right">Opciones</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($ventas as $vnt)
+                                @foreach ($ordenesp as $ord)
                                 <tr>
                                     
-                                    <td>{{ $vnt->fecha_hora }}</td>
-                                    <td>{{ $vnt->name }}</td>
-                                    <td>{{ $vnt->compan }}</td>
-                                    <td>{{ $vnt->tipo_comprobante.': '.$vnt->serie_comprobante.'-'.$vnt->num_comprobante }}</td>
-                                    <td>{{ $vnt->impuesto }}</td>
-                                    <td>{{ $vnt->total_venta }}</td>
-                                    <td>{{ $vnt->estado }}</td>
+                                    <td>{{ $ord->fecha_hora }}</td>
+                                    <td>{{ $ord->name }}</td>
+                                    <td>{{ $ord->compan }}</td>
+                                    <td>{{ $ord->estado }}</td>
 
                                     <td class="td-actions text-right">
 
-                                        <a href="{{URL::action('VentaController@show',$vnt->idventa)}}" rel="tooltip" title="Detalles" class="btn btn-info btn-simple btn-xs">
+                                        <a href="{{URL::action('ProductionOrder@show',$ord->id_production)}}" rel="tooltip" title="Detalles" class="btn btn-info btn-simple btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
 
-                                           
-
-                                        <a href="" data-target="#modal-delete-{{$vnt->idventa}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
+                                        <a href="" data-target="#modal-delete-{{$ord->id_production}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
                                     </td>
 
 
                                 </tr>
-                                @include('ventas.venta.modal')
+                                @include('productionorder.production.modal')
                                 @endforeach
                                 
                             </tbody>
                         </table>
                            
-			             {{ $ventas->links()}}
+			             {{ $ordenesp->links()}}
 			                
 						</div>
 					</div>

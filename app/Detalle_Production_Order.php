@@ -8,7 +8,7 @@ class Detalle_Production_Order extends Model
 {
    protected $table = 'detalle_production_order';
 
-    protected $primaryKey = 'iddetalle_venta';
+    protected $primaryKey = 'id_detalle_order';
 
     public $timestamps = false;
 

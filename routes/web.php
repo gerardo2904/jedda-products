@@ -35,6 +35,7 @@ Route::post('/order','CartController@update');
 Route::middleware(['auth','admin'])->group(function(){
     Route::resource('compras/ingreso','IngresoController');
     Route::resource('ventas/venta','VentaController');
+    Route::resource('productionorder/production','ProductionOrderController');
 });
 
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){

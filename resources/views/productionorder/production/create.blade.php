@@ -13,7 +13,7 @@
 		<div class="main main-raised">
 			<div class="container">
 		     	<div class="section">
-	                <h2 class="title text-center">Registrar nueva orden de venta</h2>
+	                <h2 class="title text-center">Registrar nueva orden de Producción</h2>
                     
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -25,10 +25,27 @@
                         </div>
                     @endif
                     
-                    <form method="post" action="{{ url('ventas/venta')}}">
+                    <form method="post" action="{{ url('productionorder/production')}}">
                         {{ csrf_field() }}
 
-                        
+                    
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Orden de Producción</label>
+                                <input type="text" class="form-control" name="orden" value="{{ old('orden')}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Dirección</label>
+                                <input type="text" class="form-control" name="direction" value="{{ old('direction')}}">
+                            </div>
+                        </div>
+
+                    </div>
+
                     <div class="row">
                         <div class="col-sm-12">
                                 <div class="form-group label-floating">
@@ -38,160 +55,165 @@
                                             <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
                                         @endforeach
                                     </select>
-                                    <input type="hidden" name="id_empresa" id="id_empresa" value="{{ auth()->user()->empresa_id}}">
+                                    <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
                                 </div>
                         </div>
                     </div>
                         
                     <div class="row">
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Tipo de comprobante</label>
-                                    <select class="form-control" name="tipo_comprobante">
-                                        <option value="Factura">Factura</option>
-                                        <option value="Recibo">Recibo</option>
+                                    <label class="control-label">Materia prima</label>
+                                    <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($materiaprima as $materia)
+                                            <option value="{{ $materia->id }}_{{ $materia->etiqueta }}">{{ $materia->articulo }}</option>
+                                        @endforeach
+                                    </select>                                  
+                                    <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
+                                </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Etiqueta(Lote)</label>
+                                <input type="text" class="form-control" id="etiqueta_mp" name="etiqueta_mp" value="{{ old('etiqueta_mp')}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Core</label>
+                                    <select class="form-control selectpicker" name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($core as $co)
+                                            <option value="{{ $co->id }}_{{ $co->etiqueta }}">{{ $co->articulo }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                         </div>
 
                         <div class="col-sm-2">
                             <div class="form-group label-floating">
-                                <label class="control-label">Serie de comprobante</label>
-                                <input type="text" class="form-control" name="serie_comprobante" value="{{ old('serie_comprobante')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Número de comprobante</label>
-                                <input type="text" class="form-control" name="num_comprobante" required value="{{ old('num_comprobante')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Impuesto</label>
-                                <input type="number" class="form-control" name="impuesto" id="impuesto" required value="{{ old('impuesto','16')}}">
+                                <label class="control-label">Etiqueta(Lote)</label>
+                                <input type="text" class="form-control" id="etiqueta_core" name="etiqueta_core" value="{{ old('etiqueta_core')}}">
                             </div>
                         </div>
 
                     </div>
-                    
+
+                    <div class="row">
+
+                         
+
+                        <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Leader Inicio</label>
+                                    <select class="form-control selectpicker" name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($leader as $le)
+                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}">{{ $le->articulo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Etiqueta(Lote)</label>
+                                <input type="text" class="form-control" id="etiqueta_leader1" name="etiqueta_leader1" value="{{ old('etiqueta_leader1')}}">
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Leader Final</label>
+                                    <select class="form-control selectpicker" name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($leader as $le)
+                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}">{{ $le->articulo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Etiqueta(Lote)</label>
+                                <input type="text" class="form-control" id="etiqueta_leader2" name="etiqueta_leader2" value="{{ old('etiqueta_leader2')}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Etiqueta</label>
+                                    <select class="form-control selectpicker" name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($sticker as $sti)
+                                            <option value="{{ $sti->id }}_{{ $sti->etiqueta }}">{{ $sti->articulo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Etiqueta(Lote)</label>
+                                <input type="text" class="form-control" id="etiqueta_sticker" name="etiqueta_sticker" value="{{ old('etiqueta_sticker')}}">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
                     <div class="row">
                         <div class="panel panel-primary">
                             <div class="panel-body">
+                                
+                                <div class="col-sm-1">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Corrida</label>
+                                        <input type="text" class="form-control" name="pcorrida" id="pcorrida"  >
+                                    </div>
+                                </div>
+
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                     <label class="control-label">Artículo</label>
-                                    <select class="form-control selectpicker " name="pidarticulo" id="pidarticulo" data-live-search="true" data-style="btn-primary">
-                                        @foreach ($products as $articulo)
-                                            <option value="{{$articulo->id}}_{{$articulo->existencia}}_{{$articulo->preciov}}">{{ $articulo->name }}</option>
+                                    <select class="form-control selectpicker " name="pid_producto_pt" id="pid_producto_pt" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($productoterminado as $pt)
+                                            <option value="{{$pt->id}}_{{$pt->ancho_prod}}_{{$pt->cantidad_prod}}">{{ $pt->name }}</option>
                                         @endforeach
                                     </select>
                                     </div>
                                 </div>
-                                
+
+                                <div class="col-sm-2">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Ancho</label>
+                                        <input type="number" step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
+                                    </div>
+                                </div>
+
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Cantidad</label>
-                                        <input type="number" step="0.01" class="form-control" name="pcantidad" id="pcantidad"  >
+                                        <input type="number" step="0.01" class="form-control" name="pcantidad_pt" id="pcantidad_pt"  >
                                     </div>
                                 </div>
 
-                                <div class="col-sm-2">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Existencia</label>
-                                        <input type="number" step="0.01" disabled class="form-control" name="pexistencia" id="pexistencia"  >
-                                    </div>
-                                </div>
 
-                                <div class="col-sm-2">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Precio</label>
-                                        <input type="number" step="0.01" class="form-control" name="ppreciov" id="ppreciov"  >
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-2">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Descuento</label>
-                                        <input type="number" step="0.01" class="form-control" name="pdescuento" id="pdescuento"  >
-                                    </div>
-                                </div>
-                                
-     
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                <div class="form-group label-floating">
-                                    <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
-                                        <thead style="background-color:#A9D0F5">
-                                            <th>Opciones</th>
-                                            <th>Artículo</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio de venta</th>
-                                            <th>Descuento</th>
-                                            <th>Subtotal</th>
-                                        </thead>
-                                        <tfoot>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>SUB-TOTAL</th>
-                                            <th><h4 id="subtot">$ 0.00</h4><input type="hidden" name="total_venta" id="total_venta"></th>
-                                        </tr>
-                                            
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>IMPUESTO</th>
-                                            <th><h4 id="tax">$ 0.00</h4></th>
-                                        </tr>
-
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>TOTAL</th>
-                                            <th><h4 id="gt">$ 0.00</h4></th>
-                                        </tr>
-
-
-                                        </tfoot>
-                                        <tbody>
-                                            
-
-                                        </tbody>    
-                                        
-                                    </table>
-                                </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                         <div class="col-sm-6" id="guardar">
-                            <div class="form-group label-floating">  
-                                <button class="btn btn-primary" >Registro de la orden de venta</button>
-                                <a href="{{url('/ventas/venta')}}" class="btn btn-default">Cancelar</a>
                             </div>
                         </div>
                     </div>
-                        
-                    </form>
-					
 
+
+                    </form>
 	            </div>
 	        </div>
-
 		</div>
 
 	    @include('includes.footer')
@@ -211,31 +233,61 @@
     subtot=0;
     gt=0;
     $("#guardar").hide();
-    $("#pidarticulo").change(mostrarValores);
-    $("#pidarticulo").click(mostrarValores);
+
+    $("#id_producto_mp").change(mostrarValores);
+    $("#id_producto_mp").click(mostrarValores);
+
+    $("#id_producto_core").change(mostrarValores);
+    $("#id_producto_core").click(mostrarValores);
+
+    $("#id_producto_leader1").change(mostrarValores);
+    $("#id_producto_leader1").click(mostrarValores);
+
+    $("#id_producto_leader2").change(mostrarValores);
+    $("#id_producto_leader2").click(mostrarValores);
+
+    $("#id_producto_sticker").change(mostrarValores);
+    $("#id_producto_sticker").click(mostrarValores);
+
+
+    $("#pid_producto_pt").change(mostrarValores);
+    $("#pid_producto_pt").click(mostrarValores);
+
     $(document).ready(mostrarValores);
 
     function mostrarValores()
     {
-        datosArticulo=document.getElementById('pidarticulo').value.split('_');
-        $("#pexistencia").val(datosArticulo[1]);
-        $("#ppreciov").val(datosArticulo[2]);
+        datosMateria=document.getElementById('id_producto_mp').value.split('_');
+        $("#etiqueta_mp").val(datosMateria[1]);
+
+        datosCore=document.getElementById('id_producto_core').value.split('_');
+        $("#etiqueta_core").val(datosCore[1]);
+
+        datosLeader1=document.getElementById('id_producto_leader1').value.split('_');
+        $("#etiqueta_leader1").val(datosLeader1[1]);
+
+        datosLeader2=document.getElementById('id_producto_leader2').value.split('_');
+        $("#etiqueta_leader2").val(datosLeader2[1]);
+
+        datosSticker=document.getElementById('id_producto_sticker').value.split('_');
+        $("#etiqueta_sticker").val(datosSticker[1]);
+
+        datosProducto=document.getElementById('pid_producto_pt').value.split('_');
+        $("#pancho_prod").val(datosProducto[1]);
+        
     }
 
     function agregar(){
-        datosArticulo=document.getElementById('pidarticulo').value.split('_');
+        datosArticulo=document.getElementById('pid_producto_pt').value.split('_');
         idarticulo=datosArticulo[0];
-        articulo=$("#pidarticulo option:selected").text();
-        cantidad=$("#pcantidad").val();
-        preciov=$("#ppreciov").val();
-        descuento=$("#pdescuento").val();
-        existencia=$("#pexistencia").val();
+        articulo=$("#pidproducto_pt option:selected").text();
+        cantidad=$("#pcantidad_pt").val();
+        ancho=$("#pancho_pt").val();
 
                 
-        if(idarticulo!="" && cantidad!="" && cantidad>0 && preciov!="")
+        if(idarticulo!="" && cantidad!="" && cantidad>0)
         {
-            if (parseFloat(existencia) >= parseFloat(cantidad))
-            {
+
                 subtotal[cont]=(cantidad*preciov-descuento);
                 subtot=subtot+subtotal[cont];
                 total=total+subtotal[cont];
@@ -255,10 +307,7 @@
                 evaluar();
                 $('#detalles').append(fila);
 
-            }
-            else {
-                alert("La cantidad que se quiere vender supera la existencia.");
-            }
+           
         }
         else
         {

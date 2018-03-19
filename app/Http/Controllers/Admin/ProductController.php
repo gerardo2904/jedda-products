@@ -66,6 +66,7 @@ class ProductController extends Controller
         $product->cantidad_prod    = $request->input('cantidad_prod');
         $product->ancho_prod        = $request->input('ancho_prod');
         $product->etiqueta_prod    = $request->input('etiqueta_prod');
+        $product->formula          = $request->input('formula');
 
 
         if (is_null($request->input('category_id')))
@@ -147,6 +148,7 @@ class ProductController extends Controller
 
         $product->category_id       = $request->input('category_id');
         $product->subcategory_id    = $request->input('subcategory_id');
+        $product->formula          = $request->input('formula');
         $product->roll_id           = $request->input('roll_id');
         $product->activo            = $request->input('activo');
         if ($product->activo <> 1)

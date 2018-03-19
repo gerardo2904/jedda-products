@@ -101,13 +101,34 @@
                                     <hr />
 
                                     <li>
-                                        <a href="{{ url('/produccion/produc')}}">Ordenes de producción</a>
+                                        <a href="{{ url('/productionorder/production')}}">Ordenes de producción</a>
                                     </li>
 
                                  @endif
                                     
                                 </ul>
                             </li>
+
+
+                        <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                    REPORTES <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                                                
+                                 @if (auth()->user()->permisos == '0')
+
+
+                                    <li>
+                                        <a href="{{ url('/reportes/almacen')}}">Inventario</a>
+                                    </li>
+
+                                 @endif
+                                    
+                                </ul>
+                            </li>
+
 
 
                             <li class="dropdown">

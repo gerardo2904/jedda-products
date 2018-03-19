@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Panel de control App Shop')
+@section('title','Ordenes de Producción')
 
 @section('body-class', 'profile-page')
 
@@ -13,18 +13,18 @@
 			<div class="row">
 				<div class="profile">
 					<div class="avatar">
-						<img src="{{ '/images/clients/'.$ingreso->image }}" alt="Circle Image" class="img-circle img-responsive img-raised">
+						<img src="{{ '/images/clients/'.$productionorder->image }}" alt="Circle Image" class="img-circle img-responsive img-raised">
 					</div>
 					
 					
 					<div class="name">
-						<h3 class="title">{{ $ingreso->name }}</h3>
+						<h3 class="title">{{ $productionorder->name }}</h3>
 
 					</div>
 				</div>
 			</div>
 			<div class="description text-center">
-				<p>{{ $ingreso->tipo_comprobante.'-'.$ingreso->serie_comprobante.'-'.$ingreso->num_comprobante }}</p>
+				<p>{{ $productionorder->direction }}</p>
 			</div>
 			
 			@if (session('notification'))
@@ -39,27 +39,25 @@
                                         <thead style="background-color:#A9D0F5">
                                             <th>Artículo</th>
                                             <th>Cantidad</th>
-                                            <th>Precio de compra</th>
-                                            <th>Subtotal</th>
                                         </thead>
                                         <tfoot>
                                         <tr>
 
                                             <th></th>
                                             <th></th>
-                                            <th>SUB-TOTAL</th>
-                                            <th><h4 id="subtotal">{{$ingreso->total}}</h4></th>
+                                            <th>.</th>
+                                            <th><h4 id="cantidadmetros"> </h4></th>
                                             <tr>
                                             <th></th>
                                             <th></th>    
-                                            <th>IMPUESTO</th>
-                                            <th><h4 id="impuesto">{{$ingreso->total*$ingreso->impuesto*0.01}}</h4></th>
+                                            <th>..</th>
+                                            <th><h4 id="cantidadancho"> </h4></th>
                                             </tr>
                                             <tr>
                                             <th></th>
                                             <th></th>    
-                                            <th>TOTAL</th>
-                                            <th><h4 id="total">{{$ingreso->total+($ingreso->total*$ingreso->impuesto*0.01)}}</h4></th>
+                                            <th>...</th>
+                                            <th><h4 id="cantidadalcuadrado"> </h4></th>
                                             </tr>
                                         </tr>
                                             
@@ -71,8 +69,6 @@
                                             	<tr>
                                             		<td>{{$det->articulo}}</td>
                                             		<td>{{$det->cantidad}}</td>
-                                            		<td>{{$det->precioc}}</td>
-                                                    <td>{{$det->cantidad*$det->precioc}}</td>
                                             	</tr>
                                             @endforeach
 
