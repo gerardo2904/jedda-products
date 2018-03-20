@@ -60,49 +60,54 @@ class ProductionOrderController extends Controller
 
     	$materiaprima = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','ap.existencia','ap.etiqueta')
+    	->join('units as un','art.id_unidad_prod','=','un.id')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','un.name as unidad')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','2')  // Es materia prima
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia', 'unidad')
     	  ->get();
 
     	$productoterminado = DB::table('products as art')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name','art.id_unidad_prod','cantidad_prod','ancho_prod','etiqueta_prod')
+    	->join('units as un','art.id_unidad_prod','=','un.id')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name','art.id_unidad_prod','art.ancho_prod','art.formula','cantidad_prod','etiqueta_prod','un.name as unidad')
     	  ->where('art.activo','=','1')
     	  ->where('art.roll_id','=','6')  // Es Producto terminado
-    	  ->groupBy('articulo','art.id')
+    	  ->groupBy('articulo','art.id','unidad')
     	  ->get();
 
 		$leader = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','ap.etiqueta','ap.existencia')
+    	->join('units as un','art.id_unidad_prod','=','un.id')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','4')  // Es Leader
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad')
     	  ->get();
 
     	$core = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','ap.etiqueta','ap.existencia')
+    	->join('units as un','art.id_unidad_prod','=','un.id')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','3')  // Es core
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad')
     	  ->get();
 
     	$sticker = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','ap.etiqueta','ap.existencia')
+    	->join('units as un','art.id_unidad_prod','=','un.id')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','5')  // Es Sticker
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad')
     	  ->get();
 
     	return view('productionorder.production.create',["clientes" => $clientes, "materiaprima" => $materiaprima, "productoterminado" => $productoterminado,"leader" => $leader,"core" => $core,"sticker" => $sticker]);
