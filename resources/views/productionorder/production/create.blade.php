@@ -10,25 +10,24 @@
             
 </div>
 
-		<div class="main main-raised">
-			<div class="container">
-		     	<div class="section">
-	                <h2 class="title text-center">Registrar nueva orden de Producción</h2>
+<div class="main main-raised">
+	<div class="container">
+		<div class="section">
+	        <h2 class="title text-center">Registrar nueva orden de Producción</h2>
                     
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                     
-                    <form method="post" action="{{ url('productionorder/production')}}">
-                        {{ csrf_field() }}
+            <form method="post" action="{{ url('productionorder/production')}}">
+            {{ csrf_field() }}
 
-                    
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="form-group label-floating">
@@ -37,6 +36,20 @@
                             </div>
                         </div>
 
+                        <div class="col-sm-8">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Cliente</label>
+                                <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-info">
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-sm-2">
                             <div class="form-group label-floating">
                                 <label class="control-label">Dirección</label>
@@ -44,31 +57,24 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-8">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Cliente</label>
-                                    <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-default">
-                                        @foreach ($clientes as $cliente)
-                                            <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
-                                </div>
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Formula</label>
+                                <input type="text" disabled class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
+                            </div>
                         </div>
-
                     </div>
-
                     <div class="row">
-                            <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Materia prima</label>
-                                    <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-default">
-                                        @foreach ($materiaprima as $materia)
-                                            <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}">{{ $materia->articulo }}</option>
-                                        @endforeach
-                                    </select>                                  
-                                    <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
-                                </div>
+                        <div class="col-sm-3">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Materia prima</label>
+                                <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-default">
+                                    @foreach ($materiaprima as $materia)
+                                        <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}">{{ $materia->articulo }}</option>
+                                    @endforeach
+                                </select>                                  
+                                <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
+                            </div>
                         </div>
 
                         <div class="col-sm-1">
@@ -105,23 +111,18 @@
                                 <input type="text" disabled class="form-control" id="unidad_mp" name="unidad_mp" value="{{ old('unidad_mp')}}">
                             </div>
                         </div>
-
-
                     </div>
                         
                     <div class="row">
-
-                        
-
                         <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Core</label>
-                                    <select class="form-control selectpicker" name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-default">
-                                        @foreach ($core as $co)
-                                            <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}">{{ $co->articulo }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label class="control-label">Core</label>
+                                <select class="form-control selectpicker" name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-default">
+                                    @foreach ($core as $co)
+                                        <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}">{{ $co->articulo }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <div class="col-sm-1">
@@ -144,20 +145,18 @@
                                 <input type="text" disabled class="form-control" id="unidad_core" name="unidad_core" value="{{ old('unidad_core')}}">
                             </div>
                         </div>
-
-
                     </div>
 
                     <div class="row">
                         <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Leader Inicio</label>
-                                    <select class="form-control selectpicker" name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-default">
-                                        @foreach ($leader as $le)
-                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label class="control-label">Leader Inicio</label>
+                                <select class="form-control selectpicker" name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-default">
+                                    @foreach ($leader as $le)
+                                        <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <div class="col-sm-1">
@@ -194,18 +193,18 @@
                                 <input type="text" disabled class="form-control" id="unidad_leader1" name="unidad_leader1" value="{{ old('unidad_leader1')}}">
                             </div>
                         </div>
-                        </div>
+                    </div>
 
-                        <div class="row">
+                    <div class="row">
                         <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Leader Final</label>
-                                    <select class="form-control selectpicker" name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-default">
-                                        @foreach ($leader as $le)
-                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}">{{ $le->articulo }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label class="control-label">Leader Final</label>
+                                <select class="form-control selectpicker" name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-default">
+                                    @foreach ($leader as $le)
+                                        <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}">{{ $le->articulo }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <div class="col-sm-1">
@@ -246,14 +245,14 @@
 
                     <div class="row">
                         <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Etiqueta</label>
-                                    <select class="form-control selectpicker" name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-default">
-                                        @foreach ($sticker as $sti)
-                                            <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}">{{ $sti->articulo }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label class="control-label">Etiqueta</label>
+                                <select class="form-control selectpicker" name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-default">
+                                    @foreach ($sticker as $sti)
+                                        <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}">{{ $sti->articulo }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <div class="col-sm-1">
@@ -276,58 +275,58 @@
                                 <input type="text" disabled class="form-control" id="unidad_sticker" name="unidad_sticker" value="{{ old('unidad_sticker')}}">
                             </div>
                         </div>
-
                     </div>
-                    </div>
+                </div>
 
-                    <div class="row">
-                        <div class="panel panel-primary">
-                            <div class="panel-body">
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
                                 
-                                <div class="col-sm-1">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Corrida</label>
-                                        <input type="text" class="form-control" name="pcorrida" id="pcorrida"  >
-                                    </div>
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Corrida</label>
+                                    <input type="text" class="form-control" name="pcorrida" id="pcorrida"  >
                                 </div>
+                            </div>
 
-                                <div class="col-sm-2">
-                                    <div class="form-group label-floating">
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
                                     <label class="control-label">Artículo</label>
                                     <select class="form-control selectpicker " name="pid_producto_pt" id="pid_producto_pt" data-live-search="true" data-style="btn-info">
                                         @foreach ($productoterminado as $pt)
                                             <option value="{{ $pt->id }}_{{ $pt->etiqueta_prod }}_{{ $pt->ancho_prod }}_{{ $pt->cantidad_prod }}_{{ $pt->formula }}_{{ $pt->unidad }}">{{ $pt->name }}</option>
                                         @endforeach
                                     </select>
-                                    </div>
                                 </div>
+                            </div>
 
-                                <div class="col-sm-2">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Ancho</label>
-                                        <input type="number" step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
-                                    </div>
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ancho</label>
+                                    <input type="number" step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
                                 </div>
+                            </div>
 
-                                <div class="col-sm-2">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Cantidad</label>
-                                        <input type="number" step="0.01" class="form-control" name="pcantidad_pt" id="pcantidad_pt"  >
-                                    </div>
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Cantidad</label>
+                                    <input type="number" step="0.01" class="form-control" name="pcantidad_pt" id="pcantidad_pt"  >
                                 </div>
+                            </div>
 
 
-                                <div class="col-sm-2">
-                                    <div class="form-group label-floating">
-                                        <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
-                                    </div>
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
+                                    <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
                                 </div>
+                            </div>
 
-                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                 <div class="form-group label-floating">
                                     <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
                                         <thead style="background-color:#A9D0F5">
                                             <th>Opciones</th>
+                                            <th>Corrida</th>
                                             <th>Artículo</th>
                                             <th>Ancho</th>
                                             <th>Largo</th>
@@ -335,39 +334,39 @@
                                             <th>Total</th>
                                         </thead>
                                         <tfoot>
-
                                         <tr>
                                             <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
+                                            <th></th>
                                             <th><h4 id="total">0.00</h4></th>
-                                            <th><h4 id="subtot">0.00</h4></th>
+                                            <th><div id="t1"><h4 id="subtot">0.00</h4></div></th>
                                         </tr>
-
-
                                         </tfoot>
-                                        <tbody>
-                                            
 
-                                        </tbody>    
-                                        
+                                        <tbody>
+
+                                        </tbody>            
                                     </table>
                                 </div>
-                                </div>
-
-
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div class="col-sm-6" id="guardar">
+                    <div class="form-group label-floating">  
+                        <button class="btn btn-primary" >Registro de la orden de producción</button>
+                        <a href="{{url('/productionorder/production')}}" class="btn btn-default">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+	   </div>
+	</div>
+</div>
 
-                    </form>
-	            </div>
-	        </div>
-		</div>
-
-	    @include('includes.footer')
+@include('includes.footer')
 
 @push('scripts')
 <script>
@@ -413,6 +412,7 @@
         $("#etiqueta_mp").val(datosMateria[1]);
         $("#ancho_mp").val(datosMateria[2]);
         $("#largo_mp").val(datosMateria[3]);
+        $("#formula").val(datosMateria[4]);
         unidad_mp=datosMateria[5]+'²';
         $("#unidad_mp").val(unidad_mp);        
         tot_mp=$("#ancho_mp").val()*$("#largo_mp").val();
@@ -463,6 +463,7 @@
         idarticulo=datosArticulo[0];
         ancho=datosArticulo[2];
         largo=datosArticulo[3];
+        corrida=$("#pcorrida").val();
         articulo=$("#pid_producto_pt option:selected").text();
         cantidad=$("#pcantidad_pt").val();
         total_ancho=cantidad*ancho;
@@ -478,24 +479,26 @@
                 totart[cont]=parseFloat(cantidad);
                 total=total+totart[cont];
 
-                //total=total+subtotal[cont];
-                //total=1;
-
-                //tax=tax+(($("#impuesto").val()*0.01)*subtotal[cont]);
-                
-                //gt=subtot+tax;
-
-                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_producto_pt[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="ancho_producto_pt[]" value="'+ancho+'">'+ancho+'</td> <td><input type="hidden" name="largo_producto_pt[]" value="'+largo+'">'+largo+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt[]" value="'+cantidad+'">'+cantidad+'</td> <td>'+total_ancho+'</td>';
+                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td> <td><input type="hidden" name="id_corrida_pt[]" value="'+corrida+'">'+corrida+'</td> <td><input type="hidden" name="id_producto_pt[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="ancho_producto_pt[]" value="'+ancho+'">'+ancho+'</td> <td><input type="hidden" name="largo_producto_pt[]" value="'+largo+'">'+largo+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt[]" value="'+cantidad+'">'+cantidad+'</td> <td>'+total_ancho+'</td>';
                 
                 cont++;
                 limpiar();
-                //$("#gt").html("$ "+gt);
+                
+                //alert(v1+" "+subtot);
+                
+
                 $("#subtot").html(subtot);
                 $("#total").html(total);
-                //$("#total_venta").val(total);
-                //$("#tax").html("$ "+tax);
                 evaluar();
                 $('#detalles').append(fila);
+
+                if(parseFloat(subtot) > parseFloat($("#ancho_mp").val()))
+                {
+                    document.getElementById('t1').style.color = '#AC0202';
+                    document.getElementById("t1").style.fontWeight="bold";
+                }
+                else
+                    document.getElementById('t1').style.color = '#000000';   
 
            
         }
@@ -530,21 +533,30 @@
 
     function eliminar(index){
 
-        
+        //subtotal[index]=total_ancho;
+
+        //alert(subtot+','+subtotal[index]);
+        subtot=parseFloat(subtot.toFixed(2))-parseFloat(subtotal[index].toFixed(2));
 
 
-        total=total-subtotal[index];
+        //totart[index]=parseFloat(cantidad);
+        total=total-parseFloat(totart[index]);
+
+
+        //subtot.toFixed(2);
+        //total.toFixed(2);
         
-        subtot=subtot-subtotal[index];
-        
-        tax=tax-(($("#impuesto").val()*0.01)*subtotal[index]);
-            
-        gt=subtot+tax;
-        
-        $("#gt").html("$ "+gt);
-        $("#subtot").html("$ "+subtot);
-        $("#tax").html("$ "+tax);
-        $("#total_venta").val(total);
+        $("#subtot").html(subtot.toFixed(2));
+        $("#total").html(total.toFixed(2));
+
+        if(parseFloat(subtot) > parseFloat($("#ancho_mp").val()))
+        {
+            document.getElementById('t1').style.color = '#AC0202';
+            document.getElementById("t1").style.fontWeight="bold";
+        }
+        else
+           document.getElementById('t1').style.color = '#000000';   
+
 
         $("#fila" + index).remove();
         evaluar();
