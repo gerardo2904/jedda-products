@@ -40,6 +40,13 @@
                             <label class="control-label">Descripción</label>
                             <input type="text" class="form-control" name="description" value="{{ old('description')}}">
                         </div>
+                    <div class="row">
+                        <div class="form-group label-gloating checkbox">
+                            <label>
+                                <input type="checkbox" name="es_subcategoria" {{ old('es_subcateroria',0) ? 'value=1 checked' : 'value=0' }}>Es Subcategoria 
+                            </label>
+                        </div> 
+                    </div>
                         
                        
                         <button class="btn btn-primary">Registro de categoría</button>

@@ -61,8 +61,8 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Sub Categoría del producto</label>
                                     <select class="form-control" name="subcategory_id">
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @foreach ($subcategories as $subcategory)
+                                            <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -105,7 +105,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Cantidad de producción (Length)</label>
-                                    <input type="number" step="0.01" class="form-control" id="cantidad_prod" name="cantidad_prod" value="{{ old('cantidad_prod')}}">
+                                    <input type="number" step="0.001" class="form-control" id="cantidad_prod" name="cantidad_prod" value="{{ old('cantidad_prod')}}">
                                 </div>
                             </div>
                         </div>
@@ -114,7 +114,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Ancho(Width)</label>
-                                    <input type="number" step="0.01" class="form-control" id="ancho_prod" name="ancho_prod" value="{{ old('ancho_prod')}}">
+                                    <input type="number" step="0.001" class="form-control" id="ancho_prod" name="ancho_prod" value="{{ old('ancho_prod')}}">
                                 </div>
                             </div>
 

@@ -24,8 +24,8 @@ class ProductController extends Controller
     
     public function create()
     {
-        $categories = Category::orderBy('id')->get();
-        $subcategories = Category::orderBy('id')->get();
+        $categories = Category::where('es_subcategoria','0')->orderBy('id')->get();
+        $subcategories = Category::where('es_subcategoria','1')->orderBy('id')->get();
         $unidades = Unit::orderBy('id')->get();
         $roles = RollProduct::orderBy('id')->get();
         return view('admin.products.create')->with(compact('categories','subcategories','unidades','roles'));   // formulario
@@ -101,8 +101,8 @@ class ProductController extends Controller
     
     public function edit($id)
     {
-        $categories = Category::orderBy('id')->get();
-        $subcategories = Category::orderBy('id')->get();
+        $categories = Category::where('es_subcategoria','0')->orderBy('id')->get();
+        $subcategories = Category::where('es_subcategoria','1')->orderBy('id')->get();
         $unidades = Unit::orderBy('id')->get();
         $roles = RollProduct::orderBy('id')->get();
 

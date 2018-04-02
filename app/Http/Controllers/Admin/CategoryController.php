@@ -51,6 +51,12 @@ class CategoryController extends Controller
         $category->name              = $request->input('name');
         $category->description       = $request->input('description');
 
+        if ($request->input('es_subcategoria') == 1)
+            $category->es_subcategoria    = $request->input('es_subcategoria');
+        else
+            $category->es_subcategoria = 0;
+
+
         $category->save(); //insert en tabla categories
 
         Session::flash('message','La categoria '.$category->name.' se ha agregado con exito.');
@@ -90,6 +96,14 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->name              = $request->input('name');
         $category->description       = $request->input('description');
+
+        $category->es_subcategoria  = $request->input('es_subcategoria');
+
+        if ($category->es_subcategoria <> 1)
+            $category->es_subcategoria = 0;
+        else            
+            $category->es_subcategoria = 1;
+
         $category->save(); //update en tabla categories
 
         Session::flash('message','La categoria '.$category->name.' se ha modificado con exito.');

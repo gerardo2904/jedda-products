@@ -41,7 +41,15 @@
                             <label class="control-label">Descripción</label>
                             <input type="text" class="form-control" name="description" value= "{{old('description',$category->description)}}">
                         </div>
-                        
+                    
+                    <div class="row">
+                        <div class="form-group label-gloating checkbox">
+                            <label>
+                                <input type="checkbox" id="es_subcategoria" name="es_subcategoria"  {{ Is_null(old('es_subcategoria',$category->es_subcategoria)) ? "value=0":"value=1" }}  {{ $category->es_subcategoria == 0 ? " ":"checked" }}>Es Subcategoria
+                            </label>
+                        </div> 
+                    </div>
+
                         <button class="btn btn-primary">Guardar cambios</button>
                         <a href="{{ url('/admin/categories')}}" class="btn btn-default">Cancelar</a>
                         

@@ -65,9 +65,9 @@
                             <div class="form-group label-floating">
                                 <label class="control-label">Sub Categoría del producto</label>
                                 <select class="form-control" name="subcategory_id">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" @if($category->id == old('subcategory_id',$product->subcategory_id)) selected @endif>
-                                         {{ $category->name }}
+                                    @foreach ($subcategories as $subcategory)
+                                        <option value="{{ $subcategory->id }}" @if($subcategory->id == old('subcategory_id',$product->subcategory_id)) selected @endif>
+                                         {{ $subcategory->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -111,7 +111,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Cantidad de producción</label>
-                                    <input type="number" class="form-control" id="cantidad_prod" name="cantidad_prod" value="{{ old('cantidad_prod',$product->cantidad_prod)}}">
+                                    <input type="number" step="0.001" class="form-control" id="cantidad_prod" name="cantidad_prod" value="{{ old('cantidad_prod',$product->cantidad_prod)}}">
                                 </div>
                             </div>
                     </div>
@@ -120,7 +120,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Ancho(Width)</label>
-                                    <input type="number" step="0.01" class="form-control" id="ancho_prod" name="ancho_prod" value="{{ old('ancho_prod',$product->ancho_prod)}}">
+                                    <input type="number" step="0.001" class="form-control" id="ancho_prod" name="ancho_prod" value="{{ old('ancho_prod',$product->ancho_prod)}}">
                                 </div>
                             </div>
 

@@ -102,7 +102,7 @@
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Precio</label>
-                                        <input type="number" class="form-control" name="pprecioc" id="pprecioc"  >
+                                        <input type="number" step="0.01" class="form-control" name="pprecioc" id="pprecioc"  >
                                     </div>
                                 </div>
                                 
