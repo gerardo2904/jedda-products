@@ -53,7 +53,7 @@ class IngresoController extends Controller
     	$clientes =  DB::table('clients')->where('es_proveedor','=','1')->get();
     	$units =  DB::table('units')->get();
     	$articulos = DB::table('products as art')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name','art.id_unidad_prod','art.cantidad_prod')
     	  ->where('art.activo','=','1')
     	  ->get();
     	return view('compras.ingreso.create',["clientes" => $clientes, "products" => $articulos, "units" => $units]);
@@ -75,13 +75,15 @@ class IngresoController extends Controller
     		$ingreso->num_comprobante 	= $request->get('num_comprobante');
     		$mytime						= Carbon::now('America/Tijuana');
     		$ingreso->fecha_hora		= $mytime->toDateTimeString();
-    		$ingreso->impuesto			= '16';
+    		$ingreso->impuesto			= $request->get('impuesto');
     		$ingreso->estado			= 'A';
     		$ingreso->save();
 
     		$id_articulo 				= $request->get('id_articulo');
     		$cantidad 					= $request->get('cantidad');
     		$precioc	 				= $request->get('precioc');
+            $unidad_prod                = $request->get('unidad_prod');
+            $cantidad_prod              = $request->get('cantidad_prod');
 
 
     		$etiqueta					= $request->get('etiqueta');
@@ -90,11 +92,13 @@ class IngresoController extends Controller
 
     		while ($cont < count($id_articulo)){
     			$detalle = new DetalleIngreso();
-    			$detalle->idingreso  	= $ingreso->idingreso;
-                $detalle->id_articulo 	= $id_articulo[$cont];
-    			$detalle->cantidad 		= $cantidad[$cont];
-    			$detalle->precioc 		= $precioc[$cont];
-    			$detalle->etiqueta 		= $etiqueta[$cont];
+    			$detalle->idingreso  	     = $ingreso->idingreso;
+                $detalle->id_articulo 	     = $id_articulo[$cont];
+    			$detalle->cantidad 		     = $cantidad[$cont];
+    			$detalle->precioc 		     = $precioc[$cont];
+    			$detalle->etiqueta 		     = $etiqueta[$cont];
+                //$detalle->id_unidad_prod     = $unidad_prod[$cont];
+                //$detalle->cantidad_prod      = $cantidad_prod[$cont];
     			$detalle->save();
 
                 
@@ -108,7 +112,9 @@ class IngresoController extends Controller
 
                 if ($cantproductos > 0){
                     //$productos = almproducts::find($id_articulo[$cont]);
-                    $productos = almproducts::where('id_product',$id_articulo[$cont])->first();
+                    $productos = almproducts::where([['id_product', '=', $id_articulo[$cont]],
+                                                    ['etiqueta', '=', $etiqueta[$cont]],
+                ])->first();
                     $exis=$productos->existencia;
                     //dd($productos->all());
 
@@ -124,8 +130,8 @@ class IngresoController extends Controller
                     $productos->existencia    = $cantidad[$cont];
                     $productos->precioc       = $precioc[$cont];
                     $productos->preciov       = '0';
-                    $productos->id_unidad_prod= '1';
-                    $productos->cantidad_prod = '1';
+                    $productos->id_unidad_prod= $unidad_prod[$cont];
+                    $productos->cantidad_prod = $cantidad_prod[$cont];
                     $productos->etiqueta      = $etiqueta[$cont];
                     $productos->save();
                 }
@@ -150,7 +156,7 @@ class IngresoController extends Controller
 
     	}
 
-    	return Redirect::to('compras/ingreso')->with('status', 'noexito');;
+    	return Redirect::to('compras/ingreso')->with('status', 'noexito');
     }
 
     public function show($id)

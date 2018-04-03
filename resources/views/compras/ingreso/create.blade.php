@@ -86,7 +86,7 @@
                                     <label class="control-label">Artículo</label>
                                     <select class="form-control selectpicker " name="pidarticulo" id="pidarticulo" data-live-search="true" data-style="btn-primary">
                                         @foreach ($products as $articulo)
-                                            <option value="{{ $articulo->id }}">{{ $articulo->articulo }}</option>
+                                            <option value="{{ $articulo->id }}_{{ $articulo->id_unidad_prod }}_{{ $articulo->cantidad_prod }}">{{ $articulo->articulo }}</option>
                                         @endforeach
                                     </select>
                                     </div>
@@ -96,6 +96,10 @@
                                     <div class="form-group label-floating">
                                         <label class="control-label">Cantidad</label>
                                         <input type="number" class="form-control" name="pcantidad" id="pcantidad"  >
+                                        <input type="hidden" name="pid_unidad_prod" id="pid_unidad_prod"  >
+                                        <input type="hidden" name="pcantidad_prod" id="pcantidad_prod"  >
+                                        <input type="hidden" name="pid_articulo" id="pid_articulo"  >
+
                                     </div>
                                 </div>
 
@@ -128,6 +132,7 @@
                                             <th>Artículo</th>
                                             <th>Cantidad</th>
                                             <th>Precio de compra</th>
+                                            <th>Etiqueta(Lote)</th>
                                             <th>Subtotal</th>
                                         </thead>
                                         <tfoot>
@@ -203,14 +208,28 @@
     subtot=0;
     gt=0;
     $("#guardar").hide();
-    
+
+    $("#pidarticulo").change(mostrarValores);
+    $("#pidarticulo").click(mostrarValores);
+
+    $(document).ready(mostrarValores);
+
+    function mostrarValores()
+    {       
+        datosArticulo=document.getElementById('pidarticulo').value.split('_');
+        $("#pid_articulo").val(datosArticulo[0]);
+        $("#pid_unidad_prod").val(datosArticulo[1]);
+        $("#pcantidad_prod").val(datosArticulo[2]);
+    }
 
     function agregar(){
-        idarticulo=$("#pidarticulo").val();
+        idarticulo=$("#pid_articulo").val();
         articulo=$("#pidarticulo option:selected").text();
         cantidad=$("#pcantidad").val();
         precioc=$("#pprecioc").val();
         etiqueta=$("#petiqueta").val();
+        unidad_prod=$("#pid_unidad_prod").val();
+        cantidad_prod=$("#pcantidad_prod").val();
         
         
 
@@ -220,11 +239,11 @@
             subtot=subtot+subtotal[cont];
             total=total+subtotal[cont];
 
-            tax=tax+(($("#impuesto").val()*0.01)*subtotal[cont]);
+            tax=tax+(($("#impuesto").val()*0.001)*subtotal[cont]);
             
             gt=subtot+tax;
 
-            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precioc[]" value="'+precioc+'"></td> <td><input type="text" name="etiqueta[]" value="'+etiqueta+'"></td>  <td>'+subtotal[cont]+'</td> ';
+            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precioc[]" value="'+precioc+'"></td> <td><input type="text" name="etiqueta[]" value="'+etiqueta+'"></td>  <td>'+subtotal[cont]+'</td> <input type="hidden" name="unidad_prod[]" value="'+unidad_prod+'"> <input type="hidden" name="cantidad_prod[]" value="'+cantidad_prod+'">';
             
             cont++;
             limpiar();
@@ -245,6 +264,9 @@
     function limpiar(){
         $("#pcantidad").val("");
         $("#pprecioc").val("");
+        $("#petiqueta").val("");
+        $("#pid_unidad_prod").val("");
+        $("#pcantidad_prod").val("");
     }
 
     function evaluar(){

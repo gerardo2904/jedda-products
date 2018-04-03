@@ -10,7 +10,7 @@ class DetalleIngreso extends Model
 
     protected $primaryKey = 'iddetalle_ingreso';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
     		'iddetalle_ingreso',

@@ -10,7 +10,7 @@ class Ingreso extends Model
 
     protected $primaryKey = 'idingreso';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
     		'idingreso',

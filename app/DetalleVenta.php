@@ -10,7 +10,7 @@ class DetalleVenta extends Model
 
     protected $primaryKey = 'iddetalle_venta';
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
     		'iddetalle_venta',
