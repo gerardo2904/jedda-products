@@ -59,6 +59,31 @@ class CategoryController extends Controller
 
         $category->save(); //insert en tabla categories
 
+        $cat = Category::where('name',$category->name)->first();
+        $idc=$cat->id;
+
+        // Imagen por default....
+
+        $file  = 'default.png';
+        $path = public_path() . '/images/categories';
+        //$path = public_path();
+        $fileName = uniqid() . $file;
+        //$moved = $file->copy($path.'/'.$file, $path.'/'.$fileName);
+        $moved = \File::copy($path.'/'.$file, $path.'/'.$fileName);
+        
+        // crear 1 registro en la tabla category_images
+        if ($moved){
+            $categoryImage = new CategoryImage();
+            $categoryImage->image = $fileName;
+            // $productImage->featured = false;   // Ya esta en la definicion de la tabla esta condicion, por eso se comenta.
+            $categoryImage->category_id = $idc;
+            $categoryImage->featured = 1;
+            $categoryImage->save();  //INSERT
+        }
+
+
+        ////////////////
+
         Session::flash('message','La categoria '.$category->name.' se ha agregado con exito.');
             
         //return redirect('/admin/categories');
