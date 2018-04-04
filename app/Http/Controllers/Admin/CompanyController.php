@@ -56,6 +56,29 @@ class CompanyController extends Controller
         else
         	$company->activo = 0;	
         $company->save(); //insert en tabla productos
+
+        $com = Company::where('name',$company->name)->first();
+        $idc=$com->id;
+
+        // Imagen por default....
+
+        $file  = 'company-default.png';
+        $path = public_path() . '/images/companies';
+        //$path = public_path();
+        $fileName = uniqid() . $file;
+        //$moved = $file->copy($path.'/'.$file, $path.'/'.$fileName);
+        $moved = \File::copy($path.'/'.$file, $path.'/'.$fileName);
+        
+        // crear 1 registro en la tabla category_images
+        if ($moved){
+            $companyImage = new CompanyImage();
+            $companyImage->image = $fileName;
+            // $productImage->featured = false;   // Ya esta en la definicion de la tabla esta condicion, por eso se comenta.
+            $companyImage->company_id = $idc;
+            $companyImage->featured = 1;
+            $companyImage->save();  //INSERT
+        }
+
             
         return redirect('/admin/companies');
     }

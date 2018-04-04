@@ -13,8 +13,14 @@
 <div class="main main-raised">
 	<div class="container">
 		<div class="section">
-	        <h2 class="title text-center">Registrar nueva orden de Producción</h2>
-                    
+            <div class="row">
+                <div class="col-sm-2">
+                    <img style="width:150px; height:130px;" src="{{ $cim }}" alt="Rounded Raised" class="img-rounded img-responsive img-raised">
+                </div>
+                <div class="col-sm-10">
+	             <h3 class="title text-left">Registrar nueva orden de Producción</h3>
+                </div>
+            </div>        
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -28,18 +34,25 @@
             <form method="post" action="{{ url('productionorder/production')}}">
             {{ csrf_field() }}
 
-                    <div class="row">
+                    <div class="row" style="background: #FCE7D8;">
                         <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Orden de Producción</label>
+                            <div class="form-group ">
+                                <label class="control-label" style="color: rgba(0,0,0);">Orden de Producción</label>
                                 <input type="text" class="form-control" name="orden" value="{{ old('orden')}}">
                             </div>
                         </div>
 
+                        <div class="col-sm-2">
+                            <div class="form-group ">
+                                <label class="control-label">Fecha</label>
+                                <input class="datepicker form-control" type="text" name="fecha_hora" id="fecha_hora" value="{{ old('fecha_hora')}}"/>
+                            </div>
+                        </div>
+                    
                         <div class="col-sm-8">
-                            <div class="form-group label-floating">
+                            <div class="form-group ">
                                 <label class="control-label">Cliente</label>
-                                <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-info">
+                                <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-primary">
                                     @foreach ($clientes as $cliente)
                                         <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
                                     @endforeach
@@ -47,28 +60,19 @@
                                 <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Dirección</label>
-                                <input type="text" class="form-control" name="direction" value="{{ old('direction')}}">
+                    </div>    
+                    <div class="row" style="background: #FCE7D8;">
+                        <div class="col-sm-12">
+                            <div class="form-group ">
                             </div>
                         </div>
+                    </div>    
 
-                        <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Formula</label>
-                                <input type="text" disabled class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
+                    <div class="row" style="background: #D4FAEC;">
                         <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Materia prima</label>
-                                <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-default">
+                                <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-primary">
                                     @foreach ($materiaprima as $materia)
                                         <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}">{{ $materia->articulo }}</option>
                                     @endforeach
@@ -112,6 +116,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row" style="background: #D4FAEC;">
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Dirección</label>
+                                <input type="text" class="form-control" name="direction" value="{{ old('direction')}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Formula</label>
+                                <input type="text" disabled class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
+                            </div>
+                        </div>
+                    </div>
+
                         
                     <div class="row">
                         <div class="col-sm-3">
@@ -561,7 +582,17 @@
         $("#fila" + index).remove();
         evaluar();
     }
+
+
 </script>
 @endpush
+
+
+<script>
+    $('.datepicker').datepicker({
+    weekStart:1
+    });
+</script>
+
 
 @endsection

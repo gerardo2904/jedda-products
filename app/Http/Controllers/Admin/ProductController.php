@@ -28,6 +28,7 @@ class ProductController extends Controller
         $subcategories = Category::where('es_subcategoria','1')->orderBy('id')->get();
         $unidades = Unit::orderBy('id')->get();
         $roles = RollProduct::orderBy('id')->get();
+        
         return view('admin.products.create')->with(compact('categories','subcategories','unidades','roles'));   // formulario
     }
     

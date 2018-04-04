@@ -16,6 +16,8 @@ use App\Product;
 use App\Unit;
 use App\almproducts;
 use App\Client;
+use App\Company;
+use App\CompanyImage;
 
 Use DB;
 
@@ -57,6 +59,17 @@ class ProductionOrderController extends Controller
     	$iu = Auth::user()->empresa_id; 
 
     	$clientes =  DB::table('clients')->get();
+
+        //$ci  = CompanyImage::where('company_id',$iu)->first();
+        $ci = DB::table('company_images')
+        ->select('id','image')
+        ->where('company_images.company_id','=',$iu)
+        ->first();
+        $cim ='/images/companies/'.$ci->image;
+        
+
+
+
 
     	$materiaprima = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
@@ -110,7 +123,7 @@ class ProductionOrderController extends Controller
     	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad')
     	  ->get();
 
-    	return view('productionorder.production.create',["clientes" => $clientes, "materiaprima" => $materiaprima, "productoterminado" => $productoterminado,"leader" => $leader,"core" => $core,"sticker" => $sticker]);
+    	return view('productionorder.production.create',["clientes" => $clientes, "materiaprima" => $materiaprima, "productoterminado" => $productoterminado,"leader" => $leader,"core" => $core,"sticker" => $sticker, "cim" => $cim]);
     }
 
     public function store(ProductionOrderRequest $request)
