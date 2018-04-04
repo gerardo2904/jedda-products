@@ -151,6 +151,9 @@ class ProductionOrderController extends Controller
     		$ordenproduccion->id_producto_leader2	= $request->get('id_producto_leader2');
     		$ordenproduccion->etiqueta_leader2		= $request->get('etiqueta_leader2');
 
+            $ordenproduccion->id_producto_leader3   = $request->get('id_producto_leader3');
+            $ordenproduccion->etiqueta_leader3      = $request->get('etiqueta_leader3');
+
     		$ordenproduccion->id_producto_sticker	= $request->get('id_producto_sticker');
     		$ordenproduccion->etiqueta_sticker		= $request->get('etiqueta_sticker');
 

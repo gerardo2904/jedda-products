@@ -89,7 +89,7 @@
                         </div>
                     </div>
                      
-                    <input type="hidden" name="password" value="old('password',$user->password)">
+                    <input type="hidden" name="password" value={{"$user->password"}}>
 
                     <button class="btn btn-primary">Guardar cambios</button>
                     <a href="{{ url('/admin/users')}}" class="btn btn-default">Cancelar</a>

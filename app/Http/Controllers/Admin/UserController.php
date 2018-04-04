@@ -110,7 +110,7 @@ class UserController extends Controller
            // $user->email         = $request->input('email');
 
 
-        $user->password      = $request->input('password');
+        //$user->password      = $request->input('password');
         $user->permisos      = $request->input('permisos');
         $user->empresa_id    = $request->input('empresa_id');
         

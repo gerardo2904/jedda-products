@@ -119,14 +119,17 @@
 
                     <div class="row" style="background: #D4FAEC;">
                         <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Dirección</label>
-                                <input type="text" class="form-control" name="direction" value="{{ old('direction')}}">
+                            <div class="form-group ">
+                            <label class="control-label">Dirección</label>
+                            <select class="form-control selectpicker" name="direction" id="direction" data-live-search="true" data-style="btn-primary">
+                                    <option value="In">In</option>
+                                    <option value="Out">Out</option>
+                                </select>      
                             </div>
                         </div>
 
                         <div class="col-sm-2">
-                            <div class="form-group label-floating">
+                            <div class="form-group ">
                                 <label class="control-label">Formula</label>
                                 <input type="text" disabled class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
                             </div>
@@ -134,11 +137,11 @@
                     </div>
 
                         
-                    <div class="row">
+                    <div class="row" style="background: #D4FAEC;">
                         <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Core</label>
-                                <select class="form-control selectpicker" name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-default">
+                                <select class="form-control selectpicker" name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-primary">
                                     @foreach ($core as $co)
                                         <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}">{{ $co->articulo }}</option>
                                     @endforeach
@@ -168,11 +171,11 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="background: #D4FAEC;">
                         <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Leader Inicio</label>
-                                <select class="form-control selectpicker" name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-default">
+                                <select class="form-control selectpicker" name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
                                     @foreach ($leader as $le)
                                         <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
                                     @endforeach
@@ -216,11 +219,11 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="background: #D4FAEC;">
                         <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Leader Final</label>
-                                <select class="form-control selectpicker" name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-default">
+                                <select class="form-control selectpicker" name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-primary">
                                     @foreach ($leader as $le)
                                         <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}">{{ $le->articulo }}</option>
                                     @endforeach
@@ -264,11 +267,60 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="background: #D4FAEC;">
+                        <div class="col-sm-3">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Leader Envoltura</label>
+                                <select class="form-control selectpicker" name="id_producto_leader3" id="id_producto_leader3" data-live-search="true" data-style="btn-primary">
+                                    @foreach ($leader as $le)
+                                        <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-1">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Etiqueta(Lote)</label>
+                                <input type="text" class="form-control" id="etiqueta_leader3" name="etiqueta_leader3" value="{{ old('etiqueta_leader3')}}">
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Ancho</label>
+                                <input type="text" disabled class="form-control" id="ancho_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
+                            </div>
+                        </div>
+                                
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Largo</label>
+                                <input type="text" disabled class="form-control" id="largo_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label"> </label>
+                                <input type="text" disabled class="form-control" id="total_leader3" name="total_leader3" value="{{ old('total_leader3')}}">
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-1">
+                            <div class="form-group label-floating">
+                                <label class="control-label"> </label>
+                                <input type="text" disabled class="form-control" id="unidad_leader3" name="unidad_leader3" value="{{ old('unidad_leader3')}}">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row" style="background: #D4FAEC;">
                         <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Etiqueta</label>
-                                <select class="form-control selectpicker" name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-default">
+                                <select class="form-control selectpicker" name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-primary">
                                     @foreach ($sticker as $sti)
                                         <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}">{{ $sti->articulo }}</option>
                                     @endforeach
@@ -418,6 +470,9 @@
     $("#id_producto_leader2").change(mostrarValores);
     $("#id_producto_leader2").click(mostrarValores);
 
+    $("#id_producto_leader3").change(mostrarValores);
+    $("#id_producto_leader3").click(mostrarValores);
+
     $("#id_producto_sticker").change(mostrarValores);
     $("#id_producto_sticker").click(mostrarValores);
 
@@ -466,6 +521,15 @@
         $("#unidad_leader2").val(unidad_leader2);        
         tot_leader2=$("#ancho_leader2").val()*$("#largo_leader2").val();
         $("#total_leader2").val(tot_leader2);
+
+        datosLeader3=document.getElementById('id_producto_leader3').value.split('_');
+        $("#etiqueta_leader3").val(datosLeader3[1]);
+        $("#ancho_leader3").val(datosLeader3[2]);
+        $("#largo_leader3").val(datosLeader3[3]);
+        unidad_leader3=datosLeader3[5]+'²';
+        $("#unidad_leader3").val(unidad_leader3);        
+        tot_leader3=$("#ancho_leader3").val()*$("#largo_leader3").val();
+        $("#total_leader3").val(tot_leader3);
 
         datosSticker=document.getElementById('id_producto_sticker').value.split('_');
         $("#etiqueta_sticker").val(datosSticker[1]);
