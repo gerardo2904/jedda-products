@@ -81,21 +81,21 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Etiqueta(Lote)</label>
                                 <input type="text" class="form-control" id="etiqueta_mp" name="etiqueta_mp" value="{{ old('etiqueta_mp')}}">
                             </div>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             <div class="form-group label-floating">
                                 <label class="control-label">Ancho</label>
                                 <input type="text" disabled class="form-control" id="ancho_mp" name="ancho_mp" value="{{ old('ancho_mp')}}">
                             </div>
                         </div>
                                 
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             <div class="form-group label-floating">
                                 <label class="control-label">Largo</label>
                                 <input type="text" disabled class="form-control" id="largo_mp" name="largo_mp" value="{{ old('ancho_mp')}}">
@@ -149,7 +149,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Etiqueta(Lote)</label>
                                 <input type="text" class="form-control" id="etiqueta_core" name="etiqueta_core" value="{{ old('etiqueta_core')}}">
@@ -183,21 +183,21 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Etiqueta(Lote)</label>
                                 <input type="text" class="form-control" id="etiqueta_leader1" name="etiqueta_leader1" value="{{ old('etiqueta_leader1')}}">
                             </div>
                         </div>
                         
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             <div class="form-group label-floating">
                                 <label class="control-label">Ancho</label>
                                 <input type="text" disabled class="form-control" id="ancho_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
                             </div>
                         </div>
                                 
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             <div class="form-group label-floating">
                                 <label class="control-label">Largo</label>
                                 <input type="text" disabled class="form-control" id="largo_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
@@ -231,21 +231,21 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Etiqueta(Lote)</label>
                                 <input type="text" class="form-control" id="etiqueta_leader2" name="etiqueta_leader2" value="{{ old('etiqueta_leader2')}}">
                             </div>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             <div class="form-group label-floating">
                                 <label class="control-label">Ancho</label>
                                 <input type="text" disabled class="form-control" id="ancho_leader2" name="ancho_leader2" value="{{ old('ancho_leader2')}}">
                             </div>
                         </div>
                                 
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             <div class="form-group label-floating">
                                 <label class="control-label">Largo</label>
                                 <input type="text" disabled class="form-control" id="largo_leader2" name="largo_leader2" value="{{ old('largo_leader2')}}">
@@ -279,21 +279,21 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Etiqueta(Lote)</label>
                                 <input type="text" class="form-control" id="etiqueta_leader3" name="etiqueta_leader3" value="{{ old('etiqueta_leader3')}}">
                             </div>
                         </div>
                         
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             <div class="form-group label-floating">
                                 <label class="control-label">Ancho</label>
                                 <input type="text" disabled class="form-control" id="ancho_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
                             </div>
                         </div>
                                 
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             <div class="form-group label-floating">
                                 <label class="control-label">Largo</label>
                                 <input type="text" disabled class="form-control" id="largo_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
@@ -328,7 +328,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Etiqueta(Lote)</label>
                                 <input type="text" class="form-control" id="etiqueta_sticker" name="etiqueta_sticker" value="{{ old('etiqueta_sticker')}}">
@@ -349,7 +349,68 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row" style="background: #D4FAEC;">
+                        <div class="col-sm-12">
+                            <div class="form-group ">
+                            </div>
+                        </div>
+                    </div>    
+
                 </div>
+
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                                
+                            <div class="col-sm-2">
+                                <div class="form-group ">
+                                    <label class="control-label">Desperdicio lado derecho</label>
+                                    <input type="number" step="0.001" class="form-control" name="desp_der" id="desp_der"  >
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group ">
+                                    <label class="control-label">Desperdicio lado izquierdo</label>
+                                    <input type="number" step="0.001" class="form-control" name="desp_izq" id="desp_izq"  >
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-2">
+                            <div class="form-group ">
+                                <label class="control-label">Desperdicio por corrida </label>
+                                <input type="number" step="0.001" disabled class="form-control" id="total_desp" name="total_desp" value="{{ old('total_desp')}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group ">
+                                <label class="control-label">Rollos por corrida </label>
+                                <input type="number" step="0.001" disabled class="form-control" id="rollos_materia_prima" name="rollos_materia_prima" value="{{ old('rollos_materia_prima')}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group ">
+                                <label class="control-label">Corridas necesarias </label>
+                                <input type="number" step="0.001" disabled class="form-control" id="corridas_materia_prima" name="corridas_materia_prima" value="{{ old('corridas_materia_prima')}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group ">
+                                <label class="control-label">Rollos Totales </label>
+                                <input type="number" step="0.001" disabled class="form-control" id="rollos_totales" name="rollos_totales" value="{{ old('rollos_totales')}}">
+                            </div>
+                        </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>                
 
                 <div class="row">
                     <div class="panel panel-primary">
@@ -476,14 +537,25 @@
     $("#id_producto_sticker").change(mostrarValores);
     $("#id_producto_sticker").click(mostrarValores);
 
-
     $("#pid_producto_pt").change(mostrarValores);
     $("#pid_producto_pt").click(mostrarValores);
+
+    $("#desp_der").change(mostrarValores);
+    $("#desp_der").click(mostrarValores);
+    $("#desp_izq").change(mostrarValores);
+    $("#desp_izq").click(mostrarValores);
+
 
     $(document).ready(mostrarValores);
 
     function mostrarValores()
     {       
+        desp_der=$("#desp_der").val();
+        desp_izq=$("#desp_izq").val();
+        total_desp=parseFloat(desp_der)+parseFloat(desp_izq);
+        $("#total_desp").val(total_desp);
+
+
         datosMateria=document.getElementById('id_producto_mp').value.split('_');
         $("#etiqueta_mp").val(datosMateria[1]);
         $("#ancho_mp").val(datosMateria[2]);
@@ -563,6 +635,35 @@
 
                 totart[cont]=parseFloat(cantidad);
                 total=total+totart[cont];
+
+                // calculos para obtener corridas...
+                //Math.trunc(13.37);    13
+                //var resultado = operador1 / operador2; 
+                //var resto = operador1 % operador2; 
+
+                amp=$("#ancho_mp").val();
+                at=parseFloat(amp)-parseFloat(total_desp);
+                rollos_materia_prima=Math.trunc(at/parseFloat(ancho));
+                $("#rollos_materia_prima").val(rollos_materia_prima);
+
+                ver_residuo=parseFloat(cantidad) % parseFloat(rollos_materia_prima);
+
+                var corridas_materia_prima=0;
+                if(ver_residuo>0){
+                 corridas_materia_prima=Math.trunc(parseFloat(cantidad)/parseFloat(rollos_materia_prima))+1;
+                }
+                else
+                {
+                  corridas_materia_prima=Math.trunc(parseFloat(cantidad)/parseFloat(rollos_materia_prima));   
+                }
+                $("#corridas_materia_prima").val(corridas_materia_prima);
+                
+                rollos_totales=parseFloat(corridas_materia_prima)*parseFloat(rollos_materia_prima);
+                $("#rollos_totales").val(rollos_totales);
+
+
+                
+
 
                 var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td> <td><input type="hidden" name="id_corrida_pt[]" value="'+corrida+'">'+corrida+'</td> <td><input type="hidden" name="id_producto_pt[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="ancho_producto_pt[]" value="'+ancho+'">'+ancho+'</td> <td><input type="hidden" name="largo_producto_pt[]" value="'+largo+'">'+largo+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt[]" value="'+cantidad+'">'+cantidad+'</td> <td>'+total_ancho+'</td>';
                 
