@@ -545,11 +545,20 @@
     $("#desp_izq").change(mostrarValores);
     $("#desp_izq").click(mostrarValores);
 
+    $("#desp_der").change(evaluar_desp);
+    $("#desp_der").click(evaluar_desp);
+    $(document).ready(desp_der);
+
+    $("#desp_izq").change(evaluar_desp);
+    $("#desp_izq").click(evaluar_desp);
+    $(document).ready(desp_izq);
 
     $(document).ready(mostrarValores);
 
     function mostrarValores()
-    {       
+    {   
+
+
         desp_der=$("#desp_der").val();
         desp_izq=$("#desp_izq").val();
         total_desp=parseFloat(desp_der)+parseFloat(desp_izq);
@@ -716,6 +725,16 @@
             $("#guardar").hide();   
         }
     } 
+
+    function evaluar_desp(){
+        if ($("#total_desp").val()>0){
+            $("#bt_add").show();
+        }
+        else
+        {
+            $("#bt_add").hide();
+        }
+    }
 
     function eliminar(index){
 
