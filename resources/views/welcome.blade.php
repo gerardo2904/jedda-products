@@ -45,10 +45,9 @@
 	                <div class="row">
 	                    <div class="col-md-8 col-md-offset-2">
 	                        <h2 class="title">Acceso rápido a productos</h2>
-	                        <h5 class="description">Se muestran los productos como si fuera una tienda.</h5>
 	                    </div>
 	                </div>
-
+<!--
 					<div class="features">
 						<div class="row">
 		                    <div class="col-md-4">
@@ -81,9 +80,9 @@
 		                </div>
 					</div>
 	            </div>
-
+-->
 	        	<div class="section text-center">
-	                <h2 class="title">Productos disponibles</h2>
+	                <!-- <h2 class="title">Productos disponibles</h2> -->
 
 					<div class="team">
 						<div class="row">
@@ -113,7 +112,7 @@
 
 	            </div>
 
-
+				<!--
 	        	<div class="section landing-section">
 	                <div class="row">
 	                    <div class="col-md-8 col-md-offset-2">
@@ -149,9 +148,9 @@
 	                            </div>
 	                        </form>
 	                    </div>
-	                </div>
+	                </div> -->
 
-	            </div>
+	            </div> 
 	        </div>
 
 		</div>

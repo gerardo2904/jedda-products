@@ -121,7 +121,7 @@
 
 
                                     <li>
-                                        <a href="{{ url('/reportes/almacen')}}">Inventario</a>
+                                        <a href="{{ url('/almproducts')}}">Inventario</a>
                                     </li>
 
                                  @endif

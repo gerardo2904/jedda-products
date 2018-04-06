@@ -74,7 +74,7 @@
                                 <label class="control-label">Materia prima</label>
                                 <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-primary">
                                     @foreach ($materiaprima as $materia)
-                                        <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}">{{ $materia->articulo }}</option>
+                                        <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}_{{ $materia->articulo }}">{{ $materia->articulo }}</option>
                                     @endforeach
                                 </select>                                  
                                 <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
@@ -98,7 +98,7 @@
                         <div class="col-sm-1">
                             <div class="form-group label-floating">
                                 <label class="control-label">Largo</label>
-                                <input type="text" disabled class="form-control" id="largo_mp" name="largo_mp" value="{{ old('ancho_mp')}}">
+                                <input type="text" disabled class="form-control" id="largo_mp" name="largo_mp" value="{{ old('largo_mp')}}">
                             </div>
                         </div>
                         
@@ -159,7 +159,7 @@
                         <div class="col-sm-2">
                             <div class="form-group label-floating">
                                 <label class="control-label">Cantidad</label>
-                                <input type="text" class="form-control" id="cantidad_core" name="cantidad_core" value="{{ old('cantidad_core')}}">
+                                <input type="text" disabled class="form-control" id="cantidad_core" name="cantidad_core" value="{{ old('cantidad_core')}}">
                             </div>
                         </div>
 
@@ -338,7 +338,7 @@
                         <div class="col-sm-2">
                             <div class="form-group label-floating">
                                 <label class="control-label">Cantidad</label>
-                                <input type="text" class="form-control" id="cantidad_sticker" name="cantidad_sticker" value="{{ old('cantidad_sticker')}}">
+                                <input type="text" disabled class="form-control" id="cantidad_sticker" name="cantidad_sticker" value="{{ old('cantidad_sticker')}}">
                             </div>
                         </div>
 
@@ -359,31 +359,50 @@
 
                 </div>
 
-                <div class="row">
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                                
+                
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="row">                
                             <div class="col-sm-2">
                                 <div class="form-group ">
                                     <label class="control-label">Desperdicio lado derecho</label>
-                                    <input type="number" step="0.001" class="form-control" name="desp_der" id="desp_der"  >
+                                    <input type="number" step="0.001" class="form-control" name="desp_der" id="desp_der" value="0.010" >
                                 </div>
                             </div>
 
                             <div class="col-sm-2">
                                 <div class="form-group ">
                                     <label class="control-label">Desperdicio lado izquierdo</label>
-                                    <input type="number" step="0.001" class="form-control" name="desp_izq" id="desp_izq"  >
+                                    <input type="number" step="0.001" class="form-control" name="desp_izq" id="desp_izq"  value="0.010" >
                                 </div>
                             </div>
                             
                             <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label">Desperdicio por corrida </label>
-                                <input type="number" step="0.001" disabled class="form-control" id="total_desp" name="total_desp" value="{{ old('total_desp')}}">
+                                <div class="form-group ">
+                                    <label class="control-label">Desperdicio por corrida </label>
+                                    <input type="number" step="0.001" disabled class="form-control" id="total_desp" name="total_desp" value="{{ old('total_desp')}}">
+                                </div>
                             </div>
-                        </div>
 
+                            <div class="col-sm-2">
+                                <div class="form-group ">
+                                    <label class="control-label">Desperdicio extra por corrida </label>
+                                    <input type="number" step="0.001" disabled class="form-control" id="total_desp_corrida" name="total_desp_corrida" value="{{ old('total_desp_corrida')}}">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group ">
+                                    <label class="control-label">Desperdicio total por corrida </label>
+                                    <input type="number" step="0.001" disabled class="form-control" id="dt_corrida" name="dt_corrida" value="{{ old('dt_corrida')}}">
+                                </div>
+                            </div>
+
+
+                        
+                    </div>
+
+                    <div class="row">                
                         <div class="col-sm-2">
                             <div class="form-group ">
                                 <label class="control-label">Rollos por corrida </label>
@@ -404,24 +423,48 @@
                                 <input type="number" step="0.001" disabled class="form-control" id="rollos_totales" name="rollos_totales" value="{{ old('rollos_totales')}}">
                             </div>
                         </div>
+                    </div>
 
-
-
-
+                    <div class="row">                
+                        <div class="col-sm-4">
+                            <div class="form-group ">
+                                <label class="control-label">Materia prima </label>
+                                <input type="text" disabled class="form-control" id="materia_prima" name="materia_prima" value="{{ old('materia_prima')}}">
+                            </div>
                         </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group ">
+                                <label class="control-label">Largo original </label>
+                                <input type="text" disabled class="form-control" id="largo_mp_original" name="largo_mp_original" value="{{ old('largo_mp_original')}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group ">
+                                <label class="control-label">Largo necesario </label>
+                                <input type="text" disabled class="form-control" id="largo_mp_necesario" name="largo_mp_necesario" value="{{ old('largo_mp_necesario')}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group ">
+                                <label class="control-label">Largo restante </label>
+                                <input type="text" disabled class="form-control" id="total_largo_restante" name="total_largo_restante" value="{{ old('total_largo_restante')}}">
+                            </div>
+                        </div>
+
+                        
+                            
+                    </div>
+
+
                     </div>
                 </div>                
 
                 <div class="row">
                     <div class="panel panel-primary">
                         <div class="panel-body">
-                                
-                            <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Corrida</label>
-                                    <input type="text" class="form-control" name="pcorrida" id="pcorrida"  >
-                                </div>
-                            </div>
 
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
@@ -437,7 +480,7 @@
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Ancho</label>
-                                    <input type="number" step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
+                                    <input type="number" disabled step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
                                 </div>
                             </div>
 
@@ -460,12 +503,10 @@
                                     <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
                                         <thead style="background-color:#A9D0F5">
                                             <th>Opciones</th>
-                                            <th>Corrida</th>
                                             <th>Artículo</th>
                                             <th>Ancho</th>
                                             <th>Largo</th>
                                             <th>Cantidad</th>
-                                            <th>Total</th>
                                         </thead>
                                         <tfoot>
                                         <tr>
@@ -474,8 +515,6 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th><h4 id="total">0.00</h4></th>
-                                            <th><div id="t1"><h4 id="subtot">0.00</h4></div></th>
                                         </tr>
                                         </tfoot>
 
@@ -564,16 +603,18 @@
         total_desp=parseFloat(desp_der)+parseFloat(desp_izq);
         $("#total_desp").val(total_desp);
 
-
         datosMateria=document.getElementById('id_producto_mp').value.split('_');
+        
         $("#etiqueta_mp").val(datosMateria[1]);
         $("#ancho_mp").val(datosMateria[2]);
         $("#largo_mp").val(datosMateria[3]);
+        $("#largo_mp_original").val(datosMateria[3]);
         $("#formula").val(datosMateria[4]);
         unidad_mp=datosMateria[5]+'²';
         $("#unidad_mp").val(unidad_mp);        
         tot_mp=$("#ancho_mp").val()*$("#largo_mp").val();
         $("#total_mp").val(tot_mp);
+        $("#materia_prima").val(datosMateria[6]);
 
 
 
@@ -670,11 +711,23 @@
                 rollos_totales=parseFloat(corridas_materia_prima)*parseFloat(rollos_materia_prima);
                 $("#rollos_totales").val(rollos_totales);
 
-
                 
+                total_desp_corrida=parseFloat($("#ancho_mp").val())-(parseFloat(rollos_materia_prima)*parseFloat(ancho))+parseFloat(total_desp);
+                $("#total_desp_corrida").val(total_desp_corrida);
+
+                dt_corrida=parseFloat(total_desp_corrida)+parseFloat(total_desp);
+                $("#dt_corrida").val(dt_corrida);
+
+                largo_mp_necesario=parseFloat(largo)*parseFloat(corridas_materia_prima);
+                $("#largo_mp_necesario").val(largo_mp_necesario);                
+
+                total_largo_restante=parseFloat($("#largo_mp").val())-largo_mp_necesario;
+                $("#total_largo_restante").val(total_largo_restante);                
+
+                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td>  <td><input type="hidden" name="id_producto_pt[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="ancho_producto_pt[]" value="'+ancho+'">'+ancho+'</td> <td><input type="hidden" name="largo_producto_pt[]" value="'+largo+'">'+largo+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt[]" value="'+cantidad+'">'+cantidad+'</td> ';
 
 
-                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td> <td><input type="hidden" name="id_corrida_pt[]" value="'+corrida+'">'+corrida+'</td> <td><input type="hidden" name="id_producto_pt[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="ancho_producto_pt[]" value="'+ancho+'">'+ancho+'</td> <td><input type="hidden" name="largo_producto_pt[]" value="'+largo+'">'+largo+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt[]" value="'+cantidad+'">'+cantidad+'</td> <td>'+total_ancho+'</td>';
+
                 
                 cont++;
                 limpiar();
@@ -737,7 +790,7 @@
     }
 
     function eliminar(index){
-
+        /*
         //subtotal[index]=total_ancho;
 
         //alert(subtot+','+subtotal[index]);
@@ -761,7 +814,7 @@
         }
         else
            document.getElementById('t1').style.color = '#000000';   
-
+        */
 
         $("#fila" + index).remove();
         evaluar();
