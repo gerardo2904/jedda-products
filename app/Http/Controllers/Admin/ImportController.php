@@ -19,24 +19,7 @@ class ImportController extends Controller
 		$path = public_path();
 		$fileName = $path.$file;
 
-    	/*Excel::load($fileName, function($reader) {
- 			foreach ($reader->get() as $product) {
-     			Product::create([
-     				'id' => $product->id,
-     				'name' => $product->name,
-     				'description' =>$product->description,
-     				'long_description' =>$product->long_description,
-     				'id_unidad_prod' =>$product->id_unidad_prod,
-     				'cantidad_prod' =>$product->cantidad_prod,
-     				'ancho_prod' =>$product->ancho_prod,
-     				'etiqueta_prod' =>$product->etiqueta_prod,
-     				'activo' =>$product->activo,
-     				'category_id' =>$product->category_id,
-     				'subcategory_id' =>$product->subcategory_id,
-     				'formula' =>$product->formula,
-     				'roll_id' =>$product->roll_id
-     			]); 
-       		} */
+    	
 
        	$datos = Excel::load($fileName,function($reader){})->get();
        	if (!empty($datos) && $datos->count()){
