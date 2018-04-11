@@ -37,7 +37,8 @@ class ImportController extends Controller
      			$producto->subcategory_id 	= $value->subcategory_id;
      			$producto->formula 			= $value->formula;
      			$producto->roll_id 			= $value->roll_id;
-     			$producto->save();
+     			//$producto->save();
+     			dd($producto);
        		}
        	}
 
