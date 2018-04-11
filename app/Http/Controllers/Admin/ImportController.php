@@ -18,7 +18,7 @@ class ImportController extends Controller
     	$file  = '/sa2.csv';
 		$path = public_path();
 		$fileName = $path.$file;
-
+		dd($fileName);
     	
 
        	$datos = Excel::load($fileName,function($reader){})->get();
@@ -37,8 +37,8 @@ class ImportController extends Controller
      			$producto->subcategory_id 	= $value->subcategory_id;
      			$producto->formula 			= $value->formula;
      			$producto->roll_id 			= $value->roll_id;
-     			//$producto->save();
-     			dd($producto);
+     			$producto->save();
+     			//dd($producto);
        		}
        	}
 
