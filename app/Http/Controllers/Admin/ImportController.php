@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Product;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use File;
+
+
+class ImportController extends Controller
+{
+    public function import()
+    {
+
+    	$file  = '/sa2.csv';
+		$path = public_path();
+		$fileName = $path.$file;
+
+    	/*Excel::load($fileName, function($reader) {
+ 			foreach ($reader->get() as $product) {
+     			Product::create([
+     				'id' => $product->id,
+     				'name' => $product->name,
+     				'description' =>$product->description,
+     				'long_description' =>$product->long_description,
+     				'id_unidad_prod' =>$product->id_unidad_prod,
+     				'cantidad_prod' =>$product->cantidad_prod,
+     				'ancho_prod' =>$product->ancho_prod,
+     				'etiqueta_prod' =>$product->etiqueta_prod,
+     				'activo' =>$product->activo,
+     				'category_id' =>$product->category_id,
+     				'subcategory_id' =>$product->subcategory_id,
+     				'formula' =>$product->formula,
+     				'roll_id' =>$product->roll_id
+     			]); 
+       		} */
+
+       	$datos = Excel::load($fileName,function($reader){})->get();
+       	if (!empty($datos) && $datos->count()){
+       		foreach($datos as $key => $value){
+       			$producto = new Product();
+       			$producto->name 			= $value->name;
+       			$producto->description 		= $value->description;
+       			$producto->long_description = $value->long_description;
+     			$producto->id_unidad_prod 	= $value->id_unidad_prod;
+     			$producto->cantidad_prod 	= $value->cantidad_prod;
+     			$producto->ancho_prod 		= $value->ancho_prod;
+     			$producto->etiqueta_prod 	= $value->etiqueta_prod;
+     			$producto->activo 			= $value->activo;
+     			$producto->category_id 		= $value->category_id;
+     			$producto->subcategory_id 	= $value->subcategory_id;
+     			$producto->formula 			= $value->formula;
+     			$producto->roll_id 			= $value->roll_id;
+     			$producto->save();
+       		}
+       	}
+
+       		 
+
+       		 //$results = $reader->all();
+       		 //$producto->dd(); 
+
+
+    }
+}

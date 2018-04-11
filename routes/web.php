@@ -33,6 +33,8 @@ Route::delete('/cart','CartDetailController@destroy');
 Route::post('/order','CartController@update');
 
 Route::get('/almproducts','Admin\AlmproductController@index');  //listado
+    
+Route::get('/import', 'Admin\ImportController@import');
 
 Route::middleware(['auth','admin'])->group(function(){
     Route::resource('compras/ingreso','IngresoController');

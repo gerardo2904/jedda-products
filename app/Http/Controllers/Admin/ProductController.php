@@ -13,12 +13,22 @@ use App\RollProduct;
 use File;
 Use Session;
 Use Redirect;
+use DB;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(10);
+        //$products = Product::paginate(10);
+
+        $products = DB::table('products as po')
+             ->join('categories as sub','po.subcategory_id','=','sub.id')
+             ->join('categories as cat','po.category_id','=','cat.id')
+             ->select('po.id','po.name','po.description','cat.name as categoria','sub.name as subcategoria','po.activo')
+             ->orderBy('po.name','desc')
+             ->paginate(10);
+
+
         return view('admin.products.index')->with(compact('products'));   // listado  
     }
     

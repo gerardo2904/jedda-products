@@ -36,11 +36,11 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <!-- <th class="text-center">#</th> -->
+                                    
                                     <th class="col-md-2 text-center">Nombre</th>
-                                    <th class="col-md-2 text-center">Etiqueta</th>
                                     <th class="col-md-4 text-center">Descripción</th>
                                     <th class="text-center">Categoría</th>
+                                    <th class="text-center">Sub Categoría</th>
                                     <th class="text-right">Activo</th>
                                     <th class="text-right">Opciones</th>
                                 </tr>
@@ -48,11 +48,11 @@
                             <tbody>
                                 @foreach ($products as $product)
                                 <tr>
-                                    <!-- <td class="text-center">{{ $product->id }}</td> -->
+                                    
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->etiqueta_prod }}</td>
                                     <td>{{ $product->description }}</td>
-                                    <td>{{ $product->category ? $product->category->name : 'General' }}</td>
+                                    <td>{{ $product->categoria ? $product->categoria : 'General' }}</td>
+                                    <td>{{ $product->subcategoria ? $product->subcategoria : 'General' }}</td>
                                     <td>{{ $product->activo ? 'Sí' : 'No' }}</td>
                                     <td class="td-actions text-right">
                                        <form method="post" action="{{ url('/admin/products/'.$product->id )}}">
