@@ -20,7 +20,7 @@ class ImportController extends Controller
 		$fileName = $path.$file;
 
        	$datos = Excel::load('sa2.csv',function($reader){})->get();
-       	dd($datos);
+       	
        	if (!empty($datos) && $datos->count()){
        		foreach($datos as $key => $value){
        			$producto = new Product();
