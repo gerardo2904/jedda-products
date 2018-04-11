@@ -18,10 +18,9 @@ class ImportController extends Controller
     	$file  = '/sa2.csv';
 		$path = public_path();
 		$fileName = $path.$file;
-		dd($fileName);
-    	
 
        	$datos = Excel::load($fileName,function($reader){})->get();
+       	dd($datos);
        	if (!empty($datos) && $datos->count()){
        		foreach($datos as $key => $value){
        			$producto = new Product();
