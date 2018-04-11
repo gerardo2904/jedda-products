@@ -36,6 +36,11 @@ Route::get('/almproducts','Admin\AlmproductController@index');  //listado
     
 Route::get('/import', 'Admin\ImportController@import');
 
+Route::get('phpinfo', function () {
+    return phpinfo();
+});
+
+
 Route::middleware(['auth','admin'])->group(function(){
     Route::resource('compras/ingreso','IngresoController');
     Route::resource('ventas/venta','VentaController');
