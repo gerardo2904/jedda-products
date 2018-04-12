@@ -28,14 +28,14 @@
                         </div>
                     @endif
                     
-	                <h2 class="title">Ordenes de venta</h2>
+	                <h2 class="title">Ordenes de salida</h2>
                     @include('ventas.venta.search')  
 
 
 
 					<div class="team">
 						<div class="row">
-                          <a href="{{url('/ventas/venta/create')}}" class="btn btn-primary btn-round">Nueva orden de venta</a>
+                          <a href="{{url('/ventas/venta/create')}}" class="btn btn-primary btn-round">Nueva orden de salida</a>
                         <table class="table">
                             <thead>
                                 <tr>

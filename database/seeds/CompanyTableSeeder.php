@@ -16,6 +16,7 @@ class CompanyTableSeeder extends Seeder
     {
 
         Company::create([
+          'id'      => 1,
            'name'     => 'Jedda TTR', 
            'rfc'      => 'JTT110309VD8', 
 		   'address'  => 'Blvd Diaz Ordaz No. 1111, int 101', 
@@ -27,12 +28,21 @@ class CompanyTableSeeder extends Seeder
            'activo'   => true,
         ]);
 
-        CompanyImage::create([
-            'image' => 'company-default.png',
+        $file  = 'jedda-logo.jpg';
+        $path = public_path() . '/images/companies';
+        $fileName = uniqid() . $file;
+        $moved = \File::copy($path.'/'.$file, $path.'/'.$fileName);
+        
+        if ($moved){
+         CompanyImage::create([
+            'image' => $fileName,
             'company_id' => 1,
+            'featured'   => 1
         ]);
+        }
 
         Company::insert([
+           'id'      => 2,
            'name'     => 'Bajasys LLC', 
            'rfc'      => '', 
        'address'  => '9923 Via de la Amistad, Suite  105', 
@@ -44,10 +54,18 @@ class CompanyTableSeeder extends Seeder
            'activo'   => true,
         ]);
 
-        CompanyImage::insert([
-            'image' => 'company-default.png',
-            'company_id' => 1,
+        $file  = 'bajasys_logo.jpg';
+        $path = public_path() . '/images/companies';
+        $fileName = uniqid() . $file;
+        $moved = \File::copy($path.'/'.$file, $path.'/'.$fileName);
+        
+        if ($moved){
+         CompanyImage::insert([
+            'image' => $fileName,
+            'company_id' => 2,
+            'featured'   => 1
         ]);
+        }
 
     }
 }

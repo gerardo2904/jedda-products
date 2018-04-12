@@ -92,10 +92,10 @@
 
 
                                     <li>
-                                        <a href="{{ url('/compras/ingreso')}}">Ordenes de compra</a>
+                                        <a href="{{ url('/compras/ingreso')}}">Ordenes de ingreso</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('/ventas/venta')}}">Ordenes de venta</a>
+                                        <a href="{{ url('/ventas/venta')}}">Ordenes de salida</a>
                                     </li>
 
                                     <hr />

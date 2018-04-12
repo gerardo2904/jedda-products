@@ -13,7 +13,7 @@
 		<div class="main main-raised">
 			<div class="container">
 		     	<div class="section">
-	                <h2 class="title text-center">Registrar nueva orden de venta</h2>
+	                <h2 class="title text-center">Registrar nueva orden de salida</h2>
                     
                     @if ($errors->any())
                         <div class="alert alert-danger">
