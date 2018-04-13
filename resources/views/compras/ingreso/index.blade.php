@@ -78,7 +78,7 @@
                                 
                             </tbody>
                         </table>
-                           
+                         
 			             {{ $ingresos->links()}}
 			                
 						</div>

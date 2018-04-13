@@ -29,6 +29,7 @@
                     @endif
                     
 	                <h2 class="title">Productos disponibles</h2>
+                    @include('admin.products.search') 
 
 					<div class="team">
 						<div class="row">
@@ -81,8 +82,9 @@
                                 
                             </tbody>
                         </table>
-                           
-			             {{ $products->links()}}
+                          
+			             {{ isset($searchText) ? $products->appends(['searchText' => $searchText])->links() : $products->links()}}
+                         
 			                
 						</div>
 					</div>

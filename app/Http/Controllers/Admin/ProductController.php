@@ -17,19 +17,21 @@ use DB;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         //$products = Product::paginate(10);
-
+        $query    = trim($request->get('searchText'));
         $products = DB::table('products as po')
              ->join('categories as sub','po.subcategory_id','=','sub.id')
              ->join('categories as cat','po.category_id','=','cat.id')
              ->select('po.id','po.name','po.description','cat.name as categoria','sub.name as subcategoria','po.activo')
+             ->where('po.name','LIKE','%'.$query.'%')
              ->orderBy('po.name','desc')
              ->paginate(10);
 
 
-        return view('admin.products.index')->with(compact('products'));   // listado  
+        //return view('admin.products.index')->with(compact('products'));   // listado  
+        return view('admin.products.index',["products" => $products, "searchText" => $query]);
     }
     
     public function create()
