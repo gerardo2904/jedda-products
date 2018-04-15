@@ -466,12 +466,12 @@
                     <div class="panel panel-primary">
                         <div class="panel-body">
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Artículo</label>
                                     <select class="form-control selectpicker " name="pid_producto_pt" id="pid_producto_pt" data-live-search="true" data-style="btn-info">
                                         @foreach ($productoterminado as $pt)
-                                            <option value="{{ $pt->id }}_{{ $pt->etiqueta_prod }}_{{ $pt->ancho_prod }}_{{ $pt->cantidad_prod }}_{{ $pt->formula }}_{{ $pt->unidad }}">{{ $pt->name }}</option>
+                                            <option value="{{ $pt->id }}_{{ $pt->etiqueta_prod }}_{{ $pt->ancho_prod }}_{{ $pt->cantidad_prod }}_{{ $pt->formula }}_{{ $pt->unidad }}">{{ $pt->articulo }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -526,6 +526,76 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+
+                <!--ESTE ES EL PANEL SI SOBRA MATERIAL DE UNA CORRIDA-->
+                <div style="display:none;" id="panel2" >
+                 <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Artículo</label>
+                                    <select class="form-control selectpicker " name="pid_producto_pt" id="pid_producto_pt" data-live-search="true" data-style="btn-info">
+                                        @foreach ($productoterminado as $pt)
+                                            <option value="{{ $pt->id }}_{{ $pt->etiqueta_prod }}_{{ $pt->ancho_prod }}_{{ $pt->cantidad_prod }}_{{ $pt->formula }}_{{ $pt->unidad }}">{{ $pt->articulo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ancho</label>
+                                    <input type="number" disabled step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Cantidad</label>
+                                    <input type="number" step="0.01" class="form-control" name="pcantidad_pt" id="pcantidad_pt"  >
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
+                                    <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                <div class="form-group label-floating">
+                                    <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+                                        <thead style="background-color:#A9D0F5">
+                                            <th>Opciones</th>
+                                            <th>Artículo</th>
+                                            <th>Ancho</th>
+                                            <th>Largo</th>
+                                            <th>Cantidad</th>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </tfoot>
+
+                                        <tbody>
+
+                                        </tbody>            
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
 
                 <div class="col-sm-6" id="guardar">
@@ -712,10 +782,12 @@
                 $("#rollos_totales").val(rollos_totales);
 
                 
-                total_desp_corrida=parseFloat($("#ancho_mp").val())-(parseFloat(rollos_materia_prima)*parseFloat(ancho))+parseFloat(total_desp);
+                total_desp_corrida=parseFloat($("#ancho_mp").val())-(parseFloat(rollos_materia_prima)*parseFloat(ancho))-parseFloat(total_desp);
+                total_desp_corrida=Number(total_desp_corrida.toFixed(3));
                 $("#total_desp_corrida").val(total_desp_corrida);
 
                 dt_corrida=parseFloat(total_desp_corrida)+parseFloat(total_desp);
+                dt_corrida=Number(dt_corrida.toFixed(3));
                 $("#dt_corrida").val(dt_corrida);
 
                 largo_mp_necesario=parseFloat(largo)*parseFloat(corridas_materia_prima);
@@ -768,6 +840,16 @@
         $("#pancho_pt").val("");
     }
 
+    function limpiar_mp(){
+        $("#total_desp_corrida").val("");      //Desperdicio estra por corrida
+        $("#dt_corrida").val("");              //Desperdicio total por corrida
+        $("#rollos_materia_prima").val("");    //Rollos por corrida
+        $("#corridas_materia_prima").val("");  //Corridas necesarias
+        $("#rollos_totales").val("");          //Rollos totales
+        $("#largo_mp_necesario").val("");      //Largo necesario
+        $("#total_largo_restante").val("");    //Largo restante  
+    }
+
     function evaluar(){
         if (total>0)
         {
@@ -776,6 +858,13 @@
         else
         {
             $("#guardar").hide();   
+        }
+
+        if($("#dt_corrida").val()>0.060){
+            $("#panel2").show();
+        }
+        else {
+            $("#panel2").hide();      
         }
     } 
 
@@ -788,6 +877,12 @@
             $("#bt_add").hide();
         }
     }
+
+    function show(bloq) {
+     obj = document.getElementById(bloq);
+     obj.style.display = (obj.style.display=='none') ? 'block' : 'none';
+    }
+
 
     function eliminar(index){
         /*
@@ -818,6 +913,7 @@
 
         $("#fila" + index).remove();
         evaluar();
+        limpiar_mp();
     }
 
 

@@ -84,7 +84,7 @@ class ProductionOrderController extends Controller
 
     	$productoterminado = DB::table('products as art')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name','art.id_unidad_prod','art.ancho_prod','art.formula','cantidad_prod','etiqueta_prod','un.name as unidad')
+    	  ->select(DB::raw('CONCAT(art.name," - ",art.description) AS articulo'), 'art.id','art.name','art.id_unidad_prod','art.cantidad_prod','art.ancho_prod','art.formula','art.etiqueta_prod','un.name as unidad')
     	  ->where('art.activo','=','1')
     	  ->where('art.roll_id','=','6')  // Es Producto terminado
     	  ->groupBy('articulo','art.id','unidad')
