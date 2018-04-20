@@ -49,7 +49,7 @@
                             </div>
                         </div>
                     
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <div class="form-group ">
                                 <label class="control-label">Cliente</label>
                                 <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-primary">
@@ -60,6 +60,14 @@
                                 <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
                             </div>
                         </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group ">
+                                <label class="control-label" style="color: rgba(0,0,0);">Orden de compra cliente</label>
+                                <input type="text" class="form-control" name="orden_cliente" value="{{ old('orden_cliente')}}">
+                            </div>
+                        </div>
+
                     </div>    
                     <div class="row" style="background: #FCE7D8;">
                         <div class="col-sm-12">
@@ -465,7 +473,7 @@
                 <div class="row">
                     <div class="panel panel-primary">
                         <div class="panel-body">
-
+                            <div id="panel1">
                             <div class="col-sm-3">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Artículo</label>
@@ -491,12 +499,46 @@
                                 </div>
                             </div>
 
-
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
                                 </div>
                             </div>
+                            </div>
+                            
+
+                            <!--ESTE ES EL PANEL SI SOBRA MATERIAL DE UNA CORRIDA-->
+
+                            <div style="display:none;" id="panel2" >
+                                <div class="col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Artículo</label>
+                                        <select class="form-control selectpicker " name="pid_producto_pt2" id="pid_producto_pt2" data-live-search="true" data-style="btn-info">
+                                            @foreach ($productoterminado as $pt)
+                                                <option value="{{ $pt->id }}_{{ $pt->etiqueta_prod }}_{{ $pt->ancho_prod }}_{{ $pt->cantidad_prod }}_{{ $pt->formula }}_{{ $pt->unidad }}">{{ $pt->articulo }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Ancho</label>
+                                        <input type="number" disabled step="0.01" class="form-control" name="pancho_prod2" id="pancho_prod2"  >
+                                        <input type="hidden" step="0.01" class="form-control" name="pcantidad_pt2" id="pcantidad_pt2" value="1" >
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group label-floating">
+                                        <button type="button" id="bt_add2" class="btn btn-primary">Agregar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
 
                             <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                 <div class="form-group label-floating">
@@ -526,76 +568,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-                <!--ESTE ES EL PANEL SI SOBRA MATERIAL DE UNA CORRIDA-->
-                <div style="display:none;" id="panel2" >
-                 <div class="row">
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-
-                            <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Artículo</label>
-                                    <select class="form-control selectpicker " name="pid_producto_pt" id="pid_producto_pt" data-live-search="true" data-style="btn-info">
-                                        @foreach ($productoterminado as $pt)
-                                            <option value="{{ $pt->id }}_{{ $pt->etiqueta_prod }}_{{ $pt->ancho_prod }}_{{ $pt->cantidad_prod }}_{{ $pt->formula }}_{{ $pt->unidad }}">{{ $pt->articulo }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Ancho</label>
-                                    <input type="number" disabled step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
-                                </div>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Cantidad</label>
-                                    <input type="number" step="0.01" class="form-control" name="pcantidad_pt" id="pcantidad_pt"  >
-                                </div>
-                            </div>
-
-
-                            <div class="col-sm-2">
-                                <div class="form-group label-floating">
-                                    <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                <div class="form-group label-floating">
-                                    <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
-                                        <thead style="background-color:#A9D0F5">
-                                            <th>Opciones</th>
-                                            <th>Artículo</th>
-                                            <th>Ancho</th>
-                                            <th>Largo</th>
-                                            <th>Cantidad</th>
-                                        </thead>
-                                        <tfoot>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        </tfoot>
-
-                                        <tbody>
-
-                                        </tbody>            
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 </div>
 
                 <div class="col-sm-6" id="guardar">
@@ -619,13 +591,37 @@
         });
     });
 
+    $(document).ready(function(){
+        $('#bt_add2').click(function(){
+            agregar2();
+        });
+    });
+
+
     var cont=0;
+    var cont2=0;
+    var caracteresfila=0;
     total=0;
     tax=0;
     subtotal=[];
     totart=[];
     subtot=0;
     gt=0;
+
+    /* Seccion para llevar control de:
+        - Cantidad de Rollos capturados de producto terminado
+        - Ancho
+        - Largo
+    */
+
+    mprollos=[];
+    anchorollo=[];
+    largorollo=[];
+    despcorrida=[];
+    rolloscorrida=[];
+
+
+
     $("#guardar").hide();
     
     $("#id_producto_mp").change(mostrarValores);
@@ -666,8 +662,6 @@
 
     function mostrarValores()
     {   
-
-
         desp_der=$("#desp_der").val();
         desp_izq=$("#desp_izq").val();
         total_desp=parseFloat(desp_der)+parseFloat(desp_izq);
@@ -735,6 +729,15 @@
         
     }
 
+    function mostrarValores2()
+    {   
+        datosProducto2=document.getElementById('pid_producto_pt2').value.split('_');
+        $("#pancho_prod2").val(datosProducto2[2]);
+
+
+
+    }
+
     function agregar(){
         datosArticulo=document.getElementById('pid_producto_pt').value.split('_');
         idarticulo=datosArticulo[0];
@@ -796,7 +799,14 @@
                 total_largo_restante=parseFloat($("#largo_mp").val())-largo_mp_necesario;
                 $("#total_largo_restante").val(total_largo_restante);                
 
-                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td>  <td><input type="hidden" name="id_producto_pt[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="ancho_producto_pt[]" value="'+ancho+'">'+ancho+'</td> <td><input type="hidden" name="largo_producto_pt[]" value="'+largo+'">'+largo+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt[]" value="'+cantidad+'">'+cantidad+'</td> ';
+                mprollos[cont]   = cantidad;
+                anchorollo[cont] = ancho*$("#rollos_materia_prima").val();
+                largorollo[cont] = $("#largo_mp").val();
+                despcorrida[cont] = ancho*$("#rollos_materia_prima").val();
+                rolloscorrida[cont] = $("#rollos_materia_prima").val();
+
+
+                var fila='<tr class="selected" id="fila'+cont+'"><td><button  id="b'+cont+'" type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td>  <td><input type="hidden" name="id_producto_pt[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="ancho_producto_pt[]" value="'+ancho+'">'+ancho+'</td> <td><input type="hidden" name="largo_producto_pt[]" value="'+largo+'">'+largo+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt[]" value="'+cantidad+'">'+cantidad+'</td> ';
 
 
 
@@ -811,6 +821,7 @@
                 $("#total").html(total);
                 evaluar();
                 $('#detalles').append(fila);
+                $("#panel1").hide();
 
                 if(parseFloat(subtot) > parseFloat($("#ancho_mp").val()))
                 {
@@ -835,6 +846,69 @@
     }
 
 
+function agregar2(){
+        datosArticulo2=document.getElementById('pid_producto_pt2').value.split('_');
+        idarticulo2=datosArticulo2[0];
+        ancho2=datosArticulo2[2];
+        largo2=datosArticulo2[3];
+        
+        articulo2=$("#pid_producto_pt2 option:selected").text();
+        cantidad2=$("#pcantidad_pt2").val();
+        total_ancho2=cantidad2*ancho2;
+        //ancho=$("#pancho_pt").val();
+
+ 
+                
+        if(idarticulo2!="" && cantidad2!="" && cantidad2>0)
+        {
+                                                
+                total_desp_corrida=parseFloat($("#total_desp_corrida").val())-parseFloat(ancho2);
+                total_desp_corrida=Number(total_desp_corrida.toFixed(3));
+                $("#total_desp_corrida").val(total_desp_corrida);
+
+                dt_corrida=parseFloat($("#dt_corrida").val())-parseFloat(ancho2);
+                dt_corrida=Number(dt_corrida.toFixed(3));
+                $("#dt_corrida").val(dt_corrida);
+
+                cantidad2=$("#corridas_materia_prima").val()*1;
+                rollos_totales=parseFloat($("#rollos_totales").val())+parseFloat(cantidad2);
+                $("#rollos_totales").val(rollos_totales);
+
+                t=parseInt($("#rollos_materia_prima").val())+1;
+                $("#rollos_materia_prima").val(t);
+
+                
+                mprollos[cont]   = cantidad2;
+                anchorollo[cont] = parseFloat(ancho2);
+                largorollo[cont] = $("#largo_mp").val();
+                despcorrida[cont] = parseFloat(ancho2);
+                rolloscorrida[cont] = 1;
+
+
+                var fila='<tr class="selected" id="fila'+cont+'"><td><button id="b'+cont+'" type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td>  <td><input type="hidden" name="id_producto_pt2[]" value="'+idarticulo2+'">'+articulo2+'</td> <td><input type="hidden" name="ancho_producto_pt2[]" value="'+ancho2+'">'+ancho2+'</td> <td><input type="hidden" name="largo_producto_pt2[]" value="'+largo2+'">'+largo2+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt2[]" value="'+cantidad2+'">'+cantidad2+'</td> ';
+
+                caracteresfila=fila.length;
+                
+
+                cont++;
+                limpiar();
+                
+                //alert(v1+" "+subtot);
+                
+                
+                evaluar();
+                $('#detalles').append(fila);
+                $("#panel2").hide();
+         
+        }
+        else
+        {
+            alert("Error al ingresar la información del producto, favor de revisar.");
+        }
+    }
+
+
+
     function limpiar(){
         $("#pcantidad_pt").val("");
         $("#pancho_pt").val("");
@@ -851,6 +925,16 @@
     }
 
     function evaluar(){
+        if (cont>0)
+        {
+            $("#b0").hide();
+        }
+        else
+        {
+            $("#b0").show();
+        }
+
+
         if (total>0)
         {
             $("#guardar").show();
@@ -862,10 +946,21 @@
 
         if($("#dt_corrida").val()>0.060){
             $("#panel2").show();
+            $("#pid_producto_pt2").change(mostrarValores2);
+            $("#pid_producto_pt2").click(mostrarValores2);
         }
         else {
-            $("#panel2").hide();      
+            
+            if(caracteresfila>0){
+                $("#panel2").show();      
+            }
+            else 
+            {
+                $("#panel2").hide();
+            }
         }
+
+
     } 
 
     function evaluar_desp(){
@@ -909,9 +1004,85 @@
         }
         else
            document.getElementById('t1').style.color = '#000000';   
-        */
+        
 
-        $("#fila" + index).remove();
+        mprollos[cont]   = rollos_totales;
+        anchorollo[cont] = ancho*$("#rollos_materia_prima").val();
+        largorollo[cont] = $("#largo_mp").val();
+        
+       
+
+        alert("index = "+index);
+        alert("Rollos totales = "+$("#rollos_totales").val());
+        alert("Numero de rollos a restar = "+mprollos[index]);
+        alert("Desperdicio extra por corrida = "+$("#total_desp_corrida").val());
+        alert("Rollos = "+mprollos[index]);
+        alert("Desperdicio que se sumara = "+despcorrida[index]);
+
+         
+         */
+
+
+        if (index>0)
+        {
+            tlr=$("#total_largo_restante").val(); 
+            $("#total_largo_restante").val(tlr); 
+            
+            rt=$("#rollos_totales").val()-mprollos[index]; 
+            $("#rollos_totales").val(rt); 
+
+            dec=parseFloat($("#total_desp_corrida").val())+parseFloat(despcorrida[index]);
+            $("#total_desp_corrida").val(dec); 
+
+            dc=parseFloat($("#dt_corrida").val())+parseFloat(despcorrida[index]); 
+            $("#dt_corrida").val(dc); 
+
+            rc=parseInt($("#rollos_materia_prima").val())-rolloscorrida[index];
+            $("#rollos_materia_prima").val(rc);
+            
+
+            $("#fila" + index).remove();     
+
+            evaluar();
+
+            $("#panel1").hide();      
+            $("#panel2").show(); 
+            $("#b0").hide();
+
+        }
+        else 
+        {
+            tlr=$("#total_largo_restante").val()-largorollo[index];
+            $("#total_largo_restante").val(tlr);
+            
+            rt=$("#rollos_totales").val()-mprollos[index]; 
+            $("#rollos_totales").val(rt); 
+
+            dec=parseFloat($("#total_desp_corrida").val())+parseFloat(despcorrida[index]); 
+            $("#total_desp_corrida").val(dec); 
+
+            dc=parseFloat($("#dt_corrida").val())+parseFloat(despcorrida[index]); 
+            $("#dt_corrida").val(dc); 
+
+            rc=parseInt($("#rollos_materia_prima").val())-rolloscorrida[index];
+            $("#rollos_materia_prima").val(rc);
+
+            $("#fila" + index).remove();
+            evaluar();
+
+            $("#panel1").show();      
+            $("#panel2").hide();      
+            $("#b0").show();
+
+            limpiar_mp();
+        }
+
+        
+    }
+
+    function eliminar2(index){
+
+        $("#fila2" + index).remove();
         evaluar();
         limpiar_mp();
     }
