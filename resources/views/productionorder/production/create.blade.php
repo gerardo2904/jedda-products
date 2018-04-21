@@ -889,8 +889,9 @@ function agregar2(){
 
                 caracteresfila=fila.length;
                 
+                if(cont == 0)
+                    cont++;
 
-                cont++;
                 limpiar();
                 
                 //alert(v1+" "+subtot);
@@ -925,17 +926,9 @@ function agregar2(){
     }
 
     function evaluar(){
-        if (cont>0)
-        {
-            $("#b0").hide();
-        }
-        else
-        {
-            $("#b0").show();
-        }
+        
 
-
-        if (total>0)
+        if (total>0 && $("#dt_corrida").val()<0.060)
         {
             $("#guardar").show();
         }
@@ -952,12 +945,21 @@ function agregar2(){
         else {
             
             if(caracteresfila>0){
-                $("#panel2").show();      
+                $("#panel2").show();    
             }
             else 
             {
                 $("#panel2").hide();
             }
+        }
+        
+        if(cont == 0)
+        {
+            $("#b0").show();
+        }
+        else
+        {
+            $("#b0").hide();
         }
 
 
@@ -1042,12 +1044,13 @@ function agregar2(){
             
 
             $("#fila" + index).remove();     
+            cont--;
 
             evaluar();
 
             $("#panel1").hide();      
             $("#panel2").show(); 
-            $("#b0").hide();
+            
 
         }
         else 
@@ -1068,11 +1071,13 @@ function agregar2(){
             $("#rollos_materia_prima").val(rc);
 
             $("#fila" + index).remove();
+            
+            caracteresfila=0;
             evaluar();
 
             $("#panel1").show();      
             $("#panel2").hide();      
-            $("#b0").show();
+            
 
             limpiar_mp();
         }
