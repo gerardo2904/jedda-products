@@ -22,41 +22,44 @@
                     @endif
 					
                     <ul class="nav nav-pills nav-pills-primary" role="tablist">
-                        <li class="active">
-                            <a href="#dashboard" role="tab" data-toggle="tab">
+                        <li class="nav-item ">
+                            <a class="nav-link active" href="#pill1" role="tab" data-toggle="tab">
                                 <i class="material-icons">dashboard</i>
                                 Carrito de compras
                             </a>
                         </li>
                         
-                        <li>
-                            <a href="#tasks" role="tab" data-toggle="tab">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="#pill2" role="tab" data-toggle="tab">
                                 <i class="material-icons">list</i>
                                 Pedidos realizados
                             </a>
                         </li>
                     </ul>
-					<hr>
-					<p>Tu carrito de compras presenta {{ auth()->user()->cart->details->count() }} productos.</p>
-					<table class="table">
+
+                    <div class="tab-content tab-space">
+                        <div class="tab-pane active" id="pill1">
+					       <hr>
+					       <p>Tu carrito de compras presenta {{ auth()->user()->cart->details->count() }} productos.</p>
+					       <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Nombre</th>
-                                    <th>Precio</th>
-									<th>Cantidad</th>
-									<th>Subtotal</th>
-                                    <th>Opciones</th>
+                                  <th class="text-center">#</th>
+                                  <th class="text-center">Nombre</th>
+                                  <th>Precio</th>
+								  <th>Cantidad</th>
+								  <th>Subtotal</th>
+                                  <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (auth()->user()->cart->details as $detail)
-                                <tr>
+                                    <tr>
                                     <td class="text-center">
 										<img src="{{ $detail->product->featured_image_url }}" height="50">
 									</td>
                                     <td>
-									<a href="{{ url('/products/'.$detail->product_id) }}" target="_blank">{{ $detail->product->name }}</a>
+									   <a href="{{ url('/products/'.$detail->product_id) }}" target="_blank">{{ $detail->product->name }}</a>
 									</td>
                                     <td>$ {{ $detail->product->price }}</td>
 									<td>{{ $detail->quantity }}</td>
@@ -77,11 +80,20 @@
                                             </button>
                                         </form>
                                     </td>
-                                </tr>
+                                    </tr>
                                 @endforeach
                                 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    <div class="tab-pane" id="pill2">
+                        <h1>PRUEBA</h1>
+                    </div>
+
+                </div>
+
+
 					<div class="text-center">
 						<form method="post" action="{{ url('/order') }}">
 							{{ csrf_field() }}

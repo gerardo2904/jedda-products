@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/{id}/products','ProductionOrderController@byProduction');
+Route::get('/{id}/{largo}/{ancho}/products2','ProductionOrderController@byMateria');
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

@@ -33,6 +33,48 @@ class ProductionOrderController extends Controller
 
     }
 
+    public function byProduction($id) {
+
+        $mp=Product::where('id',$id)->first();
+        $mpformula=$mp->formula;
+        
+
+        $pt = DB::table('products as art')
+        ->join('units as un','art.id_unidad_prod','=','un.id')
+          ->select(DB::raw('CONCAT(art.name," - ",art.description) AS articulo'), 'art.id','art.name','art.id_unidad_prod','art.cantidad_prod','art.ancho_prod','art.formula','art.etiqueta_prod','un.name as unidad')
+          ->where('art.activo','=','1')
+          ->where('art.roll_id','=','6')  // Es Producto terminado
+          ->where('art.formula', '=', $mpformula)
+          ->groupBy('articulo','art.id','art.formula', 'unidad')
+          ->get();
+
+        //return $mp; 
+        //return Product::where('id',$id)->get();
+          return $pt;
+    }
+
+    public function byMateria($id, $largo, $ancho) {
+
+        $mp=Product::where('id',$id)->first();
+        $mpformula=$mp->formula;
+        $mplargo=$largo;
+        $mpancho=$ancho;
+        
+
+        $pt = DB::table('products as art')
+        ->join('units as un','art.id_unidad_prod','=','un.id')
+          ->select(DB::raw('CONCAT(art.name," - ",art.description) AS articulo'), 'art.id','art.name','art.id_unidad_prod','art.cantidad_prod','art.ancho_prod','art.formula','art.etiqueta_prod','un.name as unidad')
+          ->where('art.activo','=','1')
+          ->where('art.roll_id','=','6')  // Es Producto terminado
+          ->where('art.formula', '=', $mpformula)
+          ->where('art.cantidad_prod', '=', $mplargo)
+            ->where('art.ancho_prod', '<=', $mpancho)
+          ->groupBy('articulo','art.id','art.formula', 'unidad')
+          ->get();
+
+          return $pt;
+    }
+
     public function index (Request $request)
     {
     	if ($request)

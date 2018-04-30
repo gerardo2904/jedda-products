@@ -30,544 +30,560 @@
                     </ul>
                 </div>
             @endif
-                    
+            
+            <br>        
+            
             <form method="post" action="{{ url('productionorder/production')}}">
             {{ csrf_field() }}
-
-                    <div class="row" style="background: #FCE7D8;">
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label" style="color: rgba(0,0,0);">Orden de Producción</label>
-                                <input type="text" class="form-control" name="orden" value="{{ old('orden')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label">Fecha</label>
-                                <input class="datepicker form-control" type="text" name="fecha_hora" id="fecha_hora" value="{{ old('fecha_hora')}}"/>
-                            </div>
-                        </div>
-                    
-                        <div class="col-sm-6">
-                            <div class="form-group ">
-                                <label class="control-label">Cliente</label>
-                                <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-primary">
-                                    @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label" style="color: rgba(0,0,0);">Orden de compra cliente</label>
-                                <input type="text" class="form-control" name="orden_cliente" value="{{ old('orden_cliente')}}">
-                            </div>
-                        </div>
-
-                    </div>    
-                    <div class="row" style="background: #FCE7D8;">
-                        <div class="col-sm-12">
-                            <div class="form-group ">
-                            </div>
-                        </div>
-                    </div>    
-
-                    <div class="row" style="background: #D4FAEC;">
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Materia prima</label>
-                                <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-primary">
-                                    @foreach ($materiaprima as $materia)
-                                        <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}_{{ $materia->articulo }}">{{ $materia->articulo }}</option>
-                                    @endforeach
-                                </select>                                  
-                                <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Etiqueta(Lote)</label>
-                                <input type="text" class="form-control" id="etiqueta_mp" name="etiqueta_mp" value="{{ old('etiqueta_mp')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Ancho</label>
-                                <input type="text" disabled class="form-control" id="ancho_mp" name="ancho_mp" value="{{ old('ancho_mp')}}">
-                            </div>
-                        </div>
-                                
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Largo</label>
-                                <input type="text" disabled class="form-control" id="largo_mp" name="largo_mp" value="{{ old('largo_mp')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label"> </label>
-                                <input type="text" disabled class="form-control" id="total_mp" name="total_mp" value="{{ old('total_mp')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label"> </label>
-                                <input type="text" disabled class="form-control" id="unidad_mp" name="unidad_mp" value="{{ old('unidad_mp')}}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="background: #D4FAEC;">
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                            <label class="control-label">Dirección</label>
-                            <select class="form-control selectpicker" name="direction" id="direction" data-live-search="true" data-style="btn-primary">
-                                    <option value="In">In</option>
-                                    <option value="Out">Out</option>
-                                </select>      
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label">Formula</label>
-                                <input type="text" disabled class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
-                            </div>
-                        </div>
-                    </div>
-
-                        
-                    <div class="row" style="background: #D4FAEC;">
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Core</label>
-                                <select class="form-control selectpicker" name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-primary">
-                                    @foreach ($core as $co)
-                                        <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}">{{ $co->articulo }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Etiqueta(Lote)</label>
-                                <input type="text" class="form-control" id="etiqueta_core" name="etiqueta_core" value="{{ old('etiqueta_core')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Cantidad</label>
-                                <input type="text" disabled class="form-control" id="cantidad_core" name="cantidad_core" value="{{ old('cantidad_core')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label"> </label>
-                                <input type="text" disabled class="form-control" id="unidad_core" name="unidad_core" value="{{ old('unidad_core')}}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="background: #D4FAEC;">
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Leader Inicio</label>
-                                <select class="form-control selectpicker" name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
-                                    @foreach ($leader as $le)
-                                        <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Etiqueta(Lote)</label>
-                                <input type="text" class="form-control" id="etiqueta_leader1" name="etiqueta_leader1" value="{{ old('etiqueta_leader1')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Ancho</label>
-                                <input type="text" disabled class="form-control" id="ancho_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
-                            </div>
-                        </div>
-                                
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Largo</label>
-                                <input type="text" disabled class="form-control" id="largo_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label"> </label>
-                                <input type="text" disabled class="form-control" id="total_leader1" name="total_leader1" value="{{ old('total_leader1')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label"> </label>
-                                <input type="text" disabled class="form-control" id="unidad_leader1" name="unidad_leader1" value="{{ old('unidad_leader1')}}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="background: #D4FAEC;">
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Leader Final</label>
-                                <select class="form-control selectpicker" name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-primary">
-                                    @foreach ($leader as $le)
-                                        <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}">{{ $le->articulo }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Etiqueta(Lote)</label>
-                                <input type="text" class="form-control" id="etiqueta_leader2" name="etiqueta_leader2" value="{{ old('etiqueta_leader2')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Ancho</label>
-                                <input type="text" disabled class="form-control" id="ancho_leader2" name="ancho_leader2" value="{{ old('ancho_leader2')}}">
-                            </div>
-                        </div>
-                                
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Largo</label>
-                                <input type="text" disabled class="form-control" id="largo_leader2" name="largo_leader2" value="{{ old('largo_leader2')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label"> </label>
-                                <input type="text" disabled class="form-control" id="total_leader2" name="total_leader2" value="{{ old('total_leader2')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label"> </label>
-                                <input type="text" disabled class="form-control" id="unidad_leader2" name="unidad_leader2" value="{{ old('unidad_leader2')}}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="background: #D4FAEC;">
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Leader Envoltura</label>
-                                <select class="form-control selectpicker" name="id_producto_leader3" id="id_producto_leader3" data-live-search="true" data-style="btn-primary">
-                                    @foreach ($leader as $le)
-                                        <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Etiqueta(Lote)</label>
-                                <input type="text" class="form-control" id="etiqueta_leader3" name="etiqueta_leader3" value="{{ old('etiqueta_leader3')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Ancho</label>
-                                <input type="text" disabled class="form-control" id="ancho_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
-                            </div>
-                        </div>
-                                
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Largo</label>
-                                <input type="text" disabled class="form-control" id="largo_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label"> </label>
-                                <input type="text" disabled class="form-control" id="total_leader3" name="total_leader3" value="{{ old('total_leader3')}}">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label"> </label>
-                                <input type="text" disabled class="form-control" id="unidad_leader3" name="unidad_leader3" value="{{ old('unidad_leader3')}}">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row" style="background: #D4FAEC;">
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Etiqueta</label>
-                                <select class="form-control selectpicker" name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-primary">
-                                    @foreach ($sticker as $sti)
-                                        <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}">{{ $sti->articulo }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Etiqueta(Lote)</label>
-                                <input type="text" class="form-control" id="etiqueta_sticker" name="etiqueta_sticker" value="{{ old('etiqueta_sticker')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group label-floating">
-                                <label class="control-label">Cantidad</label>
-                                <input type="text" disabled class="form-control" id="cantidad_sticker" name="cantidad_sticker" value="{{ old('cantidad_sticker')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label"> </label>
-                                <input type="text" disabled class="form-control" id="unidad_sticker" name="unidad_sticker" value="{{ old('unidad_sticker')}}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="background: #D4FAEC;">
-                        <div class="col-sm-12">
-                            <div class="form-group ">
-                            </div>
-                        </div>
-                    </div>    
-
-                </div>
-
                 
-                <div class="panel panel-primary">
-                    <div class="panel-body">
-                        <div class="row">                
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label">Desperdicio lado derecho</label>
-                                    <input type="number" step="0.001" class="form-control" name="desp_der" id="desp_der" value="0.010" >
-                                </div>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label">Desperdicio lado izquierdo</label>
-                                    <input type="number" step="0.001" class="form-control" name="desp_izq" id="desp_izq"  value="0.010" >
-                                </div>
-                            </div>
-                            
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label">Desperdicio por corrida </label>
-                                    <input type="number" step="0.001" disabled class="form-control" id="total_desp" name="total_desp" value="{{ old('total_desp')}}">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label">Desperdicio extra por corrida </label>
-                                    <input type="number" step="0.001" disabled class="form-control" id="total_desp_corrida" name="total_desp_corrida" value="{{ old('total_desp_corrida')}}">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label">Desperdicio total por corrida </label>
-                                    <input type="number" step="0.001" disabled class="form-control" id="dt_corrida" name="dt_corrida" value="{{ old('dt_corrida')}}">
-                                </div>
-                            </div>
-
-
+                <ul class="nav nav-pills nav-pills-primary">
+                    <li class="nav-item active"><a class="nav-link active" href="#pill1" data-toggle="tab">Información Principal</a></li>
                         
+                    <li class="nav-item"><a class="nav-link" href="#pill2" data-toggle="tab">Materia prima</a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="#pill3" data-toggle="tab">Calculos y productos</a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="#pill4" data-toggle="tab">Resumen</a></li>                    
+
+                </ul>
+
+                <div class="tab-content tab-space">
+                    <div class="tab-pane active" id="pill1">
+
+                        <div class="row" style="background: #FCE7D8;">
+                            <div class="col-sm-2">
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Orden de Producción</label>
+                                    <input type="text" class="form-control" name="orden" value="{{ old('orden')}}">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Fecha</label>
+                                    <input class="datepicker form-control" type="text" name="fecha_hora" id="fecha_hora" value="{{ old('fecha_hora')}}"/>
+                                </div>
+                            </div>
+                    
+                            <div class="col-sm-6">
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Cliente</label>
+                                    <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($clientes as $cliente)
+                                            <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Orden de compra cliente</label>
+                                    <input type="text" class="form-control" name="orden_cliente" value="{{ old('orden_cliente')}}">
+                                </div>
+                            </div>
+                        </div>    
+
+                        <div class="row" style="background: #FCE7D8;">
+                            <div class="col-sm-12">
+                                <div class="form-group ">
+                                </div>
+                            </div>
+                        </div>    
+
                     </div>
 
-                    <div class="row">                
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label">Rollos por corrida </label>
-                                <input type="number" step="0.001" disabled class="form-control" id="rollos_materia_prima" name="rollos_materia_prima" value="{{ old('rollos_materia_prima')}}">
-                            </div>
-                        </div>
+                    <div class="tab-pane" id="pill2">
 
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label">Corridas necesarias </label>
-                                <input type="number" step="0.001" disabled class="form-control" id="corridas_materia_prima" name="corridas_materia_prima" value="{{ old('corridas_materia_prima')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label">Rollos Totales </label>
-                                <input type="number" step="0.001" disabled class="form-control" id="rollos_totales" name="rollos_totales" value="{{ old('rollos_totales')}}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">                
-                        <div class="col-sm-4">
-                            <div class="form-group ">
-                                <label class="control-label">Materia prima </label>
-                                <input type="text" disabled class="form-control" id="materia_prima" name="materia_prima" value="{{ old('materia_prima')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label">Largo original </label>
-                                <input type="text" disabled class="form-control" id="largo_mp_original" name="largo_mp_original" value="{{ old('largo_mp_original')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label">Largo necesario </label>
-                                <input type="text" disabled class="form-control" id="largo_mp_necesario" name="largo_mp_necesario" value="{{ old('largo_mp_necesario')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group ">
-                                <label class="control-label">Largo restante </label>
-                                <input type="text" disabled class="form-control" id="total_largo_restante" name="total_largo_restante" value="{{ old('total_largo_restante')}}">
-                            </div>
-                        </div>
-
-                        
-                            
-                    </div>
-
-
-                    </div>
-                </div>                
-
-                <div class="row">
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                            <div id="panel1">
+                        <div class="row" style="background: #D4FAEC;">
                             <div class="col-sm-3">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Artículo</label>
-                                    <select class="form-control selectpicker " name="pid_producto_pt" id="pid_producto_pt" data-live-search="true" data-style="btn-info">
-                                        @foreach ($productoterminado as $pt)
-                                            <option value="{{ $pt->id }}_{{ $pt->etiqueta_prod }}_{{ $pt->ancho_prod }}_{{ $pt->cantidad_prod }}_{{ $pt->formula }}_{{ $pt->unidad }}">{{ $pt->articulo }}</option>
+                                    <label class="control-label">Materia prima</label>
+                                    <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($materiaprima as $materia)
+                                            <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}_{{ $materia->articulo }}">{{ $materia->articulo }}</option>
+                                        @endforeach
+                                    </select>                                  
+                                    <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Etiqueta(Lote)</label>
+                                    <input type="text" class="form-control" id="etiqueta_mp" name="etiqueta_mp" value="{{ old('etiqueta_mp')}}">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ancho</label>
+                                    <input type="text" disabled class="form-control" id="ancho_mp" name="ancho_mp" value="{{ old('ancho_mp')}}">
+                                </div>
+                            </div>
+                                
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Largo</label>
+                                    <input type="text" disabled class="form-control" id="largo_mp" name="largo_mp" value="{{ old('largo_mp')}}">
+                                </div>
+                            </div>
+                        
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"> </label>
+                                    <input type="text" disabled class="form-control" id="total_mp" name="total_mp" value="{{ old('total_mp')}}">
+                                </div>
+                            </div>
+                        
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"> </label>
+                                    <input type="text" disabled class="form-control" id="unidad_mp" name="unidad_mp" value="{{ old('unidad_mp')}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="background: #D4FAEC;">
+                            <div class="col-sm-2">
+                                <div class="form-group ">
+                                    <label class="control-label">Dirección</label>
+                                    <select class="form-control selectpicker" name="direction" id="direction" data-live-search="true" data-style="btn-primary">
+                                        <option value="In">In</option>
+                                        <option value="Out">Out</option>
+                                    </select>      
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group ">
+                                    <label class="control-label">Formula</label>
+                                    <input type="text" disabled class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row" style="background: #D4FAEC;">
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Core</label>
+                                    <select class="form-control selectpicker" name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($core as $co)
+                                            <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}">{{ $co->articulo }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Ancho</label>
-                                    <input type="number" disabled step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
+                                    <label class="control-label">Etiqueta(Lote)</label>
+                                    <input type="text" class="form-control" id="etiqueta_core" name="etiqueta_core" value="{{ old('etiqueta_core')}}">
                                 </div>
                             </div>
 
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Cantidad</label>
-                                    <input type="number" step="0.01" class="form-control" name="pcantidad_pt" id="pcantidad_pt"  >
+                                    <input type="text" disabled class="form-control" id="cantidad_core" name="cantidad_core" value="{{ old('cantidad_core')}}">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"> </label>
+                                    <input type="text" disabled class="form-control" id="unidad_core" name="unidad_core" value="{{ old('unidad_core')}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="background: #D4FAEC;">
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Leader Inicio</label>
+                                    <select class="form-control selectpicker" name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($leader as $le)
+                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Etiqueta(Lote)</label>
+                                    <input type="text" class="form-control" id="etiqueta_leader1" name="etiqueta_leader1" value="{{ old('etiqueta_leader1')}}">
+                                </div>
+                            </div>
+                        
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ancho</label>
+                                    <input type="text" disabled class="form-control" id="ancho_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
+                                </div>
+                            </div>
+                                
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Largo</label>
+                                    <input type="text" disabled class="form-control" id="largo_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
+                                </div>
+                            </div>
+                        
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"> </label>
+                                    <input type="text" disabled class="form-control" id="total_leader1" name="total_leader1" value="{{ old('total_leader1')}}">
+                                </div>
+                            </div>
+                        
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"> </label>
+                                    <input type="text" disabled class="form-control" id="unidad_leader1" name="unidad_leader1" value="{{ old('unidad_leader1')}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="background: #D4FAEC;">
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Leader Final</label>
+                                    <select class="form-control selectpicker" name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($leader as $le)
+                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}">{{ $le->articulo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Etiqueta(Lote)</label>
+                                    <input type="text" class="form-control" id="etiqueta_leader2" name="etiqueta_leader2" value="{{ old('etiqueta_leader2')}}">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ancho</label>
+                                    <input type="text" disabled class="form-control" id="ancho_leader2" name="ancho_leader2" value="{{ old('ancho_leader2')}}">
+                                </div>
+                            </div>
+                                
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Largo</label>
+                                    <input type="text" disabled class="form-control" id="largo_leader2" name="largo_leader2" value="{{ old('largo_leader2')}}">
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"> </label>
+                                    <input type="text" disabled class="form-control" id="total_leader2" name="total_leader2" value="{{ old('total_leader2')}}">
+                                </div>
+                            </div>
+                        
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"> </label>
+                                    <input type="text" disabled class="form-control" id="unidad_leader2" name="unidad_leader2" value="{{ old('unidad_leader2')}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="background: #D4FAEC;">
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Leader Envoltura</label>
+                                    <select class="form-control selectpicker" name="id_producto_leader3" id="id_producto_leader3" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($leader as $le)
+                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Etiqueta(Lote)</label>
+                                    <input type="text" class="form-control" id="etiqueta_leader3" name="etiqueta_leader3" value="{{ old('etiqueta_leader3')}}">
+                                </div>
+                            </div>
+                        
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ancho</label>
+                                    <input type="text" disabled class="form-control" id="ancho_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
+                                </div>
+                            </div>
+                                    
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Largo</label>
+                                    <input type="text" disabled class="form-control" id="largo_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-2">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"> </label>
+                                    <input type="text" disabled class="form-control" id="total_leader3" name="total_leader3" value="{{ old('total_leader3')}}">
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"> </label>
+                                    <input type="text" disabled class="form-control" id="unidad_leader3" name="unidad_leader3" value="{{ old('unidad_leader3')}}">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="background: #D4FAEC;">
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Etiqueta</label>
+                                    <select class="form-control selectpicker" name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-primary">
+                                        @foreach ($sticker as $sti)
+                                            <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}">{{ $sti->articulo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Etiqueta(Lote)</label>
+                                    <input type="text" class="form-control" id="etiqueta_sticker" name="etiqueta_sticker" value="{{ old('etiqueta_sticker')}}">
                                 </div>
                             </div>
 
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
-                                    <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
+                                    <label class="control-label">Cantidad</label>
+                                    <input type="text" disabled class="form-control" id="cantidad_sticker" name="cantidad_sticker" value="{{ old('cantidad_sticker')}}">
                                 </div>
                             </div>
+
+                            <div class="col-sm-1">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"> </label>
+                                    <input type="text" disabled class="form-control" id="unidad_sticker" name="unidad_sticker" value="{{ old('unidad_sticker')}}">
+                                </div>
                             </div>
-                            
+                        </div>
+
+                        <div class="row" style="background: #D4FAEC;">
+                            <div class="col-sm-12">
+                                <div class="form-group ">
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                
+
+                    <div class="tab-pane" id="pill3">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <div class="row">                
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Desperdicio lado derecho</label>
+                                        <input type="number" step="0.001" class="form-control" name="desp_der" id="desp_der" value="0.010" >
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Desperdicio lado izquierdo</label>
+                                        <input type="number" step="0.001" class="form-control" name="desp_izq" id="desp_izq"  value="0.010" >
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Desperdicio por corrida </label>
+                                        <input type="number" step="0.001" disabled class="form-control" id="total_desp" name="total_desp" value="{{ old('total_desp')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Desperdicio extra por corrida </label>
+                                        <input type="number" step="0.001" disabled class="form-control" id="total_desp_corrida" name="total_desp_corrida" value="{{ old('total_desp_corrida')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Desperdicio total por corrida </label>
+                                        <input type="number" step="0.001" disabled class="form-control" id="dt_corrida" name="dt_corrida" value="{{ old('dt_corrida')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">                
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Rollos por corrida </label>
+                                        <input type="number" step="0.001" disabled class="form-control" id="rollos_materia_prima" name="rollos_materia_prima" value="{{ old('rollos_materia_prima')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Corridas necesarias </label>
+                                        <input type="number" step="0.001" disabled class="form-control" id="corridas_materia_prima" name="corridas_materia_prima" value="{{ old('corridas_materia_prima')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Rollos Totales </label>
+                                        <input type="number" step="0.001" disabled class="form-control" id="rollos_totales" name="rollos_totales" value="{{ old('rollos_totales')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">                
+                                <div class="col-sm-4">
+                                    <div class="form-group ">
+                                        <label class="control-label">Materia prima </label>
+                                        <input type="text" disabled class="form-control" id="materia_prima" name="materia_prima" value="{{ old('materia_prima')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo original </label>
+                                        <input type="text" disabled class="form-control" id="largo_mp_original" name="largo_mp_original" value="{{ old('largo_mp_original')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo necesario </label>
+                                        <input type="text" disabled class="form-control" id="largo_mp_necesario" name="largo_mp_necesario" value="{{ old('largo_mp_necesario')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo restante </label>
+                                        <input type="text" disabled class="form-control" id="total_largo_restante" name="total_largo_restante" value="{{ old('total_largo_restante')}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                    
+                        <div class="row">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div id="panel1">
+                                        <div class="col-sm-3">
+                                            <div class="form-group" >
+                                                <label class="control-label" style="color: rgba(0,0,0);">Artículo</label>
+                                                <select class="form-control " name="pid_producto_pt" id="pid_producto_pt" data-live-search="true" data-style="btn-info">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
+                                                <input type="number" disabled step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
+                                                <input type="number" step="0.01" class="form-control" name="pcantidad_pt" id="pcantidad_pt"  >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group label-floating">
+                                                <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                             
 
                             <!--ESTE ES EL PANEL SI SOBRA MATERIAL DE UNA CORRIDA-->
 
-                            <div style="display:none;" id="panel2" >
-                                <div class="col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Artículo</label>
-                                        <select class="form-control selectpicker " name="pid_producto_pt2" id="pid_producto_pt2" data-live-search="true" data-style="btn-info">
-                                            @foreach ($productoterminado as $pt)
-                                                <option value="{{ $pt->id }}_{{ $pt->etiqueta_prod }}_{{ $pt->ancho_prod }}_{{ $pt->cantidad_prod }}_{{ $pt->formula }}_{{ $pt->unidad }}">{{ $pt->articulo }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div style="display:none;" id="panel2" >
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Artículo</label>
+                                                <select class="form-control " name="pid_producto_pt2" id="pid_producto_pt2" data-live-search="true" data-style="btn-info">
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
+                                                <input type="number" disabled step="0.01" class="form-control" name="pancho_prod2" id="pancho_prod2"  >
+                                                <input type="hidden" step="0.01" class="form-control" name="pcantidad_pt2" id="pcantidad_pt2" value="1" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group label-floating">
+                                                <button type="button" id="bt_add2" class="btn btn-primary">Agregar</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-sm-2">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Ancho</label>
-                                        <input type="number" disabled step="0.01" class="form-control" name="pancho_prod2" id="pancho_prod2"  >
-                                        <input type="hidden" step="0.01" class="form-control" name="pcantidad_pt2" id="pcantidad_pt2" value="1" >
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="form-group label-floating">
+                                            <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+                                                <thead style="background-color:#A9D0F5">
+                                                    <th>Opciones</th>
+                                                    <th>Artículo</th>
+                                                    <th>Ancho</th>
+                                                    <th>Largo</th>
+                                                    <th>Cantidad</th>
+                                                </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                                </tfoot>
+
+                                                <tbody>
+
+                                                </tbody>            
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="col-sm-2">
-                                    <div class="form-group label-floating">
-                                        <button type="button" id="bt_add2" class="btn btn-primary">Agregar</button>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                <div class="form-group label-floating">
-                                    <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
-                                        <thead style="background-color:#A9D0F5">
-                                            <th>Opciones</th>
-                                            <th>Artículo</th>
-                                            <th>Ancho</th>
-                                            <th>Largo</th>
-                                            <th>Cantidad</th>
-                                        </thead>
-                                        <tfoot>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        </tfoot>
-
-                                        <tbody>
-
-                                        </tbody>            
-                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                <div class="tab-pane" id="pill4">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <div class="row">  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 </div>
 
                 <div class="col-sm-6" id="guardar">
@@ -584,6 +600,11 @@
 @include('includes.footer')
 
 @push('scripts')
+
+<script src="/js/filtros/filtros.js"></script>
+
+
+
 <script>
     $(document).ready(function(){
         $('#bt_add').click(function(){
@@ -816,6 +837,7 @@
                 
                 //alert(v1+" "+subtot);
                 
+                $(document).ready(onSelectPtChange);
 
                 $("#subtot").html(subtot);
                 $("#total").html(total);
@@ -1047,6 +1069,8 @@ function agregar2(){
             cont--;
 
             evaluar();
+            $(document).ready(onSelectMpChange);
+            $(document).ready(onSelectPtChange);
 
             $("#panel1").hide();      
             $("#panel2").show(); 
@@ -1075,6 +1099,9 @@ function agregar2(){
             caracteresfila=0;
             evaluar();
 
+            $(document).ready(onSelectMpChange);
+            $(document).ready(onSelectPtChange);
+
             $("#panel1").show();      
             $("#panel2").hide();      
             
@@ -1089,6 +1116,8 @@ function agregar2(){
 
         $("#fila2" + index).remove();
         evaluar();
+        $(document).ready(onSelectMpChange);
+        $(document).ready(onSelectPtChange);
         limpiar_mp();
     }
 
