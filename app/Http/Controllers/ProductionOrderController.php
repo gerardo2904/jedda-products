@@ -26,6 +26,7 @@ Use Response;
 Use Illuminate\Support\Collection;
 
 
+
 class ProductionOrderController extends Controller
 {
     public function __construct()

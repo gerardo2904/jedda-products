@@ -75,4 +75,9 @@ class User extends Authenticatable
 		
 		return $cart;
 	}
+
+	public function getCompany(){
+		$comp = $this->company()->where('id',$this->empresa_id)->first();
+		return $comp;
+	}
 }

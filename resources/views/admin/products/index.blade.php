@@ -84,6 +84,10 @@
                         </table>
                           
 			             {{ isset($searchText) ? $products->appends(['searchText' => $searchText])->links() : $products->links()}}
+
+                         <hr>
+
+                         <a href="{{ route('productos.pdf') }}" class="btn btn-sm btn-primary">Descargar catalogo de productos en PDF</a>
                          
 			                
 						</div>
@@ -91,6 +95,9 @@
 
 	            </div>
 	        </div>
+
+            
+
 
 		</div>
 

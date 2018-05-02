@@ -14,6 +14,7 @@ use File;
 Use Session;
 Use Redirect;
 use DB;
+Use Barryvdh\DomPDF\Facade as PDF;
 
 class ProductController extends Controller
 {
@@ -33,6 +34,28 @@ class ProductController extends Controller
         //return view('admin.products.index')->with(compact('products'));   // listado  
         return view('admin.products.index',["products" => $products, "searchText" => $query]);
     }
+
+    public function pdf()
+    {        
+        /**
+         * toma en cuenta que para ver los mismos 
+         * datos debemos hacer la misma consulta
+        **/
+//        $products = Product::all(); 
+
+        $ps = DB::table('products as po')
+             ->join('categories as sub','po.subcategory_id','=','sub.id')
+             ->join('categories as cat','po.category_id','=','cat.id')
+             ->select('po.id','po.name','po.description','cat.name as categoria','sub.name as subcategoria','po.activo')
+             ->orderBy('po.name','desc')
+             ->get(); 
+            
+
+        $pdf = PDF::loadView('admin.products.pdf.productos', compact('ps'));
+
+        return $pdf->download('listado.pdf');
+    }
+
     
     public function create()
     {

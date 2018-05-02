@@ -27,8 +27,15 @@
                             
                         </div>
                     @endif
-                    
-	                <h2 class="title">Productos en Almacen</h2>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img style="width:150px; height:130px;" src="{{ $cim }}" alt="Rounded Raised" class="img-rounded img-responsive img-raised">
+                    </div>
+                    <div class="col-sm-10">
+                        <h3 class="title text-left">Productos en almacen {{ $cia->name }} </h3>
+                    </div>
+                </div>
 
 					<div class="team">
 						<div class="row">
@@ -59,7 +66,7 @@
                             </tbody>
                         </table>
                            
-			             
+			             <a href="{{ route('existencias.pdf') }}" class="btn btn-sm btn-primary">Descargar existencias de productos en PDF</a>
 			                
 						</div>
 					</div>

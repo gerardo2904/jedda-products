@@ -20,6 +20,7 @@ Use DB;
 Use Carbon\Carbon;
 Use Response;
 Use Illuminate\Support\Collection;
+Use Barryvdh\DomPDF\Facade as PDF;
 
 class IngresoController extends Controller
 {
@@ -178,6 +179,34 @@ class IngresoController extends Controller
 
     	return view('compras.ingreso.show',["ingreso"=>$ingreso,"detalles"=>$detalles]);
     }
+
+    public function pdf($id)
+    {        
+        if ($id<=0 )
+            $id=4;
+
+        $ingreso = DB::table('ingreso as i')
+             ->join('clients as p','i.idproveedor','=','p.id')
+             ->join('client_images as ci','i.idproveedor','=','ci.client_id')
+             ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
+             ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precioc) as total'))
+             ->where('i.idingreso','=',$id)
+             ->groupBy('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
+             ->first();
+
+        $detalles = DB::table('detalle_ingreso as d')
+          ->join('products as a','d.id_articulo','=','a.id')
+          ->select('a.name as articulo','d.cantidad','d.precioc','d.etiqueta')
+          ->where('d.idingreso','=',$id)
+          ->get();
+            
+
+        $pdf = PDF::loadView('compras.ingreso.pdf.imprimeordeningreso', compact('ingreso','detalles'));
+
+        return $pdf->download('imprimeordeningreso.pdf');
+    }
+
+
 
     public function destroy($id)
     {

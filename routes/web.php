@@ -33,6 +33,7 @@ Route::delete('/cart','CartDetailController@destroy');
 Route::post('/order','CartController@update');
 
 Route::get('/almproducts','Admin\AlmproductController@index');  //listado
+Route::get('descargar-productos', 'Admin\AlmproductController@pdf')->name('existencias.pdf');
     
 Route::get('/import', 'Admin\ImportController@import');
 
@@ -45,6 +46,7 @@ Route::middleware(['auth','admin'])->group(function(){
     Route::resource('compras/ingreso','IngresoController');
     Route::resource('ventas/venta','VentaController');
     Route::resource('productionorder/production','ProductionOrderController');
+    Route::get('{id}/descargar-ingreso', 'IngresoController@pdf')->name('imprimeordeningreso.pdf');
 });
 
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
@@ -63,6 +65,7 @@ Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(
         Route::get('/products/{id}/edit','ProductController@edit');  //Formulario edicion
         Route::post('/products/{id}/edit','ProductController@update');  //Actualizar
         Route::delete('/products/{id}','ProductController@destroy');  //Form para eliminar
+        Route::get('descargar-productos', 'ProductController@pdf')->name('productos.pdf');
 		
         Route::get('/products/{id}/images','ImageController@index');  // Listado y formulario
         Route::post('/products/{id}/images', 'ImageController@store'); //Registrar nuevas fotos

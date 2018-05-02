@@ -165,6 +165,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         'Collective\Html\HtmlServiceProvider',  // Se agrego para que las vistas acepten Form
         Maatwebsite\Excel\ExcelServiceProvider::class,   // Para usar excel...
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -230,6 +231,7 @@ return [
         'Form' => 'Collective\Html\FormFacade',   // Se agrego para que las vistas acepten Form
         'Html' => 'Collective\Html\HtmlFacade',   // Se agrego para que las vistas acepten Html
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,  // Para usar excel
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 
