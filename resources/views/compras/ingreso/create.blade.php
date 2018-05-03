@@ -76,6 +76,13 @@
                             </div>
                         </div>
 
+                        <div class="col-sm-4">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Nota</label>
+                                <input type="text" class="form-control" name="notas" id="notas" value="{{ old('notas')}}">
+                            </div>
+                        </div>
+
                     </div>
                     
                     <div class="row">
@@ -243,7 +250,7 @@
             
             gt=subtot+tax;
 
-            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precioc[]" value="'+precioc+'"></td> <td><input type="text" name="etiqueta[]" value="'+etiqueta+'"></td>  <td>'+subtotal[cont]+'</td> <input type="hidden" name="unidad_prod[]" value="'+unidad_prod+'"> <input type="hidden" name="cantidad_prod[]" value="'+cantidad_prod+'">';
+            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden"  name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden"  name="precioc[]" value="'+precioc+'">'+precioc+'</td> <td><input type="hidden"  name="etiqueta[]" value="'+etiqueta+'">'+etiqueta+'</td>  <td>'+subtotal[cont]+'</td> <input type="hidden"  name="unidad_prod[]" value="'+unidad_prod+'"> <input type="hidden" name="cantidad_prod[]" value="'+cantidad_prod+'">';
             
             cont++;
             limpiar();

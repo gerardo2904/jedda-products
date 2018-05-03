@@ -76,6 +76,13 @@
                             </div>
                         </div>
 
+                        <div class="col-sm-4">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Nota</label>
+                                <input type="text" class="form-control" name="notas" id="notas" value="{{ old('notas')}}">
+                            </div>
+                        </div>
+
                     </div>
                     
                     <div class="row">
@@ -244,7 +251,7 @@
                 
                 gt=subtot+tax;
 
-                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" step="0.01" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" step="0.01" name="preciov[]" value="'+preciov+'"></td> </td><td><input type="number" step="0.01" name="descuento[]" value="'+descuento+'"></td> <td>'+subtotal[cont]+'</td> ';
+                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" step="0.01" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" step="0.01" name="preciov[]" value="'+preciov+'">'+preciov+'</td> </td><td><input type="hidden" step="0.01" name="descuento[]" value="'+descuento+'">'+descuento+'</td> <td>'+subtotal[cont]+'</td> ';
                 
                 cont++;
                 limpiar();

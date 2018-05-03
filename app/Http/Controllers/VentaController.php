@@ -23,6 +23,7 @@ Use DB;
 Use Carbon\Carbon;
 Use Response;
 Use Illuminate\Support\Collection;
+Use Barryvdh\DomPDF\Facade as PDF;
 
 class VentaController extends Controller
 {
@@ -40,7 +41,7 @@ class VentaController extends Controller
     		 ->join('clients as p','v.idcliente','=','p.id')
     		 ->join('companies as c','v.id_empresa','=','c.id')
     		 ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
-    		 ->select('v.idventa','v.fecha_hora','p.name','c.name as compan','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','total_venta')
+    		 ->select('v.idventa','v.fecha_hora','p.name','c.name as compan','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.notas','total_venta')
     		 ->where('v.num_comprobante','LIKE','%'.$query.'%')
     		 ->orderBy('v.idventa','desc')
     		 ->groupBy('v.idventa','v.fecha_hora','p.name','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
@@ -91,6 +92,7 @@ class VentaController extends Controller
     		$venta->fecha_hora			= $mytime->toDateTimeString();
     		$venta->impuesto			= '16';
     		$venta->estado				= 'A';
+            $venta->notas               = $request->get('notas');
     		$venta->save();
 
     		$id_articulo 				= $request->get('id_articulo');
@@ -175,10 +177,10 @@ class VentaController extends Controller
     public function show($id)
     {
     	$venta = DB::table('venta as v')
-    		 ->join('clients as p','i.idproveedor','=','p.id')
+    		 ->join('clients as p','v.idcliente','=','p.id')
              ->join('client_images as ci','v.idcliente','=','ci.client_id')
     		 ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
-    		 ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.total_venta')
+    		 ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.notas','v.estado','v.total_venta')
     		 ->where('v.idventa','=',$id)
              ->groupBy('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
     		 ->first();
@@ -191,6 +193,33 @@ class VentaController extends Controller
 
     	return view('ventas.venta.show',["venta"=>$venta,"detalles"=>$detalles]);
     }
+
+    public function pdf($id)
+    {        
+        if ($id<=0 )
+            $id=4;
+
+        $venta = DB::table('venta as v')
+             ->join('clients as p','v.idcliente','=','p.id')
+             ->join('client_images as ci','v.idcliente','=','ci.client_id')
+             ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
+             ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.notas','v.estado','v.total_venta')
+             ->where('v.idventa','=',$id)
+             ->groupBy('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
+             ->first();
+
+        $detalles = DB::table('detalle_venta as d')
+          ->join('products as a','d.id_articulo','=','a.id')
+          ->select('a.name as articulo','d.cantidad','d.preciov','d.descuento','d.etiqueta')
+          ->where('d.idventa','=',$id)
+          ->get();
+            
+
+        $pdf = PDF::loadView('ventas.venta.pdf.imprimeordensalida', compact('venta','detalles'));
+
+        return $pdf->download('imprimeordensalida.pdf');
+    }
+
 
     public function destroy($id)
     {

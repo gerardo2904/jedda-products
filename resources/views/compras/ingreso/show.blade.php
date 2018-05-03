@@ -80,7 +80,7 @@
                                         
                                     </table>
                                 </div>
-                                <a href="{{ route('imprimeordeningreso.pdf',$ingreso->idingreso)}}" class="btn btn-sm btn-primary">Descargar existencias de productos en PDF</a>
+                                <a href="{{ route('imprimeordeningreso.pdf',$ingreso->idingreso)}}" class="btn btn-sm btn-primary">Descargar orden de ingreso en PDF</a>
 
 
 		</div>

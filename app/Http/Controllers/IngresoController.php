@@ -38,7 +38,7 @@ class IngresoController extends Controller
     		 ->join('clients as p','i.idproveedor','=','p.id')
     		 ->join('companies as c','i.id_empresa','=','c.id')
     		 ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-    		 ->select('i.idingreso','i.fecha_hora','p.name','c.name as compan','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precioc) as total'))
+    		 ->select('i.idingreso','i.fecha_hora','p.name','c.name as compan','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas',DB::raw('sum(di.cantidad*precioc) as total'))
     		 ->where('i.num_comprobante','LIKE','%'.$query.'%')
     		 ->orderBy('i.idingreso','desc')
     		 ->groupBy('i.idingreso','i.fecha_hora','p.name','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
@@ -78,6 +78,7 @@ class IngresoController extends Controller
     		$ingreso->fecha_hora		= $mytime->toDateTimeString();
     		$ingreso->impuesto			= $request->get('impuesto');
     		$ingreso->estado			= 'A';
+            $ingreso->notas             = $request->get('notas');
     		$ingreso->save();
 
     		$id_articulo 				= $request->get('id_articulo');
@@ -166,7 +167,7 @@ class IngresoController extends Controller
     		 ->join('clients as p','i.idproveedor','=','p.id')
              ->join('client_images as ci','i.idproveedor','=','ci.client_id')
     		 ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-    		 ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precioc) as total'))
+    		 ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas',DB::raw('sum(di.cantidad*precioc) as total'))
     		 ->where('i.idingreso','=',$id)
              ->groupBy('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
     		 ->first();
@@ -189,7 +190,7 @@ class IngresoController extends Controller
              ->join('clients as p','i.idproveedor','=','p.id')
              ->join('client_images as ci','i.idproveedor','=','ci.client_id')
              ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-             ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precioc) as total'))
+             ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas',DB::raw('sum(di.cantidad*precioc) as total'))
              ->where('i.idingreso','=',$id)
              ->groupBy('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
              ->first();

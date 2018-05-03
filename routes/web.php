@@ -47,6 +47,7 @@ Route::middleware(['auth','admin'])->group(function(){
     Route::resource('ventas/venta','VentaController');
     Route::resource('productionorder/production','ProductionOrderController');
     Route::get('{id}/descargar-ingreso', 'IngresoController@pdf')->name('imprimeordeningreso.pdf');
+    Route::get('{id}/descargar-salida', 'VentaController@pdf')->name('imprimeordensalida.pdf');
 });
 
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){

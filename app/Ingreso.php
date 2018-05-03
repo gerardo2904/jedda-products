@@ -20,7 +20,8 @@ class Ingreso extends Model
             'num_comprobante',
             'fecha_hora',
             'impuesto',
-            'estado'
+            'estado',
+            'notas'
     ];
 
     protected $guarded = [

@@ -13,18 +13,18 @@
 			<div class="row">
 				<div class="profile">
 					<div class="avatar">
-						<img src="{{ '/images/clients/'.$ingreso->image }}" alt="Circle Image" class="img-circle img-responsive img-raised">
+						<img src="{{ '/images/clients/'.$venta->image }}" alt="Circle Image" class="img-circle img-responsive img-raised">
 					</div>
 					
 					
 					<div class="name">
-						<h3 class="title">{{ $ingreso->name }}</h3>
+						<h3 class="title">{{ $venta->name }}</h3>
 
 					</div>
 				</div>
 			</div>
 			<div class="description text-center">
-				<p>{{ $ingreso->tipo_comprobante.'-'.$ingreso->serie_comprobante.'-'.$ingreso->num_comprobante }}</p>
+				<p>{{ $venta->tipo_comprobante.'-'.$venta->serie_comprobante.'-'.$venta->num_comprobante }}</p>
 			</div>
 			
 			@if (session('notification'))
@@ -39,7 +39,7 @@
                                         <thead style="background-color:#A9D0F5">
                                             <th>Artículo</th>
                                             <th>Cantidad</th>
-                                            <th>Precio de compra</th>
+                                            <th>Precio de venta</th>
                                             <th>Subtotal</th>
                                         </thead>
                                         <tfoot>
@@ -48,18 +48,18 @@
                                             <th></th>
                                             <th></th>
                                             <th>SUB-TOTAL</th>
-                                            <th><h4 id="subtotal">{{$ingreso->total}}</h4></th>
+                                            <th><h4 id="subtotal">{{$venta->total_venta}}</h4></th>
                                             <tr>
                                             <th></th>
                                             <th></th>    
                                             <th>IMPUESTO</th>
-                                            <th><h4 id="impuesto">{{$ingreso->total*$ingreso->impuesto*0.01}}</h4></th>
+                                            <th><h4 id="impuesto">{{$venta->total_venta*$venta->impuesto*0.01}}</h4></th>
                                             </tr>
                                             <tr>
                                             <th></th>
                                             <th></th>    
                                             <th>TOTAL</th>
-                                            <th><h4 id="total">{{$ingreso->total+($ingreso->total*$ingreso->impuesto*0.01)}}</h4></th>
+                                            <th><h4 id="total">{{$venta->total_venta+($venta->total_venta*$venta->impuesto*0.01)}}</h4></th>
                                             </tr>
                                         </tr>
                                             
@@ -71,8 +71,8 @@
                                             	<tr>
                                             		<td>{{$det->articulo}}</td>
                                             		<td>{{$det->cantidad}}</td>
-                                            		<td>{{$det->precioc}}</td>
-                                                    <td>{{$det->cantidad*$det->precioc}}</td>
+                                            		<td>{{$det->preciov}}</td>
+                                                    <td>{{$det->cantidad*$det->preciov}}</td>
                                             	</tr>
                                             @endforeach
 
@@ -80,6 +80,7 @@
                                         
                                     </table>
                                 </div>
+                                <a href="{{ route('imprimeordensalida.pdf',$venta->idventa)}}" class="btn btn-sm btn-primary">Descargar orden de salida en PDF</a>
 
 
 		</div>
