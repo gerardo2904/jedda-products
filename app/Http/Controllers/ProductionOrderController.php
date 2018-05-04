@@ -169,6 +169,7 @@ class ProductionOrderController extends Controller
     	return view('productionorder.production.create',["clientes" => $clientes, "materiaprima" => $materiaprima, "productoterminado" => $productoterminado,"leader" => $leader,"core" => $core,"sticker" => $sticker, "cim" => $cim]);
     }
 
+
     public function store(ProductionOrderRequest $request)
     {
     	try{
@@ -181,34 +182,32 @@ class ProductionOrderController extends Controller
     		$u 	= Auth::user()->id;
 
     		$ordenproduccion = new Production_Order;
-    		
-    		$ordenproduccion->id_producto_mp		= $request->get('id_producto_mp');
-    		$ordenproduccion->etiqueta_mp			= $request->get('etiqueta_mp');
 
-    		$ordenproduccion->id_producto_core		= $request->get('id_producto_core');
-    		$ordenproduccion->etiqueta_core			= $request->get('etiqueta_core');
+            $ordenproduccion->orden                 =   $request->get('orden');
+            $ordenproduccion->orden_cliente         =   $request->get('orden_cliente');
+            $ordenproduccion->id_producto_mp        =   $request->get('tempo_id_producto_mp');
+            $ordenproduccion->etiqueta_mp           =   $request->get('etiqueta_mp');
+            $ordenproduccion->id_producto_core      =   $request->get('tempo_id_producto_core');
+            $ordenproduccion->etiqueta_core         =   $request->get('etiqueta_core');
+            $ordenproduccion->id_producto_leader1   =   $request->get('tempo_id_producto_leader1');
+            $ordenproduccion->etiqueta_leader1      =   $request->get('etiqueta_leader1');
+            $ordenproduccion->id_producto_leader2   =   $request->get('tempo_id_producto_leader2');
+            $ordenproduccion->etiqueta_leader2      =   $request->get('etiqueta_leader2');
+            $ordenproduccion->id_producto_leader3   =   $request->get('tempo_id_producto_leader3');
+            $ordenproduccion->etiqueta_leader3      =   $request->get('etiqueta_leader3');
+            $ordenproduccion->id_producto_sticker   =   $request->get('tempo_id_producto_sticker');
+            $ordenproduccion->etiqueta_sticker      =   $request->get('etiqueta_sticker');
+            $ordenproduccion->direction             =   $request->get('direction'); 
+            $ordenproduccion->id_user               =   $u;
+            $ordenproduccion->id_company            =   $iu;
+            $ordenproduccion->idcliente             =   $request->get('idcliente');
+            $mytime                                 =   Carbon::now('America/Tijuana');
+            $ordenproduccion->fecha_hora            =   $mytime->toDateTimeString();
+            $ordenproduccion->estado                =   'A';
+            $ordenproduccion->save();
 
-    		$ordenproduccion->id_producto_leader1	= $request->get('id_producto_leader1');
-    		$ordenproduccion->etiqueta_leader1		= $request->get('etiqueta_leader1');
 
-    		$ordenproduccion->id_producto_leader2	= $request->get('id_producto_leader2');
-    		$ordenproduccion->etiqueta_leader2		= $request->get('etiqueta_leader2');
-
-            $ordenproduccion->id_producto_leader3   = $request->get('id_producto_leader3');
-            $ordenproduccion->etiqueta_leader3      = $request->get('etiqueta_leader3');
-
-    		$ordenproduccion->id_producto_sticker	= $request->get('id_producto_sticker');
-    		$ordenproduccion->etiqueta_sticker		= $request->get('etiqueta_sticker');
-
-			$ordenproduccion->direction				= $request->get('direction');    		
-    		$ordenproduccion->idcliente	 			= $request->get('idcliente');
-    		$ordenproduccion->id_company 			= $iu;
-    		$ordenproduccion->id_user 				= $u;
-    		$mytime									= Carbon::now('America/Tijuana');
-    		$ordenproduccion->fecha_hora			= $mytime->toDateTimeString();
-    		$ordenproduccion->estado				= 'A';
-    		$ordenproduccion->save();
-
+/*
     		// Empiezan los detalles de la orden de produccion...
     		$corrida					= $request->get('corrida');
     		$id_producto_pt 			= $request->get('id_producto_pt');
@@ -228,35 +227,11 @@ class ProductionOrderController extends Controller
     			
     			$detalle->save();
 
-                /*
-                $cantproductos = almproducts::where('id_product',$id_articulo[$cont])->count();
-
-                if ($cantproductos > 0){
-                    //$productos = almproducts::find($id_articulo[$cont]);
-                    $productos = almproducts::where('id_product',$id_articulo[$cont])->first();
-                    $exis=$productos->existencia;
-                    //dd($productos->all());
-
-                    
-                    $productos->existencia    = $exis-$cantidad[$cont];
-                    
-                    if($productos->existencia>=0){
-                        $productos->save();     
-                    }else {
-                        DB::rollback();
-                        //Session::flash('message','Un producto excede la cantidad que se puede vender...');
-                        return redirect('/ventas/venta')->with('status', 'noexito');
-                        
-                    }
-
-                    
-                }
-                */
 
     			$cont = $cont + 1;
 
     		}
-    		  
+  */  		  
     		DB::commit();
             Session::flash('message','Se ha realizado exitosamente la insercion de la orden de producción');
             return redirect('/productionorder/production')->with('status', 'exito');;
@@ -264,7 +239,7 @@ class ProductionOrderController extends Controller
 
     	}catch(\Exception $e)
     	{
-            //return $e;
+            return $e;
             
             DB::rollback();
             Session::flash('message',$msj);

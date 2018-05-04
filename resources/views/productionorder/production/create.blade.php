@@ -106,6 +106,10 @@
                                         @endforeach
                                     </select>                                  
                                     <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
+
+                                    <input type="hidden" name="tempo_id_producto_mp" id="tempo_id_producto_mp" value="{{ old('tempo_id_producto_mp')}}">
+
+                                    
                                 </div>
                             </div>
 
@@ -173,8 +177,11 @@
                                             <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}">{{ $co->articulo }}</option>
                                         @endforeach
                                     </select>
+
+                                    <input type="hidden" name="tempo_id_producto_core" id="tempo_id_producto_core" value="{{ old('tempo_id_producto_core')}}">
                                 </div>
                             </div>
+
 
                             <div class="col-sm-3">
                                 <div class="form-group label-floating">
@@ -207,6 +214,7 @@
                                             <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="tempo_id_producto_leader1" id="tempo_id_producto_leader1" value="{{ old('tempo_id_producto_leader1')}}">
                                 </div>
                             </div>
 
@@ -255,6 +263,7 @@
                                             <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}">{{ $le->articulo }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="tempo_id_producto_leader2" id="tempo_id_producto_leader2" value="{{ old('tempo_id_producto_leader2')}}">
                                 </div>
                             </div>
 
@@ -303,6 +312,7 @@
                                             <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="tempo_id_producto_leader3" id="tempo_id_producto_leader3" value="{{ old('tempo_id_producto_leader3')}}">
                                 </div>
                             </div>
 
@@ -352,6 +362,7 @@
                                             <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}">{{ $sti->articulo }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="tempo_id_producto_sticker" id="tempo_id_producto_sticker" value="{{ old('tempo_id_producto_sticker')}}">
                                 </div>
                             </div>
 
@@ -689,7 +700,9 @@
         $("#total_desp").val(total_desp);
 
         datosMateria=document.getElementById('id_producto_mp').value.split('_');
-        
+
+        $("#tempo_id_producto_mp").val(datosMateria[0]);
+                
         $("#etiqueta_mp").val(datosMateria[1]);
         $("#ancho_mp").val(datosMateria[2]);
         $("#largo_mp").val(datosMateria[3]);
@@ -704,6 +717,9 @@
 
 
         datosCore=document.getElementById('id_producto_core').value.split('_');
+
+        $("#tempo_id_producto_core").val(datosCore[0]);
+
         $("#etiqueta_core").val(datosCore[1]);
         $("#cantidad_core").val(datosCore[3]);
         unidad_core=datosCore[5];
@@ -711,6 +727,9 @@
 
 
         datosLeader1=document.getElementById('id_producto_leader1').value.split('_');
+
+        $("#tempo_id_producto_leader1").val(datosLeader1[0]);
+
         $("#etiqueta_leader1").val(datosLeader1[1]);
         $("#ancho_leader1").val(datosLeader1[2]);
         $("#largo_leader1").val(datosLeader1[3]);
@@ -721,6 +740,9 @@
 
 
         datosLeader2=document.getElementById('id_producto_leader2').value.split('_');
+
+        $("#tempo_id_producto_leader2").val(datosLeader2[0]);
+
         $("#etiqueta_leader2").val(datosLeader2[1]);
         $("#ancho_leader2").val(datosLeader2[2]);
         $("#largo_leader2").val(datosLeader2[3]);
@@ -730,6 +752,9 @@
         $("#total_leader2").val(tot_leader2);
 
         datosLeader3=document.getElementById('id_producto_leader3').value.split('_');
+
+        $("#tempo_id_producto_leader3").val(datosLeader3[0]);
+
         $("#etiqueta_leader3").val(datosLeader3[1]);
         $("#ancho_leader3").val(datosLeader3[2]);
         $("#largo_leader3").val(datosLeader3[3]);
@@ -739,6 +764,9 @@
         $("#total_leader3").val(tot_leader3);
 
         datosSticker=document.getElementById('id_producto_sticker').value.split('_');
+
+        $("#tempo_id_producto_sticker").val(datosSticker[0]);
+
         $("#etiqueta_sticker").val(datosSticker[1]);
         $("#cantidad_sticker").val(datosSticker[3]);
         unidad_sticker=datosSticker[5];
