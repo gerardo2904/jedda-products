@@ -15,6 +15,7 @@ use App\User;
 use App\Product;
 use App\Unit;
 use App\almproducts;
+use App\almproducts_tempo;
 use App\Client;
 use App\Company;
 use App\CompanyImage;
@@ -111,18 +112,15 @@ class ProductionOrderController extends Controller
         $cim ='/images/companies/'.$ci->image;
         
 
-
-
-
     	$materiaprima = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','un.name as unidad')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','un.name as unidad', 'un.id as id_unidad','ap.precioc','ap.preciov')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','2')  // Es materia prima
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia', 'unidad')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia', 'unidad','precioc','preciov')
     	  ->get();
 
     	$productoterminado = DB::table('products as art')
@@ -136,34 +134,34 @@ class ProductionOrderController extends Controller
 		$leader = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','4')  // Es Leader
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad','precioc','preciov')
     	  ->get();
 
     	$core = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','3')  // Es core
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad','precioc','preciov')
     	  ->get();
 
     	$sticker = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','5')  // Es Sticker
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad','precioc','preciov')
     	  ->get();
 
     	return view('productionorder.production.create',["clientes" => $clientes, "materiaprima" => $materiaprima, "productoterminado" => $productoterminado,"leader" => $leader,"core" => $core,"sticker" => $sticker, "cim" => $cim]);
@@ -182,7 +180,6 @@ class ProductionOrderController extends Controller
     		$u 	= Auth::user()->id;
 
     		$ordenproduccion = new Production_Order;
-
             $ordenproduccion->orden                 =   $request->get('orden');
             $ordenproduccion->orden_cliente         =   $request->get('orden_cliente');
             $ordenproduccion->id_producto_mp        =   $request->get('tempo_id_producto_mp');
@@ -207,34 +204,326 @@ class ProductionOrderController extends Controller
             $ordenproduccion->save();
 
 
+            $corrida                                =   0;
+            $id_producto_pt                         =   $request->get('id_producto_pt');
+            //$id_etiqueta_pt                         =   $request->get('etiqueta_pt');
+            $cantidad_pt                            =   $request->get('cantidad_pt');
+            // $u es el usuario
+            $estado_pt                              =   0;
+
+            $cont = 0;
+
+            while ($cont < count($id_producto_pt)){
+                $detalle = new Detalle_Production_Order();
+                $detalle->id_production     =   $ordenproduccion->id_production; //$ordenproduccion->orden;
+                $detalle->corrida           =   $corrida;
+                $detalle->id_producto_pt    =   $id_producto_pt[$cont];
+                $detalle->etiqueta_pt       =   $ordenproduccion->etiqueta_mp;
+                $detalle->cantidad_pt       =   $cantidad_pt[$cont];
+                $detalle->id_user           =   $u;
+                $detalle->estado_pt         =   $estado_pt;
+                
+                $detalle->save();
+                $cont = $cont + 1;
+            }
+
+            $corrida                                =   0;
+            $id_producto_pt                         =   $request->get('id_producto_pt2');
+            //$id_etiqueta_pt                         =   $request->get('etiqueta_pt2');
+            $cantidad_pt                            =   $request->get('cantidad_pt2');
+            // $u es el usuario
+            $estado_pt                              =   0;
+
+            $cont = 0;
+
+            while ($cont < count($id_producto_pt)){
+                $detalle2 = new Detalle_Production_Order();
+                $detalle2->id_production     =   $ordenproduccion->id_production; //$ordenproduccion->orden;
+                $detalle2->corrida           =   $corrida;
+                $detalle2->id_producto_pt    =   $id_producto_pt[$cont];
+                $detalle2->etiqueta_pt       =   $ordenproduccion->etiqueta_mp;
+                $detalle2->cantidad_pt       =   $cantidad_pt[$cont];
+                $detalle2->id_user           =   $u;
+                $detalle2->estado_pt         =   $estado_pt;
+                
+                $detalle2->save();
+                $cont = $cont + 1;
+            }
+
+            // Se pasa la materia prima a tabla temporal
+            $alm_mp = new almproducts_tempo();
+            $alm_mp->id_production            =   $ordenproduccion->id_production;
+            $alm_mp->id_company               =   $iu;
+            $alm_mp->id_product               =   $request->get('tempo_id_producto_mp');  
+            $alm_mp->existencia               =   1;
+            $alm_mp->precioc                  =   $request->get('tempo_precioc_mp');
+            $alm_mp->preciov                  =   $request->get('tempo_preciov_mp');
+            $alm_mp->id_unidad_prod           =   $request->get('tempo_id_unidad_mp');
+            $alm_mp->cantidad_prod            =   $request->get('largo_mp'); 
+            $alm_mp->ncantidad_prod           =   $request->get('total_largo_restante'); 
+            $alm_mp->etiqueta                 =   $request->get('etiqueta_mp');
+            $alm_mp->save();
+
+            // Se pasa el core a tabla temporal
+            $alm_core = new almproducts_tempo();
+            $alm_core->id_production            =   $ordenproduccion->id_production;
+            $alm_core->id_company               =   $iu;
+            $alm_core->id_product               =   $request->get('tempo_id_producto_core');  
+            $alm_core->existencia               =   1;
+            $alm_core->precioc                  =   $request->get('tempo_precioc_core');
+            $alm_core->preciov                  =   $request->get('tempo_preciov_core');
+            $alm_core->id_unidad_prod           =   $request->get('tempo_id_unidad_core');
+            $alm_core->cantidad_prod            =   $request->get('cantidad_core'); 
+            $alm_core->ncantidad_prod           =   $request->get('cantidad_core_restante'); 
+            $alm_core->etiqueta                 =   $request->get('etiqueta_core');
+            $alm_core->save();
+
+            // Se pasa el leader 1 a tabla temporal
+            $alm_leader1 = new almproducts_tempo();
+            $alm_leader1->id_production            =   $ordenproduccion->id_production;
+            $alm_leader1->id_company               =   $iu;
+            $alm_leader1->id_product               =   $request->get('tempo_id_producto_leader1');  
+            $alm_leader1->existencia               =   1;
+            $alm_leader1->precioc                  =   $request->get('tempo_precioc_leader1');
+            $alm_leader1->preciov                  =   $request->get('tempo_preciov_leader1');
+            $alm_leader1->id_unidad_prod           =   $request->get('tempo_id_unidad_leader1');
+            $alm_leader1->cantidad_prod            =   $request->get('largo_leader1'); 
+            $alm_leader1->ncantidad_prod           =   $request->get('largo_leader1_restante');
+            $alm_leader1->etiqueta                 =   $request->get('etiqueta_leader1');
+            $alm_leader1->save();
+
+            // Se pasa el leader 2 a tabla temporal
+            $alm_leader2 = new almproducts_tempo();
+            $alm_leader2->id_production            =   $ordenproduccion->id_production;
+            $alm_leader2->id_company               =   $iu;
+            $alm_leader2->id_product               =   $request->get('tempo_id_producto_leader2');  
+            $alm_leader2->existencia               =   1;
+            $alm_leader2->precioc                  =   $request->get('tempo_precioc_leader2');
+            $alm_leader2->preciov                  =   $request->get('tempo_preciov_leader2');
+            $alm_leader2->id_unidad_prod           =   $request->get('tempo_id_unidad_leader2');
+            $alm_leader2->cantidad_prod            =   $request->get('largo_leader2'); 
+            $alm_leader2->ncantidad_prod           =   $request->get('largo_leader2_restante');
+            $alm_leader2->etiqueta                 =   $request->get('etiqueta_leader2');
+            $alm_leader2->save();
+
+            // Se pasa el leader 3 a tabla temporal
+            $alm_leader3 = new almproducts_tempo();
+            $alm_leader3->id_production            =   $ordenproduccion->id_production;
+            $alm_leader3->id_company               =   $iu;
+            $alm_leader3->id_product               =   $request->get('tempo_id_producto_leader3');  
+            $alm_leader3->existencia               =   1;
+            $alm_leader3->precioc                  =   $request->get('tempo_precioc_leader3');
+            $alm_leader3->preciov                  =   $request->get('tempo_preciov_leader3');
+            $alm_leader3->id_unidad_prod           =   $request->get('tempo_id_unidad_leader3');
+            $alm_leader3->cantidad_prod            =   $request->get('largo_leader3'); 
+            $alm_leader3->ncantidad_prod           =   $request->get('largo_leader3_restante'); 
+            $alm_leader3->etiqueta                 =   $request->get('etiqueta_leader3');
+            $alm_leader3->save();
+
+            // Se pasa las etiquetas a tabla temporal
+            $alm_etiqueta = new almproducts_tempo();
+            $alm_etiqueta->id_production            =   $ordenproduccion->id_production;
+            $alm_etiqueta->id_company               =   $iu;
+            $alm_etiqueta->id_product               =   $request->get('tempo_id_producto_sticker');  
+            $alm_etiqueta->existencia               =   1;
+            $alm_etiqueta->precioc                  =   $request->get('tempo_precioc_sticker');
+            $alm_etiqueta->preciov                  =   $request->get('tempo_preciov_sticker');
+            $alm_etiqueta->id_unidad_prod           =   $request->get('tempo_id_unidad_sticker');
+            $alm_etiqueta->cantidad_prod            =   $request->get('cantidad_sticker'); 
+            $alm_etiqueta->ncantidad_prod           =   $request->get('cantidad_sticker_restante'); 
+            $alm_etiqueta->etiqueta                 =   $request->get('etiqueta_sticker');
+            $alm_etiqueta->save();
+
+            // Se dan de baja las materias prima del almacen...
+            $x=$request->get('tempo_id_producto_mp');
+            $y=$request->get('etiqueta_mp');
+            
+
+            $ms = DB::table('almproducts as art')
+            ->select('id','id_company','id_product','existencia','precioc','preciov','id_unidad_prod','cantidad_prod','etiqueta')
+            ->where('art.id_product','=',$x)
+            ->where('art.id_company','=',$iu)
+            ->where('art.etiqueta','=',$y)
+            ->where('art.existencia','>','0')
+            ->limit(1)
+            ->first();
+       
+            if ($ms){
+                if($ms->existencia>0){
+                    $ex=$ms->existencia-1;
+                    $msx = almproducts::find($ms->id);
+                    $msx->existencia = $ex;
+                    $msx->save();
+                }
+            }
+            // Fin de las bajas de materia prima...
+
+            // Se dan de baja el core del almacen...
+            $x=$request->get('tempo_id_producto_core');
+            $y=$request->get('etiqueta_core');
+
+            $ms = DB::table('almproducts as art')
+            ->select('id','id_company','id_product','existencia','precioc','preciov','id_unidad_prod','cantidad_prod','etiqueta')
+            ->where('art.id_product','=',$x)
+            ->where('art.id_company','=',$iu)
+            ->where('art.etiqueta','=',$y)
+            ->where('art.existencia','>','0')
+            ->limit(1)
+            ->first();
+       
+            if ($ms){
+                if($ms->existencia>0){
+                    $ex=$ms->existencia-1;
+                    $msx = almproducts::find($ms->id);
+                    $msx->existencia = $ex;
+                    $msx->save();
+                }
+            }
+            // Fin de las bajas de core...           
+
+            // Se dan de baja el leader 1 del almacen...
+            $x=$request->get('tempo_id_producto_leader1');
+            $y=$request->get('etiqueta_leader1');
+
+            $ms = DB::table('almproducts as art')
+            ->select('id','id_company','id_product','existencia','precioc','preciov','id_unidad_prod','cantidad_prod','etiqueta')
+            ->where('art.id_product','=',$x)
+            ->where('art.id_company','=',$iu)
+            ->where('art.etiqueta','=',$y)
+            ->where('art.existencia','>','0')
+            ->limit(1)
+            ->first();
+       
+            if ($ms){
+                if($ms->existencia>0){
+                    $ex=$ms->existencia-1;
+                    $msx = almproducts::find($ms->id);
+                    $msx->existencia = $ex;
+                    $msx->save();
+                }
+            }
+            // Fin de las bajas de leader 1...           
+
+            // Se dan de baja el leader 2 del almacen...
+            $x=$request->get('tempo_id_producto_leader2');
+            $y=$request->get('etiqueta_leader2');
+            
+            $ms = DB::table('almproducts as art')
+            ->select('id','id_company','id_product','existencia','precioc','preciov','id_unidad_prod','cantidad_prod','etiqueta')
+            ->where('art.id_product','=',$x)
+            ->where('art.id_company','=',$iu)
+            ->where('art.etiqueta','=',$y)
+            ->where('art.existencia','>','0')
+            ->limit(1)
+            ->first();
+       
+            if ($ms){
+                if($ms->existencia>0){
+                    $ex=$ms->existencia-1;
+                    $msx = almproducts::find($ms->id);
+                    $msx->existencia = $ex;
+                    $msx->save();
+                }
+            }
+            // Fin de las bajas de leader 2...           
+
+            // Se dan de baja el leader 3 del almacen...
+            $x=$request->get('tempo_id_producto_leader3');
+            $y=$request->get('etiqueta_leader3');
+
+            $ms = DB::table('almproducts as art')
+            ->select('id','id_company','id_product','existencia','precioc','preciov','id_unidad_prod','cantidad_prod','etiqueta')
+            ->where('art.id_product','=',$x)
+            ->where('art.id_company','=',$iu)
+            ->where('art.etiqueta','=',$y)
+            ->where('art.existencia','>','0')
+            ->limit(1)
+            ->first();
+       
+            if ($ms){
+                if($ms->existencia>0){
+                    $ex=$ms->existencia-1;
+                    $msx = almproducts::find($ms->id);
+                    $msx->existencia = $ex;
+                    $msx->save();
+                }
+            }
+            // Fin de las bajas de leader 3...           
+
+            // Se dan de baja el sticker del almacen...
+            $x=$request->get('tempo_id_producto_sticker');
+            $y=$request->get('etiqueta_sticker');
+
+            $ms = DB::table('almproducts as art')
+            ->select('id','id_company','id_product','existencia','precioc','preciov','id_unidad_prod','cantidad_prod','etiqueta')
+            ->where('art.id_product','=',$x)
+            ->where('art.id_company','=',$iu)
+            ->where('art.etiqueta','=',$y)
+            ->where('art.existencia','>','0')
+            ->limit(1)
+            ->first();
+       
+            if ($ms){
+                if($ms->existencia>0){
+                    $ex=$ms->existencia-1;
+                    $msx = almproducts::find($ms->id);
+                    $msx->existencia = $ex;
+                    $msx->save();
+                }
+            }
+            // Fin de las bajas de sticker... 
+
+
+            // Ahora, se pasaran los productos de materias prima de la tabla almproducts_tempo
+            // a la tabla almproducts ya como productos diferentes (con nuevas medidas).
+
+            $aptempo = DB::table('almproducts_tempo')
+            ->select('id','id_company','id_product','existencia','precioc','preciov','id_unidad_prod','ncantidad_prod','etiqueta')
+            ->where('id_production','=',$ordenproduccion->id_production)
+            ->get();
+
+            foreach($aptempo as $t){
+                $tid_company        = $t->id_company;
+                $tid_product        = $t->id_product;
+                $texistencia        = $t->existencia;
+                $tprecioc           = $t->precioc;
+                $tpreciov           = $t->preciov;
+                $tid_unidad_prod    = $t->id_unidad_prod;
+                $tncantidad_prod    = $t->ncantidad_prod;
+                $tetiqueta          = $t->etiqueta;
+
+                $almpt = new almproducts();
+                $almpt->id_company      =   $tid_company;
+                $almpt->id_product      =   $tid_product;
+                $almpt->existencia      =   $texistencia;
+                $almpt->precioc         =   $tprecioc;
+                $almpt->preciov         =   $tpreciov;
+                $almpt->id_unidad_prod  =   $tid_unidad_prod;
+                $almpt->cantidad_prod   =   $tncantidad_prod;
+                $almpt->etiqueta        =   $tetiqueta;
+                $almpt->save();
+            }
+
 /*
-    		// Empiezan los detalles de la orden de produccion...
-    		$corrida					= $request->get('corrida');
-    		$id_producto_pt 			= $request->get('id_producto_pt');
-    		$id_etiqueta_pt 			= $request->get('etiqueta_pt');
-    		$cantidad_pt 				= $request->get('cantidad_pt');
-    		
-    		$cont = 0;
+            $dptempo = DB::table('detalle_production_order as dart')
+            ->join('products as p','p.id_product','=','dart.id_producto_pt')
+            ->join('units as un','p.id_unidad_prod','=','un.id')
+            ->select(DB::raw('dart.id_producto_pt','dart.etiqueta_pt','dart.cantidad_pt','un.id as unidad_produccion','p.cantidad_prod')
+            ->where('detalle_production_order.id_production','=',$ordenproduccion->id_production)
+            ->groupBy('id_producto_pt','etiqueta_pt','unidad_produccion')
+            ->get();
 
-    		while ($cont < count($id_producto_pt)){
-    			$detalle = new Detalle_Production_Order();
-    			$detalle->id_production 	= $ordenproduccion->id_production;
-                $detalle->id_producto_pt 	= $id_producto_pt[$cont];
-                $detalle->etiqueta_pt 		= $etiqueta_pt[$cont];
-                $detalle->cantidad_pt 		= $cantidad_pt[$cont];
-                $detalle->corrida 			= $ordenproduccion->corrida;
-                $detalle->estado_pt			= 'A';
-    			
-    			$detalle->save();
+            $iu
+
+*/
+
+            // Fin de copia de almproducts_tempo a almproducts
 
 
-    			$cont = $cont + 1;
 
-    		}
-  */  		  
     		DB::commit();
             Session::flash('message','Se ha realizado exitosamente la insercion de la orden de producción');
-            return redirect('/productionorder/production')->with('status', 'exito');;
+            return redirect('/productionorder/production')->with('status', 'exito');
 
 
     	}catch(\Exception $e)
@@ -243,12 +532,13 @@ class ProductionOrderController extends Controller
             
             DB::rollback();
             Session::flash('message',$msj);
-            return redirect('/productionorder/production')->with('status', 'noexito');;
+            return redirect('/productionorder/production')->with('status', 'noexito');
 
     	}
 
-    	return Redirect::to('productionorder/production')->with('status', 'noexito');;
+    	return Redirect::to('productionorder/production')->with('status', 'noexito');
     }
+
 
     public function show($id)
     {
@@ -268,7 +558,8 @@ class ProductionOrderController extends Controller
     	  ->where('dpo.id_production','=',$id)
     	  ->get();
 
-    	return view('productionorder.production.show',["productionorder"=>$productionorder,"detalles"=>$detalles]);
+    	
+        return view('productionorder.production.show',["productionorder"=>$productionorder,"detalles"=>$detalles]);
     }
 
     public function destroy($id)

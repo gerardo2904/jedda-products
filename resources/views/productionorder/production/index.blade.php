@@ -58,7 +58,8 @@
 
                                     <td class="td-actions text-right">
 
-                                        <a href="{{URL::action('ProductionOrder@show',$ord->id_production)}}" rel="tooltip" title="Detalles" class="btn btn-info btn-simple btn-xs">
+                                        <a href="{{URL::action('ProductionOrderController@show',$ord->id_production)}}" 
+                                            rel="tooltip" title="Detalles" class="btn btn-info btn-simple btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
 

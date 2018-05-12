@@ -1,6 +1,6 @@
 <div class="modal fade modal-slide-in-right" aria-hidden="true"
-role="dialog" tabindex="-1" id="modal-delete-{{$vnt->idventa}}">
-	{{Form::Open(array('action'=>array('VentaController@destroy',$ord->id_production),'method'=>'delete'))}}
+role="dialog" tabindex="-1" id="modal-delete-{{$ord->id_production}}">
+	{{Form::Open(array('action'=>array('ProductionOrderController@destroy',$ord->id_production),'method'=>'delete'))}}
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -8,7 +8,7 @@ role="dialog" tabindex="-1" id="modal-delete-{{$vnt->idventa}}">
 				aria-label="Close">
                      <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title">Cancelar venta</h4>
+                <h4 class="modal-title">Cancelar orden de producción</h4>
 			</div>
 			<div class="modal-body">
 				<p>Confirme si desea Eliminar la Orden de Producción</p>

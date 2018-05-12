@@ -102,14 +102,20 @@
                                     <label class="control-label">Materia prima</label>
                                     <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-primary">
                                         @foreach ($materiaprima as $materia)
-                                            <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}_{{ $materia->articulo }}">{{ $materia->articulo }}</option>
+                                            <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}_{{ $materia->articulo }}_{{ $materia->id_unidad }}_{{ $materia->precioc }}_{{ $materia->preciov }}">{{ $materia->articulo }}</option>
                                         @endforeach
                                     </select>                                  
                                     <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
 
                                     <input type="hidden" name="tempo_id_producto_mp" id="tempo_id_producto_mp" value="{{ old('tempo_id_producto_mp')}}">
 
-                                    
+                                    <input type="hidden" name="tempo_id_unidad_mp" id="tempo_id_unidad_mp" value="{{ old('tempo_id_unidad_mp')}}">
+
+                                    <input type="hidden" name="tempo_precioc_mp" id="tempo_precioc_mp" value="{{ old('tempo_precioc_mp')}}">
+
+                                    <input type="hidden" name="tempo_preciov_mp" id="tempo_preciov_mp" value="{{ old('tempo_preciov_mp')}}">
+
+                 
                                 </div>
                             </div>
 
@@ -123,28 +129,28 @@
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Ancho</label>
-                                    <input type="text" disabled class="form-control" id="ancho_mp" name="ancho_mp" value="{{ old('ancho_mp')}}">
+                                    <input type="text" readonly class="form-control" id="ancho_mp" name="ancho_mp" value="{{ old('ancho_mp')}}">
                                 </div>
                             </div>
                                 
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Largo</label>
-                                    <input type="text" disabled class="form-control" id="largo_mp" name="largo_mp" value="{{ old('largo_mp')}}">
+                                    <input type="number" step="0.001" readonly class="form-control" id="largo_mp" name="largo_mp" value="{{ old('largo_mp')}}">
                                 </div>
                             </div>
                         
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <label class="control-label"> </label>
-                                    <input type="text" disabled class="form-control" id="total_mp" name="total_mp" value="{{ old('total_mp')}}">
+                                    <input type="text" readonly class="form-control" id="total_mp" name="total_mp" value="{{ old('total_mp')}}">
                                 </div>
                             </div>
                         
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label"> </label>
-                                    <input type="text" disabled class="form-control" id="unidad_mp" name="unidad_mp" value="{{ old('unidad_mp')}}">
+                                    <input type="text" readonly class="form-control" id="unidad_mp" name="unidad_mp" value="{{ old('unidad_mp')}}">
                                 </div>
                             </div>
                         </div>
@@ -163,7 +169,7 @@
                             <div class="col-sm-2">
                                 <div class="form-group ">
                                     <label class="control-label">Formula</label>
-                                    <input type="text" disabled class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
+                                    <input type="text" readonly class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
                                 </div>
                             </div>
                         </div>
@@ -174,11 +180,18 @@
                                     <label class="control-label">Core</label>
                                     <select class="form-control selectpicker" name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-primary">
                                         @foreach ($core as $co)
-                                            <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}">{{ $co->articulo }}</option>
+                                            <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}_{{ $co->articulo }}_{{ $co->id_unidad }}_{{ $co->precioc }}_{{ $co->preciov }}">{{ $co->articulo }}</option>
                                         @endforeach
                                     </select>
 
                                     <input type="hidden" name="tempo_id_producto_core" id="tempo_id_producto_core" value="{{ old('tempo_id_producto_core')}}">
+
+                                    <input type="hidden" name="tempo_id_unidad_core" id="tempo_id_unidad_core" value="{{ old('tempo_id_unidad_core')}}">
+
+                                    <input type="hidden" name="tempo_precioc_core" id="tempo_precioc_core" value="{{ old('tempo_precioc_core')}}">
+
+                                    <input type="hidden" name="tempo_preciov_core" id="tempo_preciov_core" value="{{ old('tempo_preciov_core')}}">
+
                                 </div>
                             </div>
 
@@ -193,14 +206,14 @@
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Cantidad</label>
-                                    <input type="text" disabled class="form-control" id="cantidad_core" name="cantidad_core" value="{{ old('cantidad_core')}}">
+                                    <input type="text" readonly class="form-control" id="cantidad_core" name="cantidad_core" value="{{ old('cantidad_core')}}">
                                 </div>
                             </div>
 
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label"> </label>
-                                    <input type="text" disabled class="form-control" id="unidad_core" name="unidad_core" value="{{ old('unidad_core')}}">
+                                    <input type="text" readonly class="form-control" id="unidad_core" name="unidad_core" value="{{ old('unidad_core')}}">
                                 </div>
                             </div>
                         </div>
@@ -211,10 +224,16 @@
                                     <label class="control-label">Leader Inicio</label>
                                     <select class="form-control selectpicker" name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
                                         @foreach ($leader as $le)
-                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
+                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}">{{ $le->articulo }}</option>
                                         @endforeach
                                     </select>
                                     <input type="hidden" name="tempo_id_producto_leader1" id="tempo_id_producto_leader1" value="{{ old('tempo_id_producto_leader1')}}">
+                                    <input type="hidden" name="tempo_id_unidad_leader1" id="tempo_id_unidad_leader1" value="{{ old('tempo_id_unidad_leader1')}}">
+
+                                    <input type="hidden" name="tempo_precioc_leader1" id="tempo_precioc_leader1" value="{{ old('tempo_precioc_leader1')}}">
+
+                                    <input type="hidden" name="tempo_preciov_leader1" id="tempo_preciov_leader1" value="{{ old('tempo_preciov_leader1')}}">
+
                                 </div>
                             </div>
 
@@ -228,28 +247,28 @@
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Ancho</label>
-                                    <input type="text" disabled class="form-control" id="ancho_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
+                                    <input type="text" readonly class="form-control" id="ancho_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
                                 </div>
                             </div>
                                 
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Largo</label>
-                                    <input type="text" disabled class="form-control" id="largo_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
+                                    <input type="text" readonly class="form-control" id="largo_leader1" name="largo_leader1" value="{{ old('largo_leader1')}}">
                                 </div>
                             </div>
                         
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <label class="control-label"> </label>
-                                    <input type="text" disabled class="form-control" id="total_leader1" name="total_leader1" value="{{ old('total_leader1')}}">
+                                    <input type="text" readonly class="form-control" id="total_leader1" name="total_leader1" value="{{ old('total_leader1')}}">
                                 </div>
                             </div>
                         
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label"> </label>
-                                    <input type="text" disabled class="form-control" id="unidad_leader1" name="unidad_leader1" value="{{ old('unidad_leader1')}}">
+                                    <input type="text" readonly class="form-control" id="unidad_leader1" name="unidad_leader1" value="{{ old('unidad_leader1')}}">
                                 </div>
                             </div>
                         </div>
@@ -260,10 +279,15 @@
                                     <label class="control-label">Leader Final</label>
                                     <select class="form-control selectpicker" name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-primary">
                                         @foreach ($leader as $le)
-                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}">{{ $le->articulo }}</option>
+                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}">{{ $le->articulo }}</option>
                                         @endforeach
                                     </select>
                                     <input type="hidden" name="tempo_id_producto_leader2" id="tempo_id_producto_leader2" value="{{ old('tempo_id_producto_leader2')}}">
+                                    <input type="hidden" name="tempo_id_unidad_leader2" id="tempo_id_unidad_leader2" value="{{ old('tempo_id_unidad_leader2')}}">
+
+                                    <input type="hidden" name="tempo_precioc_leader2" id="tempo_precioc_leader2" value="{{ old('tempo_precioc_leader2')}}">
+
+                                    <input type="hidden" name="tempo_preciov_leader2" id="tempo_preciov_leader2" value="{{ old('tempo_preciov_leader2')}}">
                                 </div>
                             </div>
 
@@ -277,28 +301,28 @@
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Ancho</label>
-                                    <input type="text" disabled class="form-control" id="ancho_leader2" name="ancho_leader2" value="{{ old('ancho_leader2')}}">
+                                    <input type="text" readonly class="form-control" id="ancho_leader2" name="ancho_leader2" value="{{ old('ancho_leader2')}}">
                                 </div>
                             </div>
                                 
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Largo</label>
-                                    <input type="text" disabled class="form-control" id="largo_leader2" name="largo_leader2" value="{{ old('largo_leader2')}}">
+                                    <input type="text" readonly class="form-control" id="largo_leader2" name="largo_leader2" value="{{ old('largo_leader2')}}">
                                 </div>
                             </div>
                             
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <label class="control-label"> </label>
-                                    <input type="text" disabled class="form-control" id="total_leader2" name="total_leader2" value="{{ old('total_leader2')}}">
+                                    <input type="text" readonly class="form-control" id="total_leader2" name="total_leader2" value="{{ old('total_leader2')}}">
                                 </div>
                             </div>
                         
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label"> </label>
-                                    <input type="text" disabled class="form-control" id="unidad_leader2" name="unidad_leader2" value="{{ old('unidad_leader2')}}">
+                                    <input type="text" readonly class="form-control" id="unidad_leader2" name="unidad_leader2" value="{{ old('unidad_leader2')}}">
                                 </div>
                             </div>
                         </div>
@@ -309,10 +333,16 @@
                                     <label class="control-label">Leader Envoltura</label>
                                     <select class="form-control selectpicker" name="id_producto_leader3" id="id_producto_leader3" data-live-search="true" data-style="btn-primary">
                                         @foreach ($leader as $le)
-                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}"">{{ $le->articulo }}</option>
+                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}">{{ $le->articulo }}</option>
                                         @endforeach
                                     </select>
                                     <input type="hidden" name="tempo_id_producto_leader3" id="tempo_id_producto_leader3" value="{{ old('tempo_id_producto_leader3')}}">
+
+                                    <input type="hidden" name="tempo_id_unidad_leader3" id="tempo_id_unidad_leader3" value="{{ old('tempo_id_unidad_leader3')}}">
+
+                                    <input type="hidden" name="tempo_precioc_leader3" id="tempo_precioc_leader3" value="{{ old('tempo_precioc_leader3')}}">
+
+                                    <input type="hidden" name="tempo_preciov_leader3" id="tempo_preciov_leader3" value="{{ old('tempo_preciov_leader3')}}">
                                 </div>
                             </div>
 
@@ -326,28 +356,28 @@
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Ancho</label>
-                                    <input type="text" disabled class="form-control" id="ancho_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
+                                    <input type="text" readonly class="form-control" id="ancho_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
                                 </div>
                             </div>
                                     
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Largo</label>
-                                    <input type="text" disabled class="form-control" id="largo_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
+                                    <input type="text" readonly class="form-control" id="largo_leader3" name="largo_leader3" value="{{ old('largo_leader3')}}">
                                 </div>
                             </div>
                             
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <label class="control-label"> </label>
-                                    <input type="text" disabled class="form-control" id="total_leader3" name="total_leader3" value="{{ old('total_leader3')}}">
+                                    <input type="text" readonly class="form-control" id="total_leader3" name="total_leader3" value="{{ old('total_leader3')}}">
                                 </div>
                             </div>
                             
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label"> </label>
-                                    <input type="text" disabled class="form-control" id="unidad_leader3" name="unidad_leader3" value="{{ old('unidad_leader3')}}">
+                                    <input type="text" readonly class="form-control" id="unidad_leader3" name="unidad_leader3" value="{{ old('unidad_leader3')}}">
                                 </div>
                             </div>
                         </div>
@@ -359,10 +389,17 @@
                                     <label class="control-label">Etiqueta</label>
                                     <select class="form-control selectpicker" name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-primary">
                                         @foreach ($sticker as $sti)
-                                            <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}">{{ $sti->articulo }}</option>
+                                            <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}_{{ $sti->articulo }}_{{ $sti->id_unidad }}_{{ $sti->precioc }}_{{ $sti->preciov }}">{{ $sti->articulo }}</option>
                                         @endforeach
                                     </select>
                                     <input type="hidden" name="tempo_id_producto_sticker" id="tempo_id_producto_sticker" value="{{ old('tempo_id_producto_sticker')}}">
+
+                                    <input type="hidden" name="tempo_id_unidad_sticker" id="tempo_id_unidad_sticker" value="{{ old('tempo_id_unidad_sticker')}}">
+
+                                    <input type="hidden" name="tempo_precioc_sticker" id="tempo_precioc_sticker" value="{{ old('tempo_precioc_sticker')}}">
+
+                                    <input type="hidden" name="tempo_preciov_sticker" id="tempo_preciov_sticker" value="{{ old('tempo_preciov_sticker')}}">
+
                                 </div>
                             </div>
 
@@ -376,14 +413,14 @@
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Cantidad</label>
-                                    <input type="text" disabled class="form-control" id="cantidad_sticker" name="cantidad_sticker" value="{{ old('cantidad_sticker')}}">
+                                    <input type="text" readonly class="form-control" id="cantidad_sticker" name="cantidad_sticker" value="{{ old('cantidad_sticker')}}">
                                 </div>
                             </div>
 
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
                                     <label class="control-label"> </label>
-                                    <input type="text" disabled class="form-control" id="unidad_sticker" name="unidad_sticker" value="{{ old('unidad_sticker')}}">
+                                    <input type="text" readonly class="form-control" id="unidad_sticker" name="unidad_sticker" value="{{ old('unidad_sticker')}}">
                                 </div>
                             </div>
                         </div>
@@ -419,21 +456,21 @@
                                 <div class="col-sm-2">
                                     <div class="form-group ">
                                         <label class="control-label">Desperdicio por corrida </label>
-                                        <input type="number" step="0.001" disabled class="form-control" id="total_desp" name="total_desp" value="{{ old('total_desp')}}">
+                                        <input type="number" step="0.001" readonly class="form-control" id="total_desp" name="total_desp" value="{{ old('total_desp')}}">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group ">
                                         <label class="control-label">Desperdicio extra por corrida </label>
-                                        <input type="number" step="0.001" disabled class="form-control" id="total_desp_corrida" name="total_desp_corrida" value="{{ old('total_desp_corrida')}}">
+                                        <input type="number" step="0.001" readonly class="form-control" id="total_desp_corrida" name="total_desp_corrida" value="{{ old('total_desp_corrida')}}">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group ">
                                         <label class="control-label">Desperdicio total por corrida </label>
-                                        <input type="number" step="0.001" disabled class="form-control" id="dt_corrida" name="dt_corrida" value="{{ old('dt_corrida')}}">
+                                        <input type="number" step="0.001" readonly class="form-control" id="dt_corrida" name="dt_corrida" value="{{ old('dt_corrida')}}">
                                     </div>
                                 </div>
                             </div>
@@ -442,21 +479,21 @@
                                 <div class="col-sm-2">
                                     <div class="form-group ">
                                         <label class="control-label">Rollos por corrida </label>
-                                        <input type="number" step="0.001" disabled class="form-control" id="rollos_materia_prima" name="rollos_materia_prima" value="{{ old('rollos_materia_prima')}}">
+                                        <input type="number" step="0.001" readonly class="form-control" id="rollos_materia_prima" name="rollos_materia_prima" value="{{ old('rollos_materia_prima')}}">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group ">
                                         <label class="control-label">Corridas necesarias </label>
-                                        <input type="number" step="0.001" disabled class="form-control" id="corridas_materia_prima" name="corridas_materia_prima" value="{{ old('corridas_materia_prima')}}">
+                                        <input type="number" step="0.001" readonly class="form-control" id="corridas_materia_prima" name="corridas_materia_prima" value="{{ old('corridas_materia_prima')}}">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group ">
                                         <label class="control-label">Rollos Totales </label>
-                                        <input type="number" step="0.001" disabled class="form-control" id="rollos_totales" name="rollos_totales" value="{{ old('rollos_totales')}}">
+                                        <input type="number" step="0.001" readonly class="form-control" id="rollos_totales" name="rollos_totales" value="{{ old('rollos_totales')}}">
                                     </div>
                                 </div>
                             </div>
@@ -465,31 +502,185 @@
                                 <div class="col-sm-4">
                                     <div class="form-group ">
                                         <label class="control-label">Materia prima </label>
-                                        <input type="text" disabled class="form-control" id="materia_prima" name="materia_prima" value="{{ old('materia_prima')}}">
+                                        <input type="text" readonly class="form-control" id="materia_prima" name="materia_prima" value="{{ old('materia_prima')}}">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group ">
                                         <label class="control-label">Largo original </label>
-                                        <input type="text" disabled class="form-control" id="largo_mp_original" name="largo_mp_original" value="{{ old('largo_mp_original')}}">
+                                        <input type="text" readonly class="form-control" id="largo_mp_original" name="largo_mp_original" value="{{ old('largo_mp_original')}}">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group ">
                                         <label class="control-label">Largo necesario </label>
-                                        <input type="text" disabled class="form-control" id="largo_mp_necesario" name="largo_mp_necesario" value="{{ old('largo_mp_necesario')}}">
+                                        <input type="text" readonly class="form-control" id="largo_mp_necesario" name="largo_mp_necesario" value="{{ old('largo_mp_necesario')}}">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group ">
                                         <label class="control-label">Largo restante </label>
-                                        <input type="text" disabled class="form-control" id="total_largo_restante" name="total_largo_restante" value="{{ old('total_largo_restante')}}">
+                                        <input type="text" readonly class="form-control" id="total_largo_restante" name="total_largo_restante" value="{{ old('total_largo_restante')}}">
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row">                
+                                <div class="col-sm-4">
+                                    <div class="form-group ">
+                                        <label class="control-label">Core </label>
+                                        <input type="text" readonly class="form-control" id="core" name="core" value="{{ old('core')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Cantidad original </label>
+                                        <input type="text" readonly class="form-control" id="cantidad_core_original" name="cantidad_core_original" value="{{ old('cantidad_core_original')}}">
+                                    </div>
+                                </div>
+                            
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Cantidad necesaria </label>
+                                        <input type="text" readonly class="form-control" id="cantidad_core_necesario" name="cantidad_core_necesario" value="{{ old('cantidad_core_necesario')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Cantidad restante </label>
+                                        <input type="text" readonly class="form-control" id="cantidad_core_restante" name="cantidad_core_restante" value="{{ old('cantidad_core_restante')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">                
+                                <div class="col-sm-4">
+                                    <div class="form-group ">
+                                        <label class="control-label">Leader Inicio </label>
+                                        <input type="text" readonly class="form-control" id="leader1" name="leader1" value="{{ old('leader1')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo original </label>
+                                        <input type="text" readonly class="form-control" id="largo_leader1_original" name="largo_leader1_original" value="{{ old('largo_leader1_original')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo necesario </label>
+                                        <input type="text" readonly class="form-control" id="largo_leader1_necesario" name="largo_leader1_necesario" value="{{ old('largo_leader1_necesario')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo restante </label>
+                                        <input type="text" readonly class="form-control" id="largo_leader1_restante" name="largo_leader1_restante" value="{{ old('largo_leader1_restante')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">                
+                                <div class="col-sm-4">
+                                    <div class="form-group ">
+                                        <label class="control-label">Leader Final </label>
+                                        <input type="text" readonly class="form-control" id="leader2" name="leader2" value="{{ old('leader2')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo original </label>
+                                        <input type="text" readonly class="form-control" id="largo_leader2_original" name="largo_leader2_original" value="{{ old('largo_leader2_original')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo necesario </label>
+                                        <input type="text" readonly class="form-control" id="largo_leader2_necesario" name="largo_leader2_necesario" value="{{ old('largo_leader2_necesario')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo restante </label>
+                                        <input type="text" readonly class="form-control" id="largo_leader2_restante" name="largo_leader2_restante" value="{{ old('largo_leader2_restante')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">                
+                                <div class="col-sm-4">
+                                    <div class="form-group ">
+                                        <label class="control-label">Leader Envoltura </label>
+                                        <input type="text" readonly class="form-control" id="leader3" name="leader3" value="{{ old('leader3')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo original </label>
+                                        <input type="text" readonly class="form-control" id="largo_leader3_original" name="largo_leader3_original" value="{{ old('largo_leader3_original')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo necesario </label>
+                                        <input type="text" readonly class="form-control" id="largo_leader3_necesario" name="largo_leader3_necesario" value="{{ old('largo_leader3_necesario')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Largo restante </label>
+                                        <input type="text" readonly class="form-control" id="largo_leader3_restante" name="largo_leader3_restante" value="{{ old('largo_leader3_restante')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">                
+                                <div class="col-sm-4">
+                                    <div class="form-group ">
+                                        <label class="control-label">Etiquetas </label>
+                                        <input type="text" readonly class="form-control" id="sticker" name="sticker" value="{{ old('sticker')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Cantidad original </label>
+                                        <input type="text" readonly class="form-control" id="cantidad_sticker_original" name="cantidad_sticker_original" value="{{ old('cantidad_sticker_original')}}">
+                                    </div>
+                                </div>
+                            
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Cantidad necesaria </label>
+                                        <input type="text" readonly class="form-control" id="cantidad_sticker_necesario" name="cantidad_sticker_necesario" value="{{ old('cantidad_sticker_necesario')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">Cantidad restante </label>
+                                        <input type="text" readonly class="form-control" id="cantidad_sticker_restante" name="cantidad_sticker_restante" value="{{ old('cantidad_sticker_restante')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>                
                     
@@ -508,7 +699,7 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
-                                                <input type="number" disabled step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
+                                                <input type="number" readonly step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
                                             </div>
                                         </div>
 
@@ -542,7 +733,7 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
-                                                <input type="number" disabled step="0.01" class="form-control" name="pancho_prod2" id="pancho_prod2"  >
+                                                <input type="number" readonly step="0.01" class="form-control" name="pancho_prod2" id="pancho_prod2"  >
                                                 <input type="hidden" step="0.01" class="form-control" name="pcantidad_pt2" id="pcantidad_pt2" value="1" >
                                             </div>
                                         </div>
@@ -713,6 +904,9 @@
         tot_mp=$("#ancho_mp").val()*$("#largo_mp").val();
         $("#total_mp").val(tot_mp);
         $("#materia_prima").val(datosMateria[6]);
+        $("#tempo_id_unidad_mp").val(datosMateria[7]);
+        $("#tempo_precioc_mp").val(datosMateria[8]);
+        $("#tempo_preciov_mp").val(datosMateria[9]);
 
 
 
@@ -722,8 +916,14 @@
 
         $("#etiqueta_core").val(datosCore[1]);
         $("#cantidad_core").val(datosCore[3]);
+        $("#cantidad_core_original").val(datosCore[3]);
         unidad_core=datosCore[5];
-        $("#unidad_core").val(unidad_core);        
+        tot_mp=$("#ancho_mp").val()*$("#largo_mp").val();
+        $("#unidad_core").val(unidad_core);    
+        $("#core").val(datosCore[6]);
+        $("#tempo_id_unidad_core").val(datosCore[7]);
+        $("#tempo_precioc_core").val(datosCore[8]);
+        $("#tempo_preciov_core").val(datosCore[9]);    
 
 
         datosLeader1=document.getElementById('id_producto_leader1').value.split('_');
@@ -733,10 +933,15 @@
         $("#etiqueta_leader1").val(datosLeader1[1]);
         $("#ancho_leader1").val(datosLeader1[2]);
         $("#largo_leader1").val(datosLeader1[3]);
+        $("#largo_leader1_original").val(datosLeader1[3]);
         unidad_leader1=datosLeader1[5]+'²';
-        $("#unidad_leader1").val(unidad_leader1);        
+        $("#unidad_leader1").val(unidad_leader1);    
+        $("#leader1").val(datosLeader1[6]);    
         tot_leader1=$("#ancho_leader1").val()*$("#largo_leader1").val();
         $("#total_leader1").val(tot_leader1);
+        $("#tempo_id_unidad_leader1").val(datosLeader1[7]);
+        $("#tempo_precioc_leader1").val(datosLeader1[8]);
+        $("#tempo_preciov_leader1").val(datosLeader1[9]); 
 
 
         datosLeader2=document.getElementById('id_producto_leader2').value.split('_');
@@ -746,10 +951,15 @@
         $("#etiqueta_leader2").val(datosLeader2[1]);
         $("#ancho_leader2").val(datosLeader2[2]);
         $("#largo_leader2").val(datosLeader2[3]);
+        $("#largo_leader2_original").val(datosLeader2[3]);
         unidad_leader2=datosLeader2[5]+'²';
-        $("#unidad_leader2").val(unidad_leader2);        
+        $("#unidad_leader2").val(unidad_leader2);  
+        $("#leader2").val(datosLeader2[6]);      
         tot_leader2=$("#ancho_leader2").val()*$("#largo_leader2").val();
         $("#total_leader2").val(tot_leader2);
+        $("#tempo_id_unidad_leader2").val(datosLeader2[7]);
+        $("#tempo_precioc_leader2").val(datosLeader2[8]);
+        $("#tempo_preciov_leader2").val(datosLeader2[9]); 
 
         datosLeader3=document.getElementById('id_producto_leader3').value.split('_');
 
@@ -758,10 +968,15 @@
         $("#etiqueta_leader3").val(datosLeader3[1]);
         $("#ancho_leader3").val(datosLeader3[2]);
         $("#largo_leader3").val(datosLeader3[3]);
+        $("#largo_leader3_original").val(datosLeader3[3]);
         unidad_leader3=datosLeader3[5]+'²';
-        $("#unidad_leader3").val(unidad_leader3);        
+        $("#unidad_leader3").val(unidad_leader3);  
+        $("#leader3").val(datosLeader3[6]);      
         tot_leader3=$("#ancho_leader3").val()*$("#largo_leader3").val();
         $("#total_leader3").val(tot_leader3);
+        $("#tempo_id_unidad_leader3").val(datosLeader3[7]);
+        $("#tempo_precioc_leader3").val(datosLeader3[8]);
+        $("#tempo_preciov_leader3").val(datosLeader3[9]); 
 
         datosSticker=document.getElementById('id_producto_sticker').value.split('_');
 
@@ -769,8 +984,13 @@
 
         $("#etiqueta_sticker").val(datosSticker[1]);
         $("#cantidad_sticker").val(datosSticker[3]);
+        $("#cantidad_sticker_original").val(datosSticker[3]);
         unidad_sticker=datosSticker[5];
-        $("#unidad_sticker").val(unidad_sticker);        
+        $("#unidad_sticker").val(unidad_sticker); 
+        $("#sticker").val(datosSticker[6]);
+        $("#tempo_id_unidad_sticker").val(datosSticker[7]);
+        $("#tempo_precioc_sticker").val(datosSticker[8]);
+        $("#tempo_preciov_sticker").val(datosSticker[9]);          
 
 
         datosProducto=document.getElementById('pid_producto_pt').value.split('_');
@@ -842,6 +1062,7 @@
                 dt_corrida=Number(dt_corrida.toFixed(3));
                 $("#dt_corrida").val(dt_corrida);
 
+                // cantidades de materia prima
                 largo_mp_necesario=parseFloat(largo)*parseFloat(corridas_materia_prima);
                 $("#largo_mp_necesario").val(largo_mp_necesario);                
 
@@ -853,6 +1074,45 @@
                 largorollo[cont] = $("#largo_mp").val();
                 despcorrida[cont] = ancho*$("#rollos_materia_prima").val();
                 rolloscorrida[cont] = $("#rollos_materia_prima").val();
+
+                // cantidades de core
+
+                
+                cantidad_core_necesario=parseFloat($("#rollos_totales").val());
+                $("#cantidad_core_necesario").val(cantidad_core_necesario);                
+
+                cantidad_core_restante=parseFloat($("#cantidad_core_original").val())-parseFloat(cantidad_core_necesario);
+                $("#cantidad_core_restante").val(cantidad_core_restante); 
+
+
+                // cantidades de leader1
+                largo_leader1_necesario=parseFloat($("#corridas_materia_prima").val());
+                $("#largo_leader1_necesario").val(largo_leader1_necesario);                
+
+                largo_leader1_restante=parseFloat($("#largo_leader1_original").val())-parseFloat(largo_leader1_necesario);
+                $("#largo_leader1_restante").val(largo_leader1_restante); 
+
+                // cantidades de leader2
+                largo_leader2_necesario=parseFloat($("#corridas_materia_prima").val());
+                $("#largo_leader2_necesario").val(largo_leader2_necesario);                
+
+                largo_leader2_restante=parseFloat($("#largo_leader2_original").val())-parseFloat(largo_leader2_necesario);
+                $("#largo_leader2_restante").val(largo_leader2_restante); 
+
+                // cantidades de leader3
+                largo_leader3_necesario=parseFloat($("#corridas_materia_prima").val());
+                $("#largo_leader3_necesario").val(largo_leader3_necesario);                
+
+                largo_leader3_restante=parseFloat($("#largo_leader3_original").val())-parseFloat(largo_leader3_necesario);
+                $("#largo_leader3_restante").val(largo_leader3_restante); 
+
+                // cantidades de sticker
+                cantidad_sticker_necesario=parseFloat($("#rollos_totales").val());
+                $("#cantidad_sticker_necesario").val(cantidad_sticker_necesario);                
+
+                cantidad_sticker_restante=parseFloat($("#cantidad_sticker_original").val())-parseFloat(cantidad_sticker_necesario);
+                $("#cantidad_sticker_restante").val(cantidad_sticker_restante); 
+
 
 
                 var fila='<tr class="selected" id="fila'+cont+'"><td><button  id="b'+cont+'" type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td>  <td><input type="hidden" name="id_producto_pt[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="ancho_producto_pt[]" value="'+ancho+'">'+ancho+'</td> <td><input type="hidden" name="largo_producto_pt[]" value="'+largo+'">'+largo+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt[]" value="'+cantidad+'">'+cantidad+'</td> ';
@@ -934,6 +1194,42 @@ function agregar2(){
                 despcorrida[cont] = parseFloat(ancho2);
                 rolloscorrida[cont] = 1;
 
+                // cantidades de core
+                cantidad_core_necesario=parseFloat($("#rollos_totales").val());
+                $("#cantidad_core_necesario").val(cantidad_core_necesario);                
+
+                cantidad_core_restante=parseFloat($("#cantidad_core_original").val())-parseFloat(cantidad_core_necesario);
+                $("#cantidad_core_restante").val(cantidad_core_restante); 
+
+                // cantidades de leader1
+                largo_leader1_necesario=parseFloat($("#corridas_materia_prima").val());
+                $("#largo_leader1_necesario").val(largo_leader1_necesario);                
+
+                largo_leader1_restante=parseFloat($("#largo_leader1_original").val())-parseFloat(largo_leader1_necesario);
+                $("#largo_leader1_restante").val(largo_leader1_restante); 
+
+                // cantidades de leader2
+                largo_leader2_necesario=parseFloat($("#corridas_materia_prima").val());
+                $("#largo_leader2_necesario").val(largo_leader2_necesario);                
+
+                largo_leader2_restante=parseFloat($("#largo_leader2_original").val())-parseFloat(largo_leader2_necesario);
+                $("#largo_leader2_restante").val(largo_leader2_restante); 
+
+                // cantidades de leader3
+                largo_leader3_necesario=parseFloat($("#corridas_materia_prima").val());
+                $("#largo_leader3_necesario").val(largo_leader3_necesario);                
+
+                largo_leader3_restante=parseFloat($("#largo_leader3_original").val())-parseFloat(largo_leader3_necesario);
+                $("#largo_leader3_restante").val(largo_leader3_restante); 
+
+                // cantidades de sticker
+                cantidad_sticker_necesario=parseFloat($("#rollos_totales").val());
+                $("#cantidad_sticker_necesario").val(cantidad_sticker_necesario);                
+
+                cantidad_sticker_restante=parseFloat($("#cantidad_sticker_original").val())-parseFloat(cantidad_sticker_necesario);
+                $("#cantidad_sticker_restante").val(cantidad_sticker_restante); 
+
+
 
                 var fila='<tr class="selected" id="fila'+cont+'"><td><button id="b'+cont+'" type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td>  <td><input type="hidden" name="id_producto_pt2[]" value="'+idarticulo2+'">'+articulo2+'</td> <td><input type="hidden" name="ancho_producto_pt2[]" value="'+ancho2+'">'+ancho2+'</td> <td><input type="hidden" name="largo_producto_pt2[]" value="'+largo2+'">'+largo2+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt2[]" value="'+cantidad2+'">'+cantidad2+'</td> ';
 
@@ -978,7 +1274,7 @@ function agregar2(){
     function evaluar(){
         
 
-        if (total>0 && $("#dt_corrida").val()<0.060)
+        if (total>0 && $("#dt_corrida").val()<0.060 && $("#total_largo_restante").val()>=0 && $("#cantidad_core_restante").val()>=0 && $("#largo_leader1_restante").val()>=0 && $("#largo_leader2_restante").val()>=0 && $("#largo_leader3_restante").val()>=0 && $("#cantidad_sticker_restante").val()>=0)
         {
             $("#guardar").show();
         }
