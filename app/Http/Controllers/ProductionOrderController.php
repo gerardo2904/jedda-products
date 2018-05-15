@@ -115,12 +115,12 @@ class ProductionOrderController extends Controller
     	$materiaprima = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','un.name as unidad', 'un.id as id_unidad','ap.precioc','ap.preciov')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','ap.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','un.name as unidad', 'un.id as id_unidad','ap.precioc','ap.preciov')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','2')  // Es materia prima
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia', 'unidad','precioc','preciov')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia', 'ap.cantidad_prod', 'unidad','precioc','preciov')
     	  ->get();
 
     	$productoterminado = DB::table('products as art')
@@ -134,34 +134,34 @@ class ProductionOrderController extends Controller
 		$leader = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','ap.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','4')  // Es Leader
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad','precioc','preciov')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','ap.cantidad_prod','unidad','precioc','preciov')
     	  ->get();
 
     	$core = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','ap.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','3')  // Es core
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad','precioc','preciov')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','ap.cantidad_prod', 'unidad','precioc','preciov')
     	  ->get();
 
     	$sticker = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','art.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','ap.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','5')  // Es Sticker
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','unidad','precioc','preciov')
+    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','ap.cantidad_prod','unidad','precioc','preciov')
     	  ->get();
 
     	return view('productionorder.production.create',["clientes" => $clientes, "materiaprima" => $materiaprima, "productoterminado" => $productoterminado,"leader" => $leader,"core" => $core,"sticker" => $sticker, "cim" => $cim]);
@@ -504,18 +504,41 @@ class ProductionOrderController extends Controller
                 $almpt->save();
             }
 
-/*
             $dptempo = DB::table('detalle_production_order as dart')
-            ->join('products as p','p.id_product','=','dart.id_producto_pt')
+            ->join('products as p','p.id','=','dart.id_producto_pt')
             ->join('units as un','p.id_unidad_prod','=','un.id')
-            ->select(DB::raw('dart.id_producto_pt','dart.etiqueta_pt','dart.cantidad_pt','un.id as unidad_produccion','p.cantidad_prod')
-            ->where('detalle_production_order.id_production','=',$ordenproduccion->id_production)
-            ->groupBy('id_producto_pt','etiqueta_pt','unidad_produccion')
+            ->select('dart.id_production','dart.id_producto_pt as id_product','dart.etiqueta_pt as etiqueta','dart.cantidad_pt as existencia','un.id as unidad_produccion','p.ancho_prod')
+            ->where('dart.id_production','=',$ordenproduccion->id_production)
+            ->groupBy('dart.id_producto_pt','dart.id_production','dart.etiqueta_pt','un.id','p.ancho_prod','existencia')
             ->get();
 
-            $iu
+            foreach($dptempo as $t){
+                $tid_company        = $iu;
+                $tid_product        = $t->id_product;
+                $texistencia        = $t->existencia;
+                $tprecioc           = 0;
+                $tpreciov           = 0;
+                $tid_unidad_prod    = $t->unidad_produccion;
+                $tncantidad_prod    = $t->ancho_prod;
+                $tetiqueta          = $t->etiqueta;
 
-*/
+                $almpt = new almproducts();
+                $almpt->id_company      =   $tid_company;
+                $almpt->id_product      =   $tid_product;
+                $almpt->existencia      =   $texistencia;
+                $almpt->precioc         =   $tprecioc;
+                $almpt->preciov         =   $tpreciov;
+                $almpt->id_unidad_prod  =   $tid_unidad_prod;
+                $almpt->cantidad_prod   =   $tncantidad_prod;
+                $almpt->etiqueta        =   $tetiqueta;
+                $almpt->save();
+            }
+
+            
+
+            
+
+
 
             // Fin de copia de almproducts_tempo a almproducts
 
