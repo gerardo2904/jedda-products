@@ -47,6 +47,7 @@
                                     <th class="col-md-2 text-center">Nombre</th>
                                     <th class="col-md-2 text-center">Etiqueta</th>
                                     <th class="col-md-4 text-center">Descripción</th>
+                                    <th class="col-md-4 text-center">Cantidad/Largo</th>
                                     <th class="col-md-4 text-center">Existencia</th>
 
                                 </tr>
@@ -58,6 +59,7 @@
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->etiqueta_prod }}</td>
                                     <td>{{ $product->description }}</td>
+                                    <td>{{ $product->cantidad_prod }}</td>
                                     <td>{{ $product->existencia}}</td>
                                     
                                 </tr>

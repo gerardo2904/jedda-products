@@ -14,6 +14,7 @@
                 <th>Producto</th>
                 <th>Lote</th>
                 <th>Descripción</th>
+                <th>Cantidad/Largo</th>
                 <th>Existencia</th>
             </tr>                            
         </thead>
@@ -24,6 +25,7 @@
                 <td>{{ $p->name }}</td>
                 <td>{{ $p->etiqueta_prod }}</td>
                 <td>{{ $p->description }}</td>
+                <td>{{ $product->cantidad_prod }}</td>
                 <td>{{ $p->existencia}}</td>
                
                 
