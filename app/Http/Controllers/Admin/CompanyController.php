@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Company;
 use App\CompanyImage;
+use App\almproducts;
 use File;
 
 Use Session;
@@ -147,13 +148,15 @@ class CompanyController extends Controller
     {
         // registrar nueva compañia en la bd
         //dd($request->all());   //imprime lo solicitado y termina ejecucion.
-        $company = Company::find($id);
+        $company    = Company::find($id);
 
-        $nomcom = $company->name;
-        $images = CompanyImage::where('company_id',$id);
-        $imagenes = CompanyImage::where('company_id',$id)->count();
+        $nomcom     = $company->name;
+        $images     = CompanyImage::where('company_id',$id);
+        $imagenes   = CompanyImage::where('company_id',$id)->count();
 
-        
+        $apc        = almproducts::where('id_company',$id)->count();
+
+        if ($apc == 0 ) {
             if($imagenes > 0){
 
                 $images->each(function ($images){
@@ -172,15 +175,19 @@ class CompanyController extends Controller
                 });
 
                 $images->where('company_id',$id)->delete();
+            }   
+
+            $company->delete(); //delete en tabla Companies
+
+            Session::flash('message','Se ha borrado exitosamente la compañia '.$nomcom.'.');
+            return redirect('/admin/companies')->with('status', 'exito');
+        }else  
+            {
+                Session::flash('message','La compañia '.$nomcom.' no se puede borrar porque tiene movimientos en almacen.');
+                return redirect('/admin/companies')->with('status', 'noexito');
+
             }
-
-            
-
-        $company->delete(); //delete en tabla Companies
-
-        Session::flash('message','Se ha borrado exitosamente la compañia '.$nomcom.'.');
-        return redirect('/admin/companies')->with('status', 'exito');
-
             
         return back();
-    }}
+    }
+}

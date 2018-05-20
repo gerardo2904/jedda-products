@@ -147,11 +147,12 @@ class CategoryController extends Controller
         $images = CategoryImage::where('category_id',$id);
         $imagenes = CategoryImage::where('category_id',$id)->count();
 
-        $prod = Product::where('category_id',$id)->count();
+        $prod  = Product::where('category_id',$id)->count();
+        $prod2 = Product::where('subcategory_id',$id)->count();
 
         
 
-        if($prod == 0){
+        if($prod == 0 && $prod2 == 0){
             if($imagenes > 0){
 
                 $images->each(function ($images){

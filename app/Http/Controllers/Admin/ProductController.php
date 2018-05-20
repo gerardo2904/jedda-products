@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\ProductImage;
+use App\almproducts;
 use App\Category;
 use App\Unit;
 use App\RollProduct;
@@ -212,32 +213,43 @@ class ProductController extends Controller
         $images = ProductImage::where('product_id',$id);
         $imagenes = ProductImage::where('product_id',$id)->count();
 
-        if($imagenes > 0){
+        $apc = almproducts::where('id_product',$id)->count();
 
-                $images->each(function ($images){
-                if (substr($images->image,0,4)==="http")  // Si empieza con http o sea que es link
-                {
-                    $deleted = true;
-                 }else {
-                    if ($images->image ==="default.png"){
-                         $deleted = true;
-                    }else{
-                         $fullPath = public_path() . '/images/products/' . $images->image;
-                         $deleted = File::delete($fullPath);
+        
+        if ($apc == 0 ) {
+
+            if($imagenes > 0){
+
+                    $images->each(function ($images){
+                    if (substr($images->image,0,4)==="http")  // Si empieza con http o sea que es link
+                    {
+                        $deleted = true;
+                     }else {
+                        if ($images->image ==="default.png"){
+                             $deleted = true;
+                        }else{
+                             $fullPath = public_path() . '/images/products/' . $images->image;
+                             $deleted = File::delete($fullPath);
+                        }
                     }
+
+                    });
+
+                    $images->where('product_id',$id)->delete();
+
                 }
 
-                });
+            $product->delete(); //delete en tabla productos
 
-                $images->where('product_id',$id)->delete();
+            Session::flash('message','Se ha borrado exitosamente el producto '.$nomprod.'.');
+            return redirect('/admin/products')->with('status', 'exito');
+        }else {
+            Session::flash('message','El producto '.$nomprod.' no se puede borrar porque tiene movimientos en almacen.');
+            return redirect('/admin/products')->with('status', 'noexito');
 
-            }
+        }
 
-        $product->delete(); //delete en tabla productos
-
-        Session::flash('message','Se ha borrado exitosamente el producto '.$nomprod.'.');
-        return redirect('/admin/products')->with('status', 'exito');
-            
+                    
         return back();
     }
 }
