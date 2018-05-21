@@ -45,7 +45,7 @@
                                 <tr>
                                     <!-- <th class="text-center">#</th> -->
                                     <th class="col-md-2 text-center">Nombre</th>
-                                    <th class="col-md-2 text-center">Etiqueta</th>
+                                    <th class="col-md-2 text-center">Lote</th>
                                     <th class="col-md-4 text-center">Descripción</th>
                                     <th class="col-md-4 text-center">Cantidad/Largo</th>
                                     <th class="col-md-4 text-center">Existencia</th>

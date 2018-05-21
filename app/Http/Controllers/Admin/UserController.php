@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\UserImage;
+Use App\Ingreso;
+Use App\Venta;
+Use App\Production_Order;
 use App\Permiso;
 use File;
 Use Session;
@@ -140,7 +143,12 @@ class UserController extends Controller
         $images = UserImage::where('user_id',$id);
         $imagenes = UserImage::where('user_id',$id)->count();
 
-        
+        $ing  = Ingreso::where('id_user',$id)->count();
+        $vta  = Venta::where('id_user',$id)->count();
+        $pro  = Production_Order::where('id_user',$id)->count();
+
+
+        if ($ing==0 && $vta == 0 && $pro ==0) {
             if($imagenes > 0){
 
                 $images->each(function ($images){
@@ -166,7 +174,11 @@ class UserController extends Controller
         Session::flash('message','Se ha borrado exitosamente el usuario '.$nomusr.'.');
         return redirect('/admin/users')->with('status', 'exito');
 
-            
+        }else{
+            Session::flash('message','El usuario '.$nomusr.' no se puede borrar porque tiene movimientos generados.');
+            return redirect('/admin/users')->with('status', 'noexito');
+        }
+
         return back();
     }
 }

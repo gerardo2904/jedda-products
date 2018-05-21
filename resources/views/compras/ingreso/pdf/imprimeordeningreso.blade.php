@@ -36,7 +36,7 @@
         <tbody>
             @foreach($detalles as $det)
                 <tr>
-                <td>{{$det->articulo}}</td>
+                <td>{{$det->articulo}} {{$det->description}}</td>
                 <td>{{$det->cantidad}}</td>
                 <td>{{$det->precioc}}</td>
                 <td>{{$det->cantidad*$det->precioc}}</td>

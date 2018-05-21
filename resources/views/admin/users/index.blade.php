@@ -13,6 +13,15 @@
 		<div class="main main-raised">
 			<div class="container">
 		    	<div class="section text-center">
+
+                    @if(Session::has('message'))
+                        <div class="alert {{ (Session::get('status') == 'exito')?'alert-success':'alert-danger' }} alert-dismissible" role="alert">
+                            {{Session::get('message')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            
+                        </div>
+                    @endif
+
 	                <h2 class="title">Usuarios</h2>
 
 					<div class="team">

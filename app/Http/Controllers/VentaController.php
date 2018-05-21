@@ -34,6 +34,7 @@ class VentaController extends Controller
 
     public function index (Request $request)
     {
+		$iu = Auth::user()->empresa_id; 
     	if ($request)
     	{
     		$query    = trim($request->get('searchText'));
@@ -42,7 +43,8 @@ class VentaController extends Controller
     		 ->join('companies as c','v.id_empresa','=','c.id')
     		 ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
     		 ->select('v.idventa','v.fecha_hora','p.name','c.name as compan','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.notas','total_venta')
-    		 ->where('v.num_comprobante','LIKE','%'.$query.'%')
+			 ->where('v.num_comprobante','LIKE','%'.$query.'%')
+			 ->where('v.id_empresa',$iu)
     		 ->orderBy('v.idventa','desc')
     		 ->groupBy('v.idventa','v.fecha_hora','p.name','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
     		 ->paginate(7);
@@ -63,11 +65,11 @@ class VentaController extends Controller
 
     	$articulos = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','ap.id_product','art.name','ap.preciov','ap.existencia')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','ap.id_product','ap.etiqueta','art.name','ap.preciov','ap.existencia')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
-    	  ->groupBy('articulo','art.id','ap.preciov', 'ap.existencia')
+    	  ->groupBy('art.id','art.name','art.description','ap.etiqueta','ap.preciov', 'ap.existencia')
     	  ->get();
     	return view('ventas.venta.create',["clientes" => $clientes, "products" => $articulos, "units" => $units]);
     }
@@ -77,13 +79,17 @@ class VentaController extends Controller
     	try{
             $msj="Ha ocurrido un error...";
 
+			$u  = Auth::user()->id;
+			$iu = Auth::user()->empresa_id; 
+			
 
     		DB::beginTransaction();
 
 
     		$venta = new Venta;
     		$venta->idcliente	 		= $request->get('idcliente');
-    		$venta->id_empresa 			= $request->get('id_empresa');
+    		$venta->id_empresa 			= $iu;
+            $venta->id_user             = $u;
     		$venta->tipo_comprobante 	= $request->get('tipo_comprobante');
     		$venta->serie_comprobante	= $request->get('serie_comprobante');
     		$venta->num_comprobante 	= $request->get('num_comprobante');
@@ -116,11 +122,17 @@ class VentaController extends Controller
     			$detalle->save();
 
                 
-                $cantproductos = almproducts::where('id_product',$id_articulo[$cont])->count();
+                $cantproductos = almproducts::where([['id_product',$id_articulo[$cont]],
+													['etiqueta', '=', $etiqueta[$cont]],
+                                                    ['id_company', '=', $venta->id_empresa],
+					])->count();
 
                 if ($cantproductos > 0){
                     //$productos = almproducts::find($id_articulo[$cont]);
-                    $productos = almproducts::where('id_product',$id_articulo[$cont])->first();
+					$productos = almproducts::where([['id_product',$id_articulo[$cont]],
+													['etiqueta', '=', $etiqueta[$cont]],
+                                                    ['id_company', '=', $venta->id_empresa],
+					])->first();
                     $exis=$productos->existencia;
                     //dd($productos->all());
 
@@ -187,7 +199,7 @@ class VentaController extends Controller
 
     	$detalles = DB::table('detalle_venta as d')
     	  ->join('products as a','d.id_articulo','=','a.id')
-    	  ->select('a.name as articulo','d.cantidad','d.preciov','d.descuento','d.etiqueta')
+    	  ->select('a.name as articulo','a.description','d.cantidad','d.preciov','d.descuento','d.etiqueta')
     	  ->where('d.idventa','=',$id)
     	  ->get();
 
@@ -210,7 +222,7 @@ class VentaController extends Controller
 
         $detalles = DB::table('detalle_venta as d')
           ->join('products as a','d.id_articulo','=','a.id')
-          ->select('a.name as articulo','d.cantidad','d.preciov','d.descuento','d.etiqueta')
+          ->select('a.name as articulo','a.description','d.cantidad','d.preciov','d.descuento','d.etiqueta')
           ->where('d.idventa','=',$id)
           ->get();
             

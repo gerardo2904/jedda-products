@@ -14,6 +14,7 @@ use App\Product;
 use App\Unit;
 use App\almproducts;
 use App\Client;
+Use Auth;
 
 Use DB;
 
@@ -31,6 +32,7 @@ class IngresoController extends Controller
 
     public function index (Request $request)
     {
+        $iu = Auth::user()->empresa_id; 
     	if ($request)
     	{
     		$query    = trim($request->get('searchText'));
@@ -39,7 +41,8 @@ class IngresoController extends Controller
     		 ->join('companies as c','i.id_empresa','=','c.id')
     		 ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
     		 ->select('i.idingreso','i.fecha_hora','p.name','c.name as compan','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas',DB::raw('sum(di.cantidad*precioc) as total'))
-    		 ->where('i.num_comprobante','LIKE','%'.$query.'%')
+             ->where('i.num_comprobante','LIKE','%'.$query.'%')
+             ->where('i.id_empresa',$iu)
     		 ->orderBy('i.idingreso','desc')
     		 ->groupBy('i.idingreso','i.fecha_hora','p.name','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
     		 ->paginate(7);
@@ -64,13 +67,16 @@ class IngresoController extends Controller
     {
     	try{
 
+            $u  = Auth::user()->id;
+            $iu = Auth::user()->empresa_id; 
 
     		DB::beginTransaction();
 
 
     		$ingreso = new Ingreso;
     		$ingreso->idproveedor 		= $request->get('idproveedor');
-    		$ingreso->id_empresa 		= $request->get('id_empresa');
+    		$ingreso->id_empresa 		= $iu;
+            $ingreso->id_user           = $u;
     		$ingreso->tipo_comprobante 	= $request->get('tipo_comprobante');
     		$ingreso->serie_comprobante	= $request->get('serie_comprobante');
     		$ingreso->num_comprobante 	= $request->get('num_comprobante');
@@ -107,6 +113,7 @@ class IngresoController extends Controller
                 //$cantproductos = almproducts::where('id_product',$id_articulo[$cont])->count();
                 $cantproductos = almproducts::where([['id_product', '=', $id_articulo[$cont]],
                                                     ['etiqueta', '=', $etiqueta[$cont]],
+                                                    ['id_company', '=', $ingreso->id_empresa],
                 ])->count();
                 
     
@@ -116,6 +123,7 @@ class IngresoController extends Controller
                     //$productos = almproducts::find($id_articulo[$cont]);
                     $productos = almproducts::where([['id_product', '=', $id_articulo[$cont]],
                                                     ['etiqueta', '=', $etiqueta[$cont]],
+                                                    ['id_company', '=', $ingreso->id_empresa],
                 ])->first();
                     $exis=$productos->existencia;
                     //dd($productos->all());
@@ -127,7 +135,7 @@ class IngresoController extends Controller
                 }
                 else {
                     $productos = new almproducts();
-                    $productos->id_company    = $request->get('id_empresa');
+                    $productos->id_company    = $ingreso->id_empresa;
                     $productos->id_product    = $id_articulo[$cont];
                     $productos->existencia    = $cantidad[$cont];
                     $productos->precioc       = $precioc[$cont];
@@ -174,7 +182,7 @@ class IngresoController extends Controller
 
     	$detalles = DB::table('detalle_ingreso as d')
     	  ->join('products as a','d.id_articulo','=','a.id')
-    	  ->select('a.name as articulo','d.cantidad','d.precioc','d.etiqueta')
+    	  ->select('a.name as articulo','a.description','d.cantidad','d.precioc','d.etiqueta')
     	  ->where('d.idingreso','=',$id)
     	  ->get();
 
@@ -197,7 +205,7 @@ class IngresoController extends Controller
 
         $detalles = DB::table('detalle_ingreso as d')
           ->join('products as a','d.id_articulo','=','a.id')
-          ->select('a.name as articulo','d.cantidad','d.precioc','d.etiqueta')
+          ->select('a.name as articulo','a.description','d.cantidad','d.precioc','d.etiqueta')
           ->where('d.idingreso','=',$id)
           ->get();
             

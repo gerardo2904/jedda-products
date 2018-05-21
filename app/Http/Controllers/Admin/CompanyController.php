@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Company;
+use App\user;
 use App\CompanyImage;
 use App\almproducts;
 use File;
@@ -155,8 +156,9 @@ class CompanyController extends Controller
         $imagenes   = CompanyImage::where('company_id',$id)->count();
 
         $apc        = almproducts::where('id_company',$id)->count();
+        $cu         = User::where('empresa_id',$id)->count();
 
-        if ($apc == 0 ) {
+        if ($apc == 0 && $cu == 0) {
             if($imagenes > 0){
 
                 $images->each(function ($images){
@@ -183,7 +185,7 @@ class CompanyController extends Controller
             return redirect('/admin/companies')->with('status', 'exito');
         }else  
             {
-                Session::flash('message','La compañia '.$nomcom.' no se puede borrar porque tiene movimientos en almacen.');
+                Session::flash('message','La compañia '.$nomcom.' no se puede borrar porque tiene movimientos en almacen o tiene usuarios asignados.');
                 return redirect('/admin/companies')->with('status', 'noexito');
 
             }

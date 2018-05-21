@@ -93,7 +93,7 @@
                                     <label class="control-label">Artículo</label>
                                     <select class="form-control selectpicker " name="pidarticulo" id="pidarticulo" data-live-search="true" data-style="btn-primary">
                                         @foreach ($products as $articulo)
-                                            <option value="{{$articulo->id}}_{{$articulo->existencia}}_{{$articulo->preciov}}">{{ $articulo->name }}</option>
+                                            <option value="{{$articulo->id}}_{{$articulo->existencia}}_{{$articulo->preciov}}">{{$articulo->articulo}} LOTE: {{$articulo->etiqueta}}</option>
                                         @endforeach
                                     </select>
                                     </div>

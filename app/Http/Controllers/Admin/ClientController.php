@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 
 use App\Client;
 use App\ClientImage;
+Use App\Ingreso;
+Use App\Venta;
+Use App\Production_Order;
 use File;
 
 Use Session;
@@ -156,7 +159,12 @@ class ClientController extends Controller
         $images = ClientImage::where('client_id',$id);
         $imagenes = ClientImage::where('client_id',$id)->count();
 
-        
+        $ing  = Ingreso::where('idproveedor',$id)->count();
+        $vta  = Venta::where('idcliente',$id)->count();
+        $pro  = Production_Order::where('idcliente',$id)->count();
+
+
+        if ($ing==0 && $vta == 0 && $pro ==0) {
             if($imagenes > 0){
 
                 $images->each(function ($images){
@@ -181,7 +189,10 @@ class ClientController extends Controller
 
         Session::flash('message','Se ha borrado exitosamente el cliente '.$nomcli.'.');
         return redirect('/admin/clients')->with('status', 'exito');
-
+        }else{
+             Session::flash('message','El Cliente / Proveedor '.$nomcli.' no se puede borrar porque tiene movimientos generados.');
+            return redirect('/admin/clients')->with('status', 'noexito');
+        }
             
         return back();
     }
