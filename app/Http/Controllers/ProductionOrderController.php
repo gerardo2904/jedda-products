@@ -569,15 +569,16 @@ class ProductionOrderController extends Controller
     	$productionorder = DB::table('production_order as po')
     		 ->join('clients as p','po.idcliente','=','p.id')
              ->join('client_images as ci','po.idcliente','=','ci.client_id')
-    		 ->join('detalle_production_order as dpo','po.id_production','=','dpo.id_production')
-    		 ->select('po.id_production','po.fecha_hora','p.name', DB::raw('CONCAT(p.address, ", CP ", p.cp, " ",p.city) as direction'), 'ci.image','po.estado')
+             ->join('detalle_production_order as dpo','po.id_production','=','dpo.id_production')
+             ->join('products as p1','po.id_producto_mp','=','p1.id')
+    		 ->select('po.id_production','po.direction as direccion','po.orden','po.fecha_hora', 'po.orden_cliente', 'po.fecha_hora','p.name', DB::raw('CONCAT(p.address, ", CP ", p.cp, " ",p.city) as direction'), 'ci.image','po.estado',DB::raw('CONCAT(p1.name, " ", p1.description) as name_materiaprima'),'po.etiqueta_mp')
     		 ->where('po.id_production','=',$id)
              ->groupBy('po.id_production','po.fecha_hora','p.name','ci.image','po.estado')
     		 ->first();
 
     	$detalles = DB::table('detalle_production_order as dpo')
     	  ->join('products as a','dpo.id_producto_pt','=','a.id')
-    	  ->select('a.name as articulo','dpo.cantidad_pt','dpo.etiqueta_pt')
+    	  ->select('a.name as articulo','a.description','dpo.cantidad_pt','dpo.etiqueta_pt')
     	  ->where('dpo.id_production','=',$id)
     	  ->get();
 

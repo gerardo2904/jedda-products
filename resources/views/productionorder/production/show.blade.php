@@ -26,6 +26,22 @@
 			<div class="description text-center">
 				<p>{{ $productionorder->direction }}</p>
 			</div>
+
+            <div>
+                <p>
+                    Orden de Producción: {{ $productionorder->orden }}, Fecha: {{ $productionorder->fecha_hora }}
+                <br>
+                    Orden de Compra del cliente: {{ $productionorder->orden_cliente }}
+                <br>
+                    Materia prima utilizada: {{ $productionorder->name_materiaprima }}
+                <br>
+                    Dirección: {{ $productionorder->direccion }}
+                <br>
+                    LOTE: {{ $productionorder->etiqueta_mp }}
+                </p>
+
+            </div>
+
 			
 			@if (session('notification'))
                         <div class="alert alert-success">
@@ -38,36 +54,17 @@
                                     <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
                                         <thead style="background-color:#A9D0F5">
                                             <th>Artículo</th>
+                                            <th>Descripción</th>
                                             <th>Cantidad</th>
                                         </thead>
                                         <tfoot>
-                                        <tr>
-
-                                            <th></th>
-                                            <th></th>
-                                            <th>.</th>
-                                            <th><h4 id="cantidadmetros"> </h4></th>
-                                            <tr>
-                                            <th></th>
-                                            <th></th>    
-                                            <th>..</th>
-                                            <th><h4 id="cantidadancho"> </h4></th>
-                                            </tr>
-                                            <tr>
-                                            <th></th>
-                                            <th></th>    
-                                            <th>...</th>
-                                            <th><h4 id="cantidadalcuadrado"> </h4></th>
-                                            </tr>
-                                        </tr>
-                                            
                                         
-
                                         </tfoot>
                                         <tbody>
                                             @foreach($detalles as $det)
                                             	<tr>
                                             		<td>{{$det->articulo}}</td>
+                                                    <td>{{$det->description}}</td>
                                             		<td>{{$det->cantidad_pt}}</td>
                                             	</tr>
                                             @endforeach
