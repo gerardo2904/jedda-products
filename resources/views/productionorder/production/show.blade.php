@@ -68,7 +68,7 @@
                                             @foreach($detalles as $det)
                                             	<tr>
                                             		<td>{{$det->articulo}}</td>
-                                            		<td>{{$det->cantidad}}</td>
+                                            		<td>{{$det->cantidad_pt}}</td>
                                             	</tr>
                                             @endforeach
 

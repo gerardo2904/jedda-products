@@ -565,19 +565,19 @@ class ProductionOrderController extends Controller
 
     public function show($id)
     {
-
+        
     	$productionorder = DB::table('production_order as po')
-    		 ->join('clients as p','i.idproveedor','=','p.id')
+    		 ->join('clients as p','po.idcliente','=','p.id')
              ->join('client_images as ci','po.idcliente','=','ci.client_id')
     		 ->join('detalle_production_order as dpo','po.id_production','=','dpo.id_production')
-    		 ->select('po.id_production','po.fecha_hora','p.name','ci.image','po.estado')
+    		 ->select('po.id_production','po.fecha_hora','p.name', DB::raw('CONCAT(p.address, ", CP ", p.cp, " ",p.city) as direction'), 'ci.image','po.estado')
     		 ->where('po.id_production','=',$id)
              ->groupBy('po.id_production','po.fecha_hora','p.name','ci.image','po.estado')
     		 ->first();
 
     	$detalles = DB::table('detalle_production_order as dpo')
     	  ->join('products as a','dpo.id_producto_pt','=','a.id')
-    	  ->select('a.name as articulo','dpo.cantidad_pt','d.etiqueta_pt')
+    	  ->select('a.name as articulo','dpo.cantidad_pt','dpo.etiqueta_pt')
     	  ->where('dpo.id_production','=',$id)
     	  ->get();
 
