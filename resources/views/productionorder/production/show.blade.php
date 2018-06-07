@@ -28,18 +28,30 @@
 			</div>
 
             <div>
-                <p>
-                    Orden de Producción: {{ $productionorder->orden }}, Fecha: {{ $productionorder->fecha_hora }}
-                <br>
-                    Orden de Compra del cliente: {{ $productionorder->orden_cliente }}
-                <br>
-                    Materia prima utilizada: {{ $productionorder->name_materiaprima }}
-                <br>
-                    Dirección: {{ $productionorder->direccion }}
-                <br>
-                    LOTE: {{ $productionorder->etiqueta_mp }}
-                </p>
-
+                
+                <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+                    <thead style="background-color:#FFEEDD">
+                        <th width="30%"><center><img src="{{ '/images/clients/'.$productionorder->image }}" class=" img-responsive img-raised"></center> </th>
+                        <th width="50%"><center><h3>ORDEN DE PRODUCCIÓN </h3></center></th>
+                        <th width="30%"><center><h4>Orden: {{ $productionorder->orden }} </h4></center></th>
+                    </thead>
+                    <tfoot>
+                                        
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td width="30%">Fecha: {{ $productionorder->fecha_hora }}</td>
+                            <td width="50%">Orden de Compra del cliente: {{ $productionorder->orden_cliente }}</td>
+                        </tr>
+                        <tr>
+                            <td width="30%">LOTE: {{ $productionorder->etiqueta_mp }}</td>
+                            <td width="50%">Materia prima utilizada: {{ $productionorder->name_materiaprima }}</td>
+                            <td width="30%">Dirección: {{ $productionorder->direccion }}</td>
+                        </tr>
+                                            
+                    </tbody>    
+                                        
+                </table>
             </div>
 
 			
