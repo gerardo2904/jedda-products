@@ -42,6 +42,7 @@
                         <tr>
                             <td width="30%">Fecha: {{ $productionorder->fecha_hora }}</td>
                             <td width="50%">Orden de Compra del cliente: {{ $productionorder->orden_cliente }}</td>
+                            <td width="30%">Formula: {{ $productionorder->formula }}</td>
                         </tr>
                         <tr>
                             <td width="30%">LOTE: {{ $productionorder->etiqueta_mp }}</td>
@@ -54,6 +55,11 @@
                 </table>
             </div>
 
+                <br>    
+
+                {{$leader->name_leader1}}<br>
+                {{$leader->name_leader2}}<br>
+                {{$leader->name_leader3}}<br>
 			
 			@if (session('notification'))
                         <div class="alert alert-success">
@@ -67,7 +73,8 @@
                                         <thead style="background-color:#A9D0F5">
                                             <th>Artículo</th>
                                             <th>Descripción</th>
-                                            <th>Cantidad</th>
+                                            <th>Medida</th>
+                                            <th>Rollos</th>
                                         </thead>
                                         <tfoot>
                                         
@@ -77,6 +84,7 @@
                                             	<tr>
                                             		<td>{{$det->articulo}}</td>
                                                     <td>{{$det->description}}</td>
+                                                    <td>{{$det->ancho_prod}} X {{round($det->cantidad_prod)}}</td>
                                             		<td>{{$det->cantidad_pt}}</td>
                                             	</tr>
                                             @endforeach

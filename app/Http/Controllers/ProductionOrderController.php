@@ -571,19 +571,28 @@ class ProductionOrderController extends Controller
              ->join('client_images as ci','po.idcliente','=','ci.client_id')
              ->join('detalle_production_order as dpo','po.id_production','=','dpo.id_production')
              ->join('products as p1','po.id_producto_mp','=','p1.id')
-    		 ->select('po.id_production','po.direction as direccion','po.orden','po.fecha_hora', 'po.orden_cliente', 'po.fecha_hora','p.name', DB::raw('CONCAT(p.address, ", CP ", p.cp, " ",p.city) as direction'), 'ci.image','po.estado',DB::raw('CONCAT(p1.name, " ", p1.description) as name_materiaprima'),'po.etiqueta_mp')
+    		 ->select('po.id_production','po.direction as direccion','po.orden','po.fecha_hora', 'po.orden_cliente', 'po.fecha_hora','p.name', DB::raw('CONCAT(p.address, ", CP ", p.cp, " ",p.city) as direction'), 'ci.image','po.estado',DB::raw('CONCAT(p1.name, " ", p1.description) as name_materiaprima'),'p1.formula','po.etiqueta_mp')
     		 ->where('po.id_production','=',$id)
              ->groupBy('po.id_production','po.fecha_hora','p.name','ci.image','po.estado')
     		 ->first();
 
     	$detalles = DB::table('detalle_production_order as dpo')
     	  ->join('products as a','dpo.id_producto_pt','=','a.id')
-    	  ->select('a.name as articulo','a.description','dpo.cantidad_pt','dpo.etiqueta_pt')
+    	  ->select('a.name as articulo','a.description','a.ancho_prod', 'a.cantidad_prod', 'dpo.cantidad_pt','dpo.etiqueta_pt')
     	  ->where('dpo.id_production','=',$id)
     	  ->get();
 
+          $leader= DB::table('production_order as po')
+             ->join('products as leader1','po.id_producto_leader1','=','leader1.id')
+             ->join('products as leader2','po.id_producto_leader2','=','leader2.id')
+             ->join('products as leader3','po.id_producto_leader3','=','leader3.id')
+             ->select('po.id_production',DB::raw('CONCAT(leader1.name, " ", leader1.description) as name_leader1'),'po.etiqueta_leader1',DB::raw('CONCAT(leader2.name, " ", leader2.description) as name_leader2'),'po.etiqueta_leader2',DB::raw('CONCAT(leader3.name, " ", leader3.description) as name_leader3'),'po.etiqueta_leader3')
+             ->where('po.id_production','=',$id)
+             ->groupBy('po.id_production','po.fecha_hora','leader1.name','leader2.name','leader3.name')
+             ->first();
+
     	
-        return view('productionorder.production.show',["productionorder"=>$productionorder,"detalles"=>$detalles]);
+        return view('productionorder.production.show',["productionorder"=>$productionorder,"detalles"=>$detalles,"leader"=>$leader]);
     }
 
     public function destroy($id)
