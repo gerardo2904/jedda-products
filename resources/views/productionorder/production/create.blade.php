@@ -54,14 +54,14 @@
                             <div class="col-sm-2">
                                 <div class="form-group ">
                                     <label class="control-label" style="color: rgba(0,0,0);">Orden de Producción</label>
-                                    <input type="text" class="form-control" name="orden" value="{{ old('orden')}}">
+                                    <input type="text" class="form-control" readonly id="orden" name="orden" value="{{ $nop }}">
                                 </div>
                             </div>
 
                             <div class="col-sm-2">
                                 <div class="form-group ">
                                     <label class="control-label" style="color: rgba(0,0,0);">Fecha</label>
-                                    <input class="datepicker form-control" type="text" name="fecha_hora" id="fecha_hora" value="{{ old('fecha_hora')}}"/>
+                                    <input class="datepicker form-control" type="text" name="fecha_hora" id="fecha_hora" value="{{ $fecha_actual }}"/>
                                 </div>
                             </div>
                     

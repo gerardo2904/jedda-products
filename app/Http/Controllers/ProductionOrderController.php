@@ -56,7 +56,9 @@ class ProductionOrderController extends Controller
     }
 
     public function byMateria($id, $largo, $ancho) {
-
+        // Aqui se filtra dependiendo de la materia prima a utilizar
+        // Es decir, se checa la formula y solo se muestra producto terminado
+        // que cumpla con la formula.
         $mp=Product::where('id',$id)->first();
         $mpformula=$mp->formula;
         $mplargo=$largo;
@@ -110,6 +112,31 @@ class ProductionOrderController extends Controller
         ->where('company_images.company_id','=',$iu)
         ->first();
         $cim ='/images/companies/'.$ci->image;
+
+        // Se obtiene el cunsecutivo de Orden de produccion para que sea automatico...
+        $no_ordenp = DB::table('production_order')
+        ->join('companies','production_order.id_company','=','companies.id')
+        ->select('production_order.id_company', DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-",(production_order.orden + 1)) as orden'))
+        ->where('production_order.id_company','=',$iu)
+        ->orderBy('production_order.orden','DESC')
+        ->first();
+
+        $ordenp='';
+
+        if ($no_ordenp){
+            $ordenp=$no_ordenp->orden;
+        }else {
+            $comp = DB::table('companies')
+            ->select(DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-1") as orden'))
+            ->where('companies.id','=',$iu)
+            ->first();
+            $ordenp=$comp->orden;
+        }
+
+        $fecha_actual=Carbon::now()->format('m/d/Y');
+
+        ////////////////////////////////////////////////////////////////////////
+
         
 
     	$materiaprima = DB::table('products as art')
@@ -164,7 +191,7 @@ class ProductionOrderController extends Controller
     	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','ap.cantidad_prod','unidad','precioc','preciov')
     	  ->get();
 
-    	return view('productionorder.production.create',["clientes" => $clientes, "materiaprima" => $materiaprima, "productoterminado" => $productoterminado,"leader" => $leader,"core" => $core,"sticker" => $sticker, "cim" => $cim]);
+    	return view('productionorder.production.create',["clientes" => $clientes, "materiaprima" => $materiaprima, "productoterminado" => $productoterminado,"leader" => $leader,"core" => $core,"sticker" => $sticker, "cim" => $cim, "nop" => $ordenp,"fecha_actual" => $fecha_actual]);
     }
 
 
