@@ -83,7 +83,8 @@ class ProductionOrderController extends Controller
     {
     	if ($request)
     	{
-
+            $iu = Auth::user()->empresa_id; 
+            
     		$query    = trim($request->get('searchText'));
     		$ordenesp = DB::table('production_order as po')
     		 ->join('clients as p','po.idcliente','=','p.id')
@@ -91,6 +92,7 @@ class ProductionOrderController extends Controller
     		 ->join('detalle_production_order as dpo','po.id_production','=','dpo.id_production')
     		 ->select('po.id_production','po.fecha_hora','p.name','c.name as compan','po.estado')
     		 ->where('c.name','LIKE','%'.$query.'%')
+             ->where('po.id_company','=',$iu)
     		 ->orderBy('po.id_production','desc')
     		 ->groupBy('po.id_production','po.fecha_hora','p.name','po.estado')
     		 ->paginate(7);
@@ -114,9 +116,10 @@ class ProductionOrderController extends Controller
         $cim ='/images/companies/'.$ci->image;
 
         // Se obtiene el cunsecutivo de Orden de produccion para que sea automatico...
+        // algebra relacional para calcularlo...
         $no_ordenp = DB::table('production_order')
         ->join('companies','production_order.id_company','=','companies.id')
-        ->select('production_order.id_company', DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-",(production_order.orden + 1)) as orden'))
+        ->select('production_order.id_company', DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-",(if((production_order.orden REGEXP "^[0-9]")=1,production_order.orden + 1,substr(production_order.orden,5,10) + 1))) as orden'))
         ->where('production_order.id_company','=',$iu)
         ->orderBy('production_order.orden','DESC')
         ->first();
