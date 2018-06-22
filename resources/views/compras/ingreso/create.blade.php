@@ -58,14 +58,14 @@
                         <div class="col-sm-2">
                             <div class="form-group label-floating">
                                 <label class="control-label">Serie de comprobante</label>
-                                <input type="text" class="form-control" name="serie_comprobante" value="{{ old('serie_comprobante')}}">
+                                <input type="text" readonly class="form-control" name="serie_comprobante" value="{{ $noi }}">
                             </div>
                         </div>
                         
                         <div class="col-sm-2">
                             <div class="form-group label-floating">
                                 <label class="control-label">Número de comprobante</label>
-                                <input type="text" class="form-control" name="num_comprobante" required value="{{ old('num_comprobante')}}">
+                                <input type="text" readonly class="form-control" name="num_comprobante" required value="{{ $nci }}">
                             </div>
                         </div>
 

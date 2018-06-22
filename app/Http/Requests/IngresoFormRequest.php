@@ -27,7 +27,7 @@ class IngresoFormRequest extends FormRequest
             'idproveedor' => 'required',
             'id_empresa' => 'required',
             'tipo_comprobante' => 'required|max:20',
-            'serie_comprobante' => 'required|max:7',
+            'serie_comprobante' => 'required|max:20',
             'num_comprobante' => 'required|max:10',
             'id_articulo' => 'required',
             'cantidad' => 'required',

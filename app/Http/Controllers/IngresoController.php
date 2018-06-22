@@ -53,6 +53,8 @@ class IngresoController extends Controller
 
     public function create()
     {
+        $iu = Auth::user()->empresa_id;
+
     	//$clientes = DB::table('clients')->where('tipo_persona','=','Proveedor')->get();
     	$clientes =  DB::table('clients')->where('es_proveedor','=','1')->get();
     	$units =  DB::table('units')->get();
@@ -60,7 +62,42 @@ class IngresoController extends Controller
     	  ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','art.name','art.id_unidad_prod','art.cantidad_prod')
     	  ->where('art.activo','=','1')
     	  ->get();
-    	return view('compras.ingreso.create',["clientes" => $clientes, "products" => $articulos, "units" => $units]);
+
+
+          // Se obtiene el cunsecutivo de Orden de Ingreso para que sea automatico...
+        // algebra relacional para calcularlo...
+        $no_ordeni = DB::table('ingreso')
+        ->join('companies','ingreso.id_empresa','=','companies.id')
+        ->select('ingreso.id_empresa', DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-PO-",DATE_FORMAT(NOW( ), "%H%i%S" )) as orden'), DB::raw('if(ingreso.num_comprobante REGEXP "^[0-9]"=1, CAST(ingreso.num_comprobante AS UNSIGNED) + 1 , CAST(substr(ingreso.num_comprobante,3,10) AS UNSIGNED) + 1) as nocompi'), DB::raw('CAST(ingreso.num_comprobante AS UNSIGNED) as num_comprobante'))
+        ->where('ingreso.id_empresa','=',$iu)
+        ->orderBy('num_comprobante','DESC')
+        ->first();
+/*SELECT  textoanumero */
+
+        /*  
+            (if((production_order.orden REGEXP "^[0-9]")=1,production_order.orden + 1,substr(production_order.orden,5,10) + 1)
+        */
+
+        $ordeni='';
+        $ncompi='';
+
+        if ($no_ordeni){
+            $ordeni=$no_ordeni->orden;
+            $ncompi=$no_ordeni->nocompi;
+        }else {
+            $comp = DB::table('companies')
+            ->select(DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-PO-",DATE_FORMAT(NOW( ), "%H%i%S" ))) as orden'))
+            ->where('companies.id','=',$iu)
+            ->first();
+            $ordeni=$comp->orden;
+            $ncompi=1;
+        }
+
+        $fecha_actual=Carbon::now()->format('m/d/Y');
+
+        ////////////////////////////////////////////////////////////////////////
+
+    	return view('compras.ingreso.create',["clientes" => $clientes, "products" => $articulos, "units" => $units, "noi" => $ordeni,"nci" => $ncompi]);
     }
 
     public function store(IngresoFormRequest $request)
