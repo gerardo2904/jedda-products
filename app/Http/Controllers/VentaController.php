@@ -71,7 +71,38 @@ class VentaController extends Controller
     	  ->where('ap.existencia','>','0')
     	  ->groupBy('art.id','art.name','art.description','ap.etiqueta','ap.preciov', 'ap.existencia')
     	  ->get();
-    	return view('ventas.venta.create',["clientes" => $clientes, "products" => $articulos, "units" => $units]);
+
+        // Se obtiene el cunsecutivo de Orden de Salida para que sea automatico...
+        // algebra relacional para calcularlo...
+        $no_ordenv = DB::table('venta')
+        ->join('companies','venta.id_empresa','=','companies.id')
+        ->select('venta.id_empresa', DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-SO-",DATE_FORMAT(NOW( ), "%H%i%S" )) as orden'), DB::raw('if(venta.num_comprobante REGEXP "^[0-9]"=1, CAST(venta.num_comprobante AS UNSIGNED) + 1 , CAST(substr(venta.num_comprobante,3,10) AS UNSIGNED) + 1) as nocompv'), DB::raw('CAST(venta.num_comprobante AS UNSIGNED) as num_comprobante'))
+        ->where('venta.id_empresa','=',$iu)
+        ->orderBy('num_comprobante','DESC')
+        ->first();
+
+
+        $ordenv='';
+        $ncompv='';
+
+        if ($no_ordenv){
+            $ordenv=$no_ordenv->orden;
+            $ncompv=$no_ordenv->nocompv;
+        }else {
+            $comp = DB::table('companies')
+            ->select(DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-PO-",DATE_FORMAT(NOW( ), "%H%i%S" ))) as orden'))
+            ->where('companies.id','=',$iu)
+            ->first();
+            $ordenv=$comp->orden;
+            $ncompv=1;
+        }
+
+        $fecha_actual=Carbon::now()->format('m/d/Y');
+
+        ////////////////////////////////////////////////////////////////////////
+
+
+    	return view('ventas.venta.create',["clientes" => $clientes, "products" => $articulos, "units" => $units, "nov" => $ordenv,"ncv" => $ncompv]);
     }
 
     public function store(VentaFormRequest $request)

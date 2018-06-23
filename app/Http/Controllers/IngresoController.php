@@ -64,7 +64,7 @@ class IngresoController extends Controller
     	  ->get();
 
 
-          // Se obtiene el cunsecutivo de Orden de Ingreso para que sea automatico...
+        // Se obtiene el cunsecutivo de Orden de Ingreso para que sea automatico...
         // algebra relacional para calcularlo...
         $no_ordeni = DB::table('ingreso')
         ->join('companies','ingreso.id_empresa','=','companies.id')
@@ -72,11 +72,7 @@ class IngresoController extends Controller
         ->where('ingreso.id_empresa','=',$iu)
         ->orderBy('num_comprobante','DESC')
         ->first();
-/*SELECT  textoanumero */
 
-        /*  
-            (if((production_order.orden REGEXP "^[0-9]")=1,production_order.orden + 1,substr(production_order.orden,5,10) + 1)
-        */
 
         $ordeni='';
         $ncompi='';
