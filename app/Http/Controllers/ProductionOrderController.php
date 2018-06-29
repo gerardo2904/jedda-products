@@ -79,6 +79,33 @@ class ProductionOrderController extends Controller
           return $pt;
     }
 
+    public function byLeader1($id) {
+        // Aqui se filtra dependiendo del leader a utilizar
+        // Es decir, se filtra leader final y leader envoltura diferente a leader inicio
+        
+        $empresa=almproducts::where('id',$id)->first();
+        $emp=$empresa->id_company;
+
+        $pt = DB::table('products as art')
+        ->join('units as un','art.id_unidad_prod','=','un.id')
+        ->join('almproducts as almp','art.id','=','almp.id_product')
+          ->select(DB::raw('CONCAT(art.name," - ",art.description) AS articulo'), 'almp.id','art.name','art.id_unidad_prod','art.cantidad_prod','art.ancho_prod','art.formula','almp.etiqueta','un.name as unidad')
+          ->where('art.activo','=','1')
+          ->where('art.roll_id','=','4')  // Es Leader
+          ->where('almp.id','<>',$id)
+          ->where('almp.existencia','>','0')
+          ->where('almp.id_company','=',$emp)
+          ->groupBy('articulo','almp.id','unidad')
+          ->get();
+
+        //return $mp; 
+        //return Product::where('id',$id)->get();
+          return $pt;
+    }
+
+
+
+
     public function index (Request $request)
     {
     	if ($request)
@@ -145,12 +172,12 @@ class ProductionOrderController extends Controller
     	$materiaprima = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','ap.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','un.name as unidad', 'un.id as id_unidad','ap.precioc','ap.preciov')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'ap.id','ap.id_product','art.name','art.ancho_prod','ap.cantidad_prod','ap.cantidad_prod as largo','art.formula','ap.existencia','ap.etiqueta','un.name as unidad', 'un.id as id_unidad','ap.precioc','ap.preciov')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','2')  // Es materia prima
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia', 'ap.cantidad_prod', 'unidad','precioc','preciov')
+    	  ->groupBy('articulo','ap.id','ap.etiqueta', 'ap.existencia', 'ap.cantidad_prod', 'unidad','precioc','preciov')
     	  ->get();
 
     	$productoterminado = DB::table('products as art')
@@ -164,12 +191,12 @@ class ProductionOrderController extends Controller
 		$leader = DB::table('products as art')
     	->join('almproducts as ap','ap.id_product','=','art.id')
     	->join('units as un','art.id_unidad_prod','=','un.id')
-    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','ap.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
+    	  ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'ap.id','ap.id_product','art.name','art.ancho_prod','ap.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
     	  ->where('art.activo','=','1')
     	  ->where('ap.id_company','=',$iu)
     	  ->where('ap.existencia','>','0')
     	  ->where('art.roll_id','=','4')  // Es Leader
-    	  ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','ap.cantidad_prod','unidad','precioc','preciov')
+    	  ->groupBy('articulo','ap.id','ap.etiqueta', 'ap.existencia','ap.cantidad_prod','unidad','precioc','preciov')
     	  ->get();
 
     	$core = DB::table('products as art')

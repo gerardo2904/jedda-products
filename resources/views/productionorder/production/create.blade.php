@@ -102,7 +102,7 @@
                                     <label class="control-label">Materia prima</label>
                                     <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-primary">
                                         @foreach ($materiaprima as $materia)
-                                            <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}_{{ $materia->articulo }}_{{ $materia->id_unidad }}_{{ $materia->precioc }}_{{ $materia->preciov }}">{{ $materia->articulo }}</option>
+                                            <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}_{{ $materia->articulo }}_{{ $materia->id_unidad }}_{{ $materia->precioc }}_{{ $materia->preciov }}_{{$materia->id_product}}_{{$materia->largo}}">{{ $materia->articulo }}</option>
                                         @endforeach
                                     </select>                                  
                                     <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
@@ -275,12 +275,10 @@
 
                         <div class="row" style="background: #D4FAEC;">
                             <div class="col-sm-3">
-                                <div class="form-group label-floating">
+                                <div class="form-group ">
                                     <label class="control-label">Leader Final</label>
-                                    <select class="form-control selectpicker" name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-primary">
-                                        @foreach ($leader as $le)
-                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}">{{ $le->articulo }}</option>
-                                        @endforeach
+                                    <select class="form-control " name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-primary">
+
                                     </select>
                                     <input type="hidden" name="tempo_id_producto_leader2" id="tempo_id_producto_leader2" value="{{ old('tempo_id_producto_leader2')}}">
                                     <input type="hidden" name="tempo_id_unidad_leader2" id="tempo_id_unidad_leader2" value="{{ old('tempo_id_unidad_leader2')}}">
@@ -292,36 +290,36 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <div class="form-group label-floating">
+                                <div class="form-group ">
                                     <label class="control-label">Etiqueta(Lote)</label>
                                     <input type="text" class="form-control" id="etiqueta_leader2" name="etiqueta_leader2" value="{{ old('etiqueta_leader2')}}">
                                 </div>
                             </div>
 
                             <div class="col-sm-1">
-                                <div class="form-group label-floating">
+                                <div class="form-group ">
                                     <label class="control-label">Ancho</label>
                                     <input type="text" readonly class="form-control" id="ancho_leader2" name="ancho_leader2" value="{{ old('ancho_leader2')}}">
                                 </div>
                             </div>
                                 
                             <div class="col-sm-1">
-                                <div class="form-group label-floating">
+                                <div class="form-group ">
                                     <label class="control-label">Largo</label>
                                     <input type="text" readonly class="form-control" id="largo_leader2" name="largo_leader2" value="{{ old('largo_leader2')}}">
                                 </div>
                             </div>
                             
                             <div class="col-sm-2">
-                                <div class="form-group label-floating">
-                                    <label class="control-label"> </label>
+                                <div class="form-group ">
+                                    <label class="control-label">.</label>
                                     <input type="text" readonly class="form-control" id="total_leader2" name="total_leader2" value="{{ old('total_leader2')}}">
                                 </div>
                             </div>
                         
                             <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label"> </label>
+                                <div class="form-group ">
+                                    <label class="control-label">.</label>
                                     <input type="text" readonly class="form-control" id="unidad_leader2" name="unidad_leader2" value="{{ old('unidad_leader2')}}">
                                 </div>
                             </div>
@@ -892,11 +890,11 @@
 
         datosMateria=document.getElementById('id_producto_mp').value.split('_');
 
-        $("#tempo_id_producto_mp").val(datosMateria[0]);
+        $("#tempo_id_producto_mp").val(datosMateria[10]);
                 
         $("#etiqueta_mp").val(datosMateria[1]);
         $("#ancho_mp").val(datosMateria[2]);
-        $("#largo_mp").val(datosMateria[3]);
+        $("#largo_mp").val(datosMateria[11]);
         $("#largo_mp_original").val(datosMateria[3]);
         $("#formula").val(datosMateria[4]);
         unidad_mp=datosMateria[5]+'²';
