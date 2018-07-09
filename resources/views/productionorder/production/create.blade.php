@@ -50,7 +50,7 @@
                 <div class="tab-content tab-space">
                     <div class="tab-pane active" id="pill1">
 
-                        <div class="row" style="background: #FCE7D8;">
+                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
                             <div class="col-sm-2">
                                 <div class="form-group ">
                                     <label class="control-label" style="color: rgba(0,0,0);">Orden de Producción</label>
@@ -85,7 +85,7 @@
                             </div>
                         </div>    
 
-                        <div class="row" style="background: #FCE7D8;">
+                        <div class="row" style="background: #F8F8FF; box-shadow: 10px 10px;">
                             <div class="col-sm-12">
                                 <div class="form-group ">
                                 </div>
@@ -96,11 +96,11 @@
 
                     <div class="tab-pane" id="pill2">
 
-                        <div class="row" style="background: #D4FAEC;">
+                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
                             <div class="col-sm-3">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Materia prima</label>
-                                    <select class="form-control selectpicker" name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-primary">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Materia prima</label>
+                                    <select class="form-control " name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-default">
                                         @foreach ($materiaprima as $materia)
                                             <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}_{{ $materia->articulo }}_{{ $materia->id_unidad }}_{{ $materia->precioc }}_{{ $materia->preciov }}_{{$materia->id_product}}_{{$materia->largo}}">{{ $materia->articulo }}</option>
                                         @endforeach
@@ -121,21 +121,21 @@
 
                             <div class="col-sm-3">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Etiqueta(Lote)</label>
-                                    <input type="text" class="form-control" id="etiqueta_mp" name="etiqueta_mp" value="{{ old('etiqueta_mp')}}">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
+                                    <input type="text" readonly class="form-control" id="etiqueta_mp" name="etiqueta_mp" value="{{ old('etiqueta_mp')}}">
                                 </div>
                             </div>
 
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Ancho</label>
+                                    <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
                                     <input type="text" readonly class="form-control" id="ancho_mp" name="ancho_mp" value="{{ old('ancho_mp')}}">
                                 </div>
                             </div>
                                 
                             <div class="col-sm-1">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Largo</label>
+                                    <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
                                     <input type="number" step="0.001" readonly class="form-control" id="largo_mp" name="largo_mp" value="{{ old('largo_mp')}}">
                                 </div>
                             </div>
@@ -155,11 +155,11 @@
                             </div>
                         </div>
 
-                        <div class="row" style="background: #D4FAEC;">
+                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
                             <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label">Dirección</label>
-                                    <select class="form-control selectpicker" name="direction" id="direction" data-live-search="true" data-style="btn-primary">
+                                <div class="form-group label-floating">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Dirección</label>
+                                    <select class="form-control " name="direction" id="direction" data-live-search="true" data-style="btn-primary">
                                         <option value="In">In</option>
                                         <option value="Out">Out</option>
                                     </select>      
@@ -167,18 +167,18 @@
                             </div>
 
                             <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label">Formula</label>
+                                <div class="form-group label-floating">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Formula</label>
                                     <input type="text" readonly class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="row" style="background: #D4FAEC;">
+                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
                             <div class="col-sm-3">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Core</label>
-                                    <select class="form-control selectpicker" name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-primary">
+                                    <label class="control-label " style="color: rgba(0,0,0);">Core</label>
+                                    <select class="form-control " name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-primary">
                                         @foreach ($core as $co)
                                             <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}_{{ $co->articulo }}_{{ $co->id_unidad }}_{{ $co->precioc }}_{{ $co->preciov }}">{{ $co->articulo }}</option>
                                         @endforeach
@@ -198,14 +198,14 @@
 
                             <div class="col-sm-3">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Etiqueta(Lote)</label>
+                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
                                     <input type="text" class="form-control" id="etiqueta_core" name="etiqueta_core" value="{{ old('etiqueta_core')}}">
                                 </div>
                             </div>
 
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Cantidad</label>
+                                    <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
                                     <input type="text" readonly class="form-control" id="cantidad_core" name="cantidad_core" value="{{ old('cantidad_core')}}">
                                 </div>
                             </div>
@@ -218,11 +218,11 @@
                             </div>
                         </div>
 
-                        <div class="row" style="background: #D4FAEC;">
+                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
                             <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Leader Inicio</label>
-                                    <select class="form-control selectpicker" name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Leader Inicio</label>
+                                    <select class="form-control " name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
                                         @foreach ($leader as $le)
                                             <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}">{{ $le->articulo }}</option>
                                         @endforeach
@@ -238,45 +238,45 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Etiqueta(Lote)</label>
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
                                     <input type="text" class="form-control" id="etiqueta_leader1" name="etiqueta_leader1" value="{{ old('etiqueta_leader1')}}">
                                 </div>
                             </div>
                         
                             <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Ancho</label>
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
                                     <input type="text" readonly class="form-control" id="ancho_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
                                 </div>
                             </div>
                                 
                             <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Largo</label>
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
                                     <input type="text" readonly class="form-control" id="largo_leader1" name="largo_leader1" value="{{ old('largo_leader1')}}">
                                 </div>
                             </div>
                         
                             <div class="col-sm-2">
-                                <div class="form-group label-floating">
+                                <div class="form-group ">
                                     <label class="control-label"> </label>
                                     <input type="text" readonly class="form-control" id="total_leader1" name="total_leader1" value="{{ old('total_leader1')}}">
                                 </div>
                             </div>
                         
                             <div class="col-sm-1">
-                                <div class="form-group label-floating">
+                                <div class="form-group ">
                                     <label class="control-label"> </label>
                                     <input type="text" readonly class="form-control" id="unidad_leader1" name="unidad_leader1" value="{{ old('unidad_leader1')}}">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row" style="background: #D4FAEC;">
+                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
                             <div class="col-sm-3">
                                 <div class="form-group ">
-                                    <label class="control-label">Leader Final</label>
+                                    <label class="control-label" style="color: rgba(0,0,0);">Leader Final</label>
                                     <select class="form-control " name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-primary">
 
                                     </select>
@@ -291,21 +291,21 @@
 
                             <div class="col-sm-3">
                                 <div class="form-group ">
-                                    <label class="control-label">Etiqueta(Lote)</label>
+                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
                                     <input type="text" class="form-control" id="etiqueta_leader2" name="etiqueta_leader2" value="{{ old('etiqueta_leader2')}}">
                                 </div>
                             </div>
 
                             <div class="col-sm-1">
                                 <div class="form-group ">
-                                    <label class="control-label">Ancho</label>
+                                    <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
                                     <input type="text" readonly class="form-control" id="ancho_leader2" name="ancho_leader2" value="{{ old('ancho_leader2')}}">
                                 </div>
                             </div>
                                 
                             <div class="col-sm-1">
                                 <div class="form-group ">
-                                    <label class="control-label">Largo</label>
+                                    <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
                                     <input type="text" readonly class="form-control" id="largo_leader2" name="largo_leader2" value="{{ old('largo_leader2')}}">
                                 </div>
                             </div>
@@ -325,14 +325,12 @@
                             </div>
                         </div>
 
-                        <div class="row" style="background: #D4FAEC;">
+                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
                             <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Leader Envoltura</label>
-                                    <select class="form-control selectpicker" name="id_producto_leader3" id="id_producto_leader3" data-live-search="true" data-style="btn-primary">
-                                        @foreach ($leader as $le)
-                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}">{{ $le->articulo }}</option>
-                                        @endforeach
+                                <div class="form-group ">
+                                    <label class="control-label"  style="color: rgba(0,0,0);">Leader Envoltura</label>
+                                    <select class="form-control " name="id_producto_leader3" id="id_producto_leader3" data-live-search="true" data-style="btn-primary">
+                                        
                                     </select>
                                     <input type="hidden" name="tempo_id_producto_leader3" id="tempo_id_producto_leader3" value="{{ old('tempo_id_producto_leader3')}}">
 
@@ -345,35 +343,35 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Etiqueta(Lote)</label>
+                                <div class="form-group ">
+                                    <label class="control-label"  style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
                                     <input type="text" class="form-control" id="etiqueta_leader3" name="etiqueta_leader3" value="{{ old('etiqueta_leader3')}}">
                                 </div>
                             </div>
                         
                             <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Ancho</label>
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
                                     <input type="text" readonly class="form-control" id="ancho_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
                                 </div>
                             </div>
                                     
                             <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Largo</label>
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
                                     <input type="text" readonly class="form-control" id="largo_leader3" name="largo_leader3" value="{{ old('largo_leader3')}}">
                                 </div>
                             </div>
                             
                             <div class="col-sm-2">
-                                <div class="form-group label-floating">
+                                <div class="form-group ">
                                     <label class="control-label"> </label>
                                     <input type="text" readonly class="form-control" id="total_leader3" name="total_leader3" value="{{ old('total_leader3')}}">
                                 </div>
                             </div>
                             
                             <div class="col-sm-1">
-                                <div class="form-group label-floating">
+                                <div class="form-group ">
                                     <label class="control-label"> </label>
                                     <input type="text" readonly class="form-control" id="unidad_leader3" name="unidad_leader3" value="{{ old('unidad_leader3')}}">
                                 </div>
@@ -381,11 +379,11 @@
                         </div>
 
 
-                        <div class="row" style="background: #D4FAEC;">
+                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
                             <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Etiqueta</label>
-                                    <select class="form-control selectpicker" name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-primary">
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta</label>
+                                    <select class="form-control " name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-primary">
                                         @foreach ($sticker as $sti)
                                             <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}_{{ $sti->articulo }}_{{ $sti->id_unidad }}_{{ $sti->precioc }}_{{ $sti->preciov }}">{{ $sti->articulo }}</option>
                                         @endforeach
@@ -402,28 +400,28 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Etiqueta(Lote)</label>
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
                                     <input type="text" class="form-control" id="etiqueta_sticker" name="etiqueta_sticker" value="{{ old('etiqueta_sticker')}}">
                                 </div>
                             </div>
 
                             <div class="col-sm-2">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Cantidad</label>
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
                                     <input type="text" readonly class="form-control" id="cantidad_sticker" name="cantidad_sticker" value="{{ old('cantidad_sticker')}}">
                                 </div>
                             </div>
 
                             <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label"> </label>
+                                <div class="form-group ">
+                                    <label class="control-label" style="color: rgba(0,0,0);"> </label>
                                     <input type="text" readonly class="form-control" id="unidad_sticker" name="unidad_sticker" value="{{ old('unidad_sticker')}}">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row" style="background: #D4FAEC;">
+                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
                             <div class="col-sm-12">
                                 <div class="form-group ">
                                 </div>
@@ -589,7 +587,7 @@
 
                             <div class="row">                
                                 <div class="col-sm-4">
-                                    <div class="form-group ">
+                                    <div class="form-group">
                                         <label class="control-label">Leader Final </label>
                                         <input type="text" readonly class="form-control" id="leader2" name="leader2" value="{{ old('leader2')}}">
                                     </div>
@@ -806,6 +804,18 @@
 
 
 <script>
+
+    $('.datepicker').datepicker({
+    weekStart:1
+    });
+</script>
+
+
+<script>
+
+
+
+
     $(document).ready(function(){
         $('#bt_add').click(function(){
             agregar();
@@ -1113,7 +1123,7 @@
 
 
 
-                var fila='<tr class="selected" id="fila'+cont+'"><td><button  id="b'+cont+'" type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td>  <td><input type="hidden" name="id_producto_pt[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="ancho_producto_pt[]" value="'+ancho+'">'+ancho+'</td> <td><input type="hidden" name="largo_producto_pt[]" value="'+largo+'">'+largo+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt[]" value="'+cantidad+'">'+cantidad+'</td> ';
+                var fila='<tr class="selected" id="fila'+cont+'"><td><button  id="b'+cont+'" type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td>  <td><input type="hidden" name="id_producto_pt[]" value="'+idarticulo+'">'+articulo+'</td> <td><input type="hidden" name="ancho_producto_pt[]" value="'+ancho+'">'+ancho+'</td> <td><input type="hidden" name="largo_producto_pt[]" value="'+largo+'">'+largo+'</td> <td><input type="hidden" step="0.01" name="cantidad_pt[]" value="'+rollos_totales+'">'+rollos_totales+'</td> ';
 
 
 
@@ -1267,10 +1277,79 @@ function agregar2(){
         $("#rollos_totales").val("");          //Rollos totales
         $("#largo_mp_necesario").val("");      //Largo necesario
         $("#total_largo_restante").val("");    //Largo restante  
+
+        $("#cantidad_sticker_restante").val("");    //Cantidad Sticker restante  
+        $("#cantidad_sticker_necesario").val("");   //Cantidad Sticker necesario 
+
+        $("#largo_leader3_restante").val("");    //Leader 3 (envoltura) restante
+        $("#largo_leader3_necesario").val("");   //Leader 3 (envoltura) necesario 
+
+        $("#largo_leader2_restante").val("");    //Leader 2 (final) restante
+        $("#largo_leader2_necesario").val("");   //Leader 2 (final) necesario 
+
+        $("#largo_leader1_restante").val("");    //Leader 1 (inicial) restante
+        $("#largo_leader1_necesario").val("");   //Leader 1 (inicial) necesario 
+
+        $("#cantidad_core_restante").val("");    //Cantidad Core restante  
+        $("#cantidad_core_necesario").val("");   //Cantidad Core necesario 
+
+
     }
 
     function evaluar(){
         
+        if($("#cantidad_sticker_restante").val() < 0)
+                {
+                    document.getElementById("cantidad_sticker_restante").style.color = '#FF0000';
+                    document.getElementById("cantidad_sticker_restante").style.fontWeight="bold";
+                }
+                else
+                    document.getElementById('cantidad_sticker_restante').style.color = '#000000';   
+        
+        if($("#cantidad_core_restante").val() < 0)
+                {
+                    document.getElementById("cantidad_core_restante").style.color = '#FF0000';
+                    document.getElementById("cantidad_core_restante").style.fontWeight="bold";
+                }
+                else
+                    document.getElementById('cantidad_core_restante').style.color = '#000000';   
+
+        if($("#total_largo_restante").val() < 0)
+                {
+                    document.getElementById("total_largo_restante").style.color = '#FF0000';
+                    document.getElementById("total_largo_restante").style.fontWeight="bold";
+                }
+                else
+                    document.getElementById('total_largo_restante').style.color = '#000000';   
+
+
+        if($("#largo_leader1_restante").val() < 0)
+                {
+                    document.getElementById("largo_leader1_restante").style.color = '#FF0000';
+                    document.getElementById("largo_leader1_restante").style.fontWeight="bold";
+                }
+                else
+                    document.getElementById('largo_leader1_restante').style.color = '#000000';   
+        
+        if($("#largo_leader2_restante").val() < 0)
+                {
+                    document.getElementById("largo_leader2_restante").style.color = '#FF0000';
+                    document.getElementById("largo_leader2_restante").style.fontWeight="bold";
+                }
+                else
+                    document.getElementById('largo_leader2_restante').style.color = '#000000';   
+        
+        if($("#largo_leader3_restante").val() < 0)
+                {
+                    document.getElementById("largo_leader3_restante").style.color = '#FF0000';
+                    document.getElementById("largo_leader3_restante").style.fontWeight="bold";
+                }
+                else
+                    document.getElementById('largo_leader3_restante').style.color = '#000000';   
+
+
+        
+
 
         if (total>0 && $("#dt_corrida").val()<0.060 && $("#total_largo_restante").val()>=0 && $("#cantidad_core_restante").val()>=0 && $("#largo_leader1_restante").val()>=0 && $("#largo_leader2_restante").val()>=0 && $("#largo_leader3_restante").val()>=0 && $("#cantidad_sticker_restante").val()>=0)
         {
@@ -1393,6 +1472,9 @@ function agregar2(){
             evaluar();
             $(document).ready(onSelectMpChange);
             $(document).ready(onSelectPtChange);
+            $(document).ready(onSelectLeader1Change);
+            $(document).ready(onSelectLeader2Change);
+
 
             $("#panel1").hide();      
             $("#panel2").show(); 
@@ -1446,13 +1528,5 @@ function agregar2(){
 
 </script>
 @endpush
-
-
-<script>
-    $('.datepicker').datepicker({
-    weekStart:1
-    });
-</script>
-
 
 @endsection

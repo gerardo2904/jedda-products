@@ -12,6 +12,11 @@ $(function() {
 	$('#id_producto_leader1').on('change', onSelectLeader1Change);
 	$('#id_producto_leader1').on('click', onSelectLeader1Change);
 	$(document).ready(onSelectLeader1Change);
+
+	$('#id_producto_leader2').on('change', onSelectLeader2Change);
+	$('#id_producto_leader2').on('click', onSelectLeader2Change);
+	$(document).ready(onSelectLeader2Change);
+	
 });
 
 
@@ -36,7 +41,7 @@ function onSelectMpChange() {
     	
 
     	$('#pid_producto_pt').html(html_select);
-    	console.log(html_select);
+    	//console.log(html_select);
     });
 	
 
@@ -75,10 +80,28 @@ function onSelectLeader1Change() {
     $.get('/api/'+leader1_id+'/products3', function (data){
     	var html_select = '';
     	for (var i=0; i<data.length; i++)
-   			html_select+='<option value="'+data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+'">'+""+data[i].articulo+'</option>';
+   			html_select+='<option value="'+data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+"_"+data[i].articulo+'">'+""+data[i].articulo+'</option>';
 
     	$('#id_producto_leader2').html(html_select);
-    	console.log(html_select);
+    	/*console.log(html_select);*/
     });
 }
 
+function onSelectLeader2Change() {
+
+	datosl1=document.getElementById("id_producto_leader1").value.split('_');
+    leader1_id = datosl1[0];
+
+    datosl2=document.getElementById("id_producto_leader2").value.split('_');
+    leader2_id = datosl2[0];
+
+
+    $.get('/api/'+leader1_id+'/'+leader2_id+'/products4', function (data){
+    	var html_select = '';
+    	for (var i=0; i<data.length; i++)
+   			html_select+='<option value="'+data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+"_"+data[i].articulo+'">'+""+data[i].articulo+'</option>';
+
+    	$('#id_producto_leader3').html(html_select);
+    	console.log(html_select);
+    });
+}
