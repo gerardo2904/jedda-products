@@ -80,7 +80,7 @@ function onSelectLeader1Change() {
     $.get('/api/'+leader1_id+'/products3', function (data){
     	var html_select = '';
     	for (var i=0; i<data.length; i++)
-   			html_select+='<option value="'+data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+"_"+data[i].articulo+'">'+""+data[i].articulo+'</option>';
+   			html_select+='<option value="'+data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+"_"+data[i].articulo+"_"+data[i].id_unidad+"_"+data[i].precioc+"_"+data[i].preciov+"_"+data[i].id_product+'">'+""+data[i].articulo+'</option>';
 
     	$('#id_producto_leader2').html(html_select);
     	/*console.log(html_select);*/
@@ -99,7 +99,7 @@ function onSelectLeader2Change() {
     $.get('/api/'+leader1_id+'/'+leader2_id+'/products4', function (data){
     	var html_select = '';
     	for (var i=0; i<data.length; i++)
-   			html_select+='<option value="'+data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+"_"+data[i].articulo+'">'+""+data[i].articulo+'</option>';
+   			html_select+='<option value="'+data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+"_"+data[i].articulo+"_"+data[i].id_unidad+"_"+data[i].precioc+"_"+data[i].preciov+"_"+data[i].id_product+'">'+""+data[i].articulo+'</option>';
 
     	$('#id_producto_leader3').html(html_select);
     	console.log(html_select);

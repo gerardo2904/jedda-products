@@ -224,7 +224,7 @@
                                     <label class="control-label" style="color: rgba(0,0,0);">Leader Inicio</label>
                                     <select class="form-control " name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
                                         @foreach ($leader as $le)
-                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}">{{ $le->articulo }}</option>
+                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}_{{ $le->id_product }}">{{ $le->articulo }}</option>
                                         @endforeach
                                     </select>
                                     <input type="hidden" name="tempo_id_producto_leader1" id="tempo_id_producto_leader1" value="{{ old('tempo_id_producto_leader1')}}">
@@ -936,7 +936,7 @@
 
         datosLeader1=document.getElementById('id_producto_leader1').value.split('_');
 
-        $("#tempo_id_producto_leader1").val(datosLeader1[0]);
+        $("#tempo_id_producto_leader1").val(datosLeader1[10]);
 
         $("#etiqueta_leader1").val(datosLeader1[1]);
         $("#ancho_leader1").val(datosLeader1[2]);
@@ -954,7 +954,7 @@
 
         datosLeader2=document.getElementById('id_producto_leader2').value.split('_');
 
-        $("#tempo_id_producto_leader2").val(datosLeader2[0]);
+        $("#tempo_id_producto_leader2").val(datosLeader2[10]);
 
         $("#etiqueta_leader2").val(datosLeader2[1]);
         $("#ancho_leader2").val(datosLeader2[2]);
@@ -971,7 +971,7 @@
 
         datosLeader3=document.getElementById('id_producto_leader3').value.split('_');
 
-        $("#tempo_id_producto_leader3").val(datosLeader3[0]);
+        $("#tempo_id_producto_leader3").val(datosLeader3[10]);
 
         $("#etiqueta_leader3").val(datosLeader3[1]);
         $("#ancho_leader3").val(datosLeader3[2]);

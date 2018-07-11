@@ -124,6 +124,10 @@
                                         <a href="{{ url('/almproducts')}}">Inventario</a>
                                     </li>
 
+                                    <li>
+                                        <a href="{{ url('/almproducts/lote')}}">Seguimiento por LOTE</a>
+                                    </li>
+
                                  @endif
                                     
                                 </ul>

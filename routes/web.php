@@ -34,6 +34,10 @@ Route::post('/order','CartController@update');
 
 Route::get('/almproducts','Admin\AlmproductController@index');  //listado
 Route::get('descargar-productos', 'Admin\AlmproductController@pdf')->name('existencias.pdf');
+
+Route::get('/almproducts/lote','Admin\AlmproductController@lote');  //Seguimiento por lote
+Route::get('descargar-por-lote', 'Admin\AlmproductController@pdf2')->name('seguimiento.pdf');
+
     
 Route::get('/import', 'Admin\ImportController@import');
 
