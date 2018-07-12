@@ -63,7 +63,9 @@
                                     <td>{{ $product->name }}</td>
                                     
                                     <td>
-                                    <a href="{{url('/almproducts/showlote/'.$product->etiqueta_prod.'/'.$cia->id)}}" class="btn btn-sm btn-primary" rel="tooltip" title="Historial">
+                                    <a href="{{URL::action('Admin\AlmproductController@showlote',[urlencode($product->etiqueta_prod),$cia->id])}}" class="btn btn-sm btn-primary" rel="tooltip" title="Historial">
+                                    
+
                                     {{ $product->etiqueta_prod }}
                                     </a>
                                     </td>
