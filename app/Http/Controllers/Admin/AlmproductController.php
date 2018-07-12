@@ -89,6 +89,7 @@ class AlmproductController extends Controller
         $cim ='/images/companies/'.$ci->image;
 
         $query    = trim($request->get('searchText'));
+        $searchText = $query;
 
         $products = DB::table('almproducts as alm')
         ->join('products as art','art.id','=','alm.id_product')
@@ -100,7 +101,7 @@ class AlmproductController extends Controller
         ->groupBy('art.id','articulo','art.name','art.description', 'art.id_unidad_prod', 'art.activo','art.category_id','art.ancho_prod', 'art.subcategory_id','art.formula','art.roll_id','alm.id_company','alm.etiqueta', 'alm.precioc','alm.preciov','alm.cantidad_prod')
         ->get();
 
-        return view('almproducts.lote')->with(compact('products','cia','cim'));   // listado  
+        return view('almproducts.lote')->with(compact('products','cia','cim','searchText'));   // listado  
     }
 
    public function pdf2()
@@ -130,6 +131,27 @@ class AlmproductController extends Controller
 
         return $pdf->download('existencias.pdf');
     }
+
+    public function showlote($lote,$id){
+        $l=$lote;
+        $i=$id;
+        /*$product = Product::find($id);
+        $images  = $product->images;
+        
+        $imagesLeft  = collect();   //crea un array
+        $imagesRight = collect();   //crea un array
+        
+        foreach ($images as $key => $image) {
+            if ($key%2==0)  // Si es par lo manda al array Left, si no, lo manda al array Right.  Esto para acomodarlas en la vista.
+                $imagesLeft->push($image);
+            else
+                $imagesRight->push($image);
+        }
+        */
+        
+        return view('almproducts.showlote')->with(compact('l','i'));
+    }
+
 }
 
 

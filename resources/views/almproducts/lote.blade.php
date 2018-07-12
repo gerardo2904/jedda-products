@@ -28,15 +28,18 @@
                         </div>
                     @endif
 
+                    
+
                 <div class="row">
                     <div class="col-sm-2">
                         <img style="width:150px; height:130px;" src="{{ $cim }}" alt="Rounded Raised" class="img-rounded img-responsive img-raised">
                     </div>
                     <div class="col-sm-10">
                         <h3 class="title text-left">Productos en almacen {{ $cia->name }} </h3>
-                        @include('almproducts.searchlote') 
+                        
                     </div>
                 </div>
+                @include('almproducts.searchlote') 
 
 					<div class="team">
 						<div class="row">
@@ -58,7 +61,13 @@
                                 <tr>
                                     <!-- <td class="text-center">{{ $product->id }}</td> -->
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->etiqueta_prod }}</td>
+                                    
+                                    <td>
+                                    <a href="{{url('/almproducts/showlote/'.$product->etiqueta_prod.'/'.$cia->id)}}" class="btn btn-sm btn-primary" rel="tooltip" title="Historial">
+                                    {{ $product->etiqueta_prod }}
+                                    </a>
+                                    </td>
+                                    
                                     <td>{{ $product->description }}</td>
                                     <td>{{ $product->cantidad_prod }}</td>
                                     <td>{{ $product->existencia}}</td>
@@ -68,6 +77,8 @@
                                 
                             </tbody>
                         </table>
+
+                        
                            
 			             <a href="{{ route('existencias.pdf') }}" class="btn btn-sm btn-primary">Descargar existencias de productos en PDF</a>
 			                
