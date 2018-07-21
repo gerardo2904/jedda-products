@@ -144,7 +144,7 @@ class AlmproductController extends Controller
         ->select(DB::raw('CONCAT(products.name," ",products.description," ",detalle_ingreso.etiqueta) AS articulo'),'products.id','products.name','products.description','products.id_unidad_prod','products.ancho_prod','products.activo','products.category_id','products.subcategory_id','products.formula','products.roll_id','ingreso.id_empresa','detalle_ingreso.precioc','products.cantidad_prod','detalle_ingreso.etiqueta','ingreso.tipo_comprobante','ingreso.serie_comprobante','ingreso.num_comprobante','detalle_ingreso.cantidad','ingreso.fecha_hora')
         ->where('products.activo','=','1')
         ->where('ingreso.id_empresa','=',$id)
-        ->where('detalle_ingreso.etiqueta','>','"$lote"')
+        ->where('detalle_ingreso.etiqueta','=',$lote)
         ->groupBy('products.id','products.name','products.id_unidad_prod','products.ancho_prod', 'products.formula','products.roll_id','ingreso.id_empresa','detalle_ingreso.etiqueta','detalle_ingreso.precioc','ingreso.tipo_comprobante','ingreso.serie_comprobante','ingreso.num_comprobante','products.cantidad_prod','detalle_ingreso.cantidad','ingreso.fecha_hora')
         ->first();
 
@@ -157,7 +157,7 @@ class AlmproductController extends Controller
         ->select(DB::raw('CONCAT(products.name," ",products.description," ",detalle_production_order.etiqueta_pt) AS articulo'), 'products.id', 'products.name', 'products.description', 'products.id_unidad_prod', 'products.ancho_prod', 'products.activo', 'products.category_id', 'products.subcategory_id', 'products.formula', 'products.roll_id', 'production_order.id_company', 'products.cantidad_prod', 'detalle_production_order.etiqueta_pt', 'production_order.orden', 'detalle_production_order.cantidad_pt', 'production_order.id_producto_mp', DB::raw('CONCAT(p.name," ",p.description," ",production_order.etiqueta_mp) AS materia'), 'production_order.fecha_hora', 'almproducts_tempo.ncantidad_prod as cantidad_despues','almproducts_tempo.cantidad_prod as cantidad_antes')
         ->where('products.activo','=','1')
         ->where('production_order.id_company','=',$id)
-        ->where('detalle_production_order.etiqueta_pt','>','"$lote"')
+        ->where('detalle_production_order.etiqueta_pt','=',$lote)
         ->groupBy('products.id', 'products.name', 'products.id_unidad_prod', 'products.ancho_prod', 'products.formula', 'products.roll_id', 'production_order.id_company', 'detalle_production_order.etiqueta_pt', 'production_order.orden', 'products.cantidad_prod')
         ->orderBy('almproducts_tempo.id_production','ASC')
         ->get();

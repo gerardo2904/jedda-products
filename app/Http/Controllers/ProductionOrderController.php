@@ -185,7 +185,9 @@ class ProductionOrderController extends Controller
         // algebra relacional para calcularlo...
         $no_ordenp = DB::table('production_order')
         ->join('companies','production_order.id_company','=','companies.id')
-        ->select('production_order.id_company', DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-",(if((production_order.orden REGEXP "^[0-9]")=1,CAST(production_order.orden AS UNSIGNED) + 1,CAST(substr(production_order.orden,5,10) AS UNSIGNED) + 1))) as orden'), DB::raw('CAST(production_order.orden AS UNSIGNED) as ordenp'))
+        ->select('production_order.id_company', DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-","PRO-",DATE_FORMAT(NOW( ), "%H%i%S" ),"-",(if((production_order.orden REGEXP "^[0-9]")=1,CAST(production_order.orden AS UNSIGNED) + 1,CAST(substr(production_order.orden,16,10) AS UNSIGNED) + 1))) as orden'), DB::raw('CAST(production_order.orden AS UNSIGNED) as ordenp'))
+
+
         ->where('production_order.id_company','=',$iu)
         ->orderBy('orden','DESC')
         ->first();

@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 
 Use Illuminate\Http\Request;
 Use App\Http\Requests\VentaFormRequest;
-Use Auth;
-
 Use Session;
 Use Redirect;
 Use Input;
@@ -17,6 +15,7 @@ use App\Product;
 use App\Unit;
 use App\almproducts;
 use App\Client;
+Use Auth;
 
 Use DB;
 
@@ -90,7 +89,7 @@ class VentaController extends Controller
             $ncompv=$no_ordenv->nocompv;
         }else {
             $comp = DB::table('companies')
-            ->select(DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-PO-",DATE_FORMAT(NOW( ), "%H%i%S" ))) as orden'))
+            ->select(DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-SO-",DATE_FORMAT(NOW( ), "%H%i%S" )) as orden'))
             ->where('companies.id','=',$iu)
             ->first();
             $ordenv=$comp->orden;
