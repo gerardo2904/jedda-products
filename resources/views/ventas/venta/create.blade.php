@@ -93,7 +93,7 @@
                                     <label class="control-label">Artículo</label>
                                     <select class="form-control selectpicker " name="pidarticulo" id="pidarticulo" data-live-search="true" data-style="btn-primary">
                                         @foreach ($products as $articulo)
-                                            <option value="{{$articulo->id}}_{{$articulo->existencia}}_{{$articulo->preciov}}">{{$articulo->articulo}} LOTE: {{$articulo->etiqueta}}</option>
+                                            <option value="{{$articulo->id}}_{{$articulo->existencia}}_{{$articulo->preciov}}_{{$articulo->etiqueta}}">{{$articulo->articulo}} LOTE: {{$articulo->etiqueta}}</option>
                                         @endforeach
                                     </select>
                                     </div>
@@ -117,6 +117,7 @@
                                     <div class="form-group label-floating">
                                         <label class="control-label">Precio</label>
                                         <input type="number" step="0.01" class="form-control" name="ppreciov" id="ppreciov"  >
+                                        <input type="hidden" name="petiqueta" id="petiqueta" value="{{ old('petiqueta')}}">
                                     </div>
                                 </div>
 
@@ -227,11 +228,13 @@
         datosArticulo=document.getElementById('pidarticulo').value.split('_');
         $("#pexistencia").val(datosArticulo[1]);
         $("#ppreciov").val(datosArticulo[2]);
+        $("#petiqueta").val(datosArticulo[3]);
     }
 
     function agregar(){
         datosArticulo=document.getElementById('pidarticulo').value.split('_');
         idarticulo=datosArticulo[0];
+        et=datosArticulo[3];
         articulo=$("#pidarticulo option:selected").text();
         cantidad=$("#pcantidad").val();
         preciov=$("#ppreciov").val();
@@ -250,8 +253,8 @@
                 tax=tax+(($("#impuesto").val()*0.01)*subtotal[cont]);
                 
                 gt=subtot+tax;
-
-                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" step="0.01" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" step="0.01" name="preciov[]" value="'+preciov+'">'+preciov+'</td> </td><td><input type="hidden" step="0.01" name="descuento[]" value="'+descuento+'">'+descuento+'</td> <td>'+subtotal[cont]+'</td> ';
+                /* AQUI AGREGAR ETIQUETA PARA SALIDA (LOTE) Y AGREGAR A REPORTE POR LOTE*/
+                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" step="0.01" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" step="0.01" name="preciov[]" value="'+preciov+'">'+preciov+'</td><td><input type="hidden" step="0.01" name="descuento[]" value="'+descuento+'">'+descuento+' </td> <td>'+subtotal[cont]+'</td> <input type="hidden" name="etiqueta[]" value="'+et+'">';
                 
                 cont++;
                 limpiar();
