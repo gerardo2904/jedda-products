@@ -24,9 +24,10 @@
                         <div class="alert {{ (Session::get('status') == 'exito')?'alert-success':'alert-danger' }} alert-dismissible" role="alert">
                             {{Session::get('message')}}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            
                         </div>
                     @endif
+
+                
 
                 <div class="row">
                     <div class="col-sm-2">
@@ -36,7 +37,9 @@
                         <h3 class="title text-left">Productos en almacen {{ $cia->name }} </h3>
                     </div>
                 </div>
-
+                
+                @include('almproducts.search') 
+                
 					<div class="team">
 						<div class="row">
                           

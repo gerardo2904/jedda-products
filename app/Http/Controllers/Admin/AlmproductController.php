@@ -17,7 +17,7 @@ Use Barryvdh\DomPDF\Facade as PDF;
 
 class AlmproductController extends Controller
 {
-     public function index()
+     public function index(Request $request)
     {
         //$products = almproducts::paginate(10);
 
@@ -32,6 +32,9 @@ class AlmproductController extends Controller
         ->first();
         $cim ='/images/companies/'.$ci->image;
 
+        $query    = trim($request->get('searchText'));
+        $searchText = $query;
+
 
         $products = DB::table('almproducts as alm')
         ->join('products as art','art.id','=','alm.id_product')
@@ -39,10 +42,12 @@ class AlmproductController extends Controller
         ->where('art.activo','=','1')
         ->where('alm.id_company','=',$iu)
         ->where('alm.existencia','>','0')
+        ->where('alm.etiqueta','LIKE','%'.$query.'%')
+        ->orWhere('art.name','LIKE','%'.$query.'%')
         ->groupBy('art.id','articulo','art.name','art.description', 'art.id_unidad_prod', 'art.activo','art.category_id','art.ancho_prod', 'art.subcategory_id','art.formula','art.roll_id','alm.id_company','alm.etiqueta', 'alm.precioc','alm.preciov','alm.cantidad_prod')
         ->get();
 
-        return view('almproducts.index')->with(compact('products','cia','cim'));   // listado  
+        return view('almproducts.index')->with(compact('products','cia','cim','searchText'));   // listado  
     }
 
    public function pdf()
@@ -97,7 +102,8 @@ class AlmproductController extends Controller
         ->where('art.activo','=','1')
         ->where('alm.id_company','=',$iu)
         ->where('alm.existencia','>','0')
-         ->where('alm.etiqueta','LIKE','%'.$query.'%')
+        ->where('alm.etiqueta','LIKE','%'.$query.'%')
+        ->orWhere('art.name','LIKE','%'.$query.'%')
         ->groupBy('art.id','articulo','art.name','art.description', 'art.id_unidad_prod', 'art.activo','art.category_id','art.ancho_prod', 'art.subcategory_id','art.formula','art.roll_id','alm.id_company','alm.etiqueta', 'alm.precioc','alm.preciov','alm.cantidad_prod')
         ->get();
 
