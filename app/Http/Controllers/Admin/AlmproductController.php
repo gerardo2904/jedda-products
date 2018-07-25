@@ -41,7 +41,7 @@ class AlmproductController extends Controller
         ->select(DB::raw('CONCAT(art.name," ",art.description," ",alm.etiqueta) AS articulo'),'art.id','art.name','art.description','art.id_unidad_prod','art.ancho_prod','art.activo','art.category_id','art.subcategory_id','art.formula','art.roll_id','alm.id_company',DB::raw('SUM(alm.existencia) as existencia'),'alm.precioc','alm.preciov','alm.cantidad_prod','alm.etiqueta as etiqueta_prod')
         ->where('art.activo','=','1')
         ->where('alm.id_company','=',$iu)
-        ->where('alm.existencia','>','0')
+        ->where('alm.existencia','>',0)
         ->where('alm.etiqueta','LIKE','%'.$query.'%')
         ->orWhere('art.name','LIKE','%'.$query.'%')
         ->groupBy('art.id','articulo','art.name','art.description', 'art.id_unidad_prod', 'art.activo','art.category_id','art.ancho_prod', 'art.subcategory_id','art.formula','art.roll_id','alm.id_company','alm.etiqueta', 'alm.precioc','alm.preciov','alm.cantidad_prod')
