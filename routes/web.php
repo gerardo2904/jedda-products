@@ -32,13 +32,13 @@ Route::delete('/cart','CartDetailController@destroy');
 
 Route::post('/order','CartController@update');
 
+Route::middleware(['auth','admin'])->group(function(){
 Route::get('/almproducts','Admin\AlmproductController@index');  //listado
 Route::get('descargar-productos', 'Admin\AlmproductController@pdf')->name('existencias.pdf');
-
 Route::get('/almproducts/lote','Admin\AlmproductController@lote');  //Seguimiento por lote
 Route::get('/almproducts/{lote}/{id}','Admin\AlmproductController@showlote');  
 Route::get('descargar-por-lote', 'Admin\AlmproductController@pdf2')->name('seguimiento.pdf');
-
+});
     
 Route::get('/import', 'Admin\ImportController@import');
 
