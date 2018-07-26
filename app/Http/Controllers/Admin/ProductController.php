@@ -80,16 +80,19 @@ class ProductController extends Controller
             'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
             'description.required' => 'La descripción corta es un campo obligatorio',
             'description.max' => 'La descripción corta solo admite hasta 200 caracteres',
-            'unique' => 'Información repetida'
-            
+            'unique' => 'Información repetida',
+            'cantidad_prod.required' => 'Es necesario capturar la cantidad de producción. 
+                                         Como ayuda, puedes tener estos casos: 
+                                         1.- Unidad de producción = 1 si es una caja con varias cosas y vendes por caja.  
+                                         2.- Si tienes una caja con 2000 piezas y vendes por pueza, entonces la cantidad de producción es 2000.   
+                                         Recuerda que estos solo son ejemplos.'  
         ];
         
         $rules = [
             'name' => 'required|min:3',
             'description' => 'required|max:200',
-            'name','id_unidad_prod','cantidad_prod','etiqueta_prod' => 'unique:products'
-            
-            
+            'name','id_unidad_prod','cantidad_prod','etiqueta_prod' => 'unique:products',
+            'cantidad_prod' => 'required'    
         ];
         
         $this->validate($request,$rules,$messages);  
