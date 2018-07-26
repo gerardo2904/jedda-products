@@ -34,19 +34,19 @@
 
                                 </tr>
                             </thead>
-                            <tbody>                              
+                            <tbody> 
+								@foreach ($ps2 as $prod2)                             
                                 <tr>
-                                    <td class="text-center">{{ $ps->articulo }}</td>
-                                    <td class="text-center">{{ $ps->ancho_prod }}</td>
-                                    <td class="text-center">{{ $ps->cantidad_prod }}</td>
-                                    <td class="text-center">{{ $ps->formula }}</td>
-                                    <td class="text-center">{{ $ps->precioc }} </td>
+                                    <td class="text-center">{{ $prod2->articulo }}</td>
+                                    <td class="text-center">{{ $prod2->ancho_prod }}</td>
+                                    <td class="text-center">{{ $prod2->cantidad_prod }}</td>
+                                    <td class="text-center">{{ $prod2->formula }}</td>
+                                    <td class="text-center">{{ $prod2->precioc }} </td>
                                     
                                 </tr>
+								@endforeach
                             </tbody>
                         </table>
-
-			             <a href="{{ route('existencias.pdf') }}" class="btn btn-sm btn-primary">Descargar existencias de productos en PDF</a>
 			                
 				</div>
 				<br><br>
@@ -104,7 +104,47 @@
 
 				@endforeach
 
-			
+			<br>
+			<br>
+			<div class="row">
+				<div class="profile">
+					<div class="name">
+						<h3 class="title">Orden de Salida {{$pv->tipo_comprobante}}-{{$pv->serie_comprobante}}-{{$pv->num_comprobante}}</h3>
+						{{$pv->fecha_hora}}
+						<br>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">                          
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-md-5 text-center">Articulo</th>
+                            <th class="col-md-1 text-center">Ancho</th>
+                            <th class="col-md-2 text-center">Cantidad/Largo</th>
+                            <th class="col-md-2 text-center">Formula</th>
+ 							<th class="col-md-2 text-center">Precio de compra</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+						@foreach ($pv2 as $prodv2)                             
+                            <tr>
+                                <td class="text-center">{{ $prodv2->articulo }}</td>
+                                <td class="text-center">{{ $prodv2->ancho_prod }}</td>
+                                <td class="text-center">{{ $prodv2->cantidad_prod }}</td>
+                                <td class="text-center">{{ $prodv2->formula }}</td>
+                                <td class="text-center">{{ $prodv2->preciov }} </td>
+                            </tr>
+						@endforeach
+                    </tbody>
+                </table>
+			</div>
+			<br><br>
+
+
+
+			<a href="{{ route('existencias.pdf') }}" class="btn btn-sm btn-primary">Descargar existencias de productos en PDF</a>
             
 			@if (session('notification'))
                         <div class="alert alert-success">
