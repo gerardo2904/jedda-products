@@ -32,8 +32,11 @@ class AlmproductController extends Controller
         ->first();
         $cim ='/images/companies/'.$ci->image;
 
-        $query    = trim($request->get('searchText'));
-        $searchText = $query;
+        $queryLote    = trim($request->get('searchTextLote'));
+        $searchTextLote = $queryLote;
+
+        $queryName    = trim($request->get('searchTextName'));
+        $searchTextName = $queryName;
 
 
         $products = DB::table('almproducts as alm')
@@ -42,12 +45,12 @@ class AlmproductController extends Controller
         ->where('art.activo','=','1')
         ->where('alm.id_company','=',$iu)
         ->where('existencia','>',0)
-        ->where('alm.etiqueta','LIKE','%'.$query.'%')
-        ->orWhere('art.name','LIKE','%'.$query.'%')
+        ->where('alm.etiqueta','LIKE','%'.$queryLote.'%')
+        ->Where('art.name','LIKE','%'.$queryName.'%')
         ->groupBy('art.id','articulo','art.name','art.description', 'art.id_unidad_prod', 'art.activo','art.category_id','art.ancho_prod', 'art.subcategory_id','art.formula','art.roll_id','alm.id_company','alm.etiqueta', 'alm.precioc','alm.preciov','alm.cantidad_prod')
         ->get();
 
-        return view('almproducts.index')->with(compact('products','cia','cim','searchText'));   // listado  
+        return view('almproducts.index')->with(compact('products','cia','cim','searchTextLote','searchTextName'));   // listado  
     }
 
    public function pdf()
@@ -93,8 +96,11 @@ class AlmproductController extends Controller
         ->first();
         $cim ='/images/companies/'.$ci->image;
 
-        $query    = trim($request->get('searchText'));
-        $searchText = $query;
+        $queryLote    = trim($request->get('searchTextLote'));
+        $searchTextLote = $queryLote;
+
+        $queryName    = trim($request->get('searchTextName'));
+        $searchTextName = $queryName;
 
         $products = DB::table('almproducts as alm')
         ->join('products as art','art.id','=','alm.id_product')
@@ -102,12 +108,12 @@ class AlmproductController extends Controller
         ->where('art.activo','=','1')
         ->where('alm.id_company','=',$iu)
         ->where('alm.existencia','>','0')
-        ->where('alm.etiqueta','LIKE','%'.$query.'%')
-        ->orWhere('art.name','LIKE','%'.$query.'%')
+        ->where('alm.etiqueta','LIKE','%'.$queryLote.'%')
+        ->Where('art.name','LIKE','%'.$queryName.'%')
         ->groupBy('art.id','articulo','art.name','art.description', 'art.id_unidad_prod', 'art.activo','art.category_id','art.ancho_prod', 'art.subcategory_id','art.formula','art.roll_id','alm.id_company','alm.etiqueta', 'alm.precioc','alm.preciov','alm.cantidad_prod')
         ->get();
 
-        return view('almproducts.lote')->with(compact('products','cia','cim','searchText'));   // listado  
+        return view('almproducts.lote')->with(compact('products','cia','cim','searchTextLote','searchTextName'));   // listado  
     }
 
    public function pdf2()
