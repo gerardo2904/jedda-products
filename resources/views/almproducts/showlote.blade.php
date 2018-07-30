@@ -106,11 +106,17 @@
 
 			<br>
 			<br>
+
+			{{-- 
+			if ($pv)
+			
 			<div class="row">
 				<div class="profile">
 					<div class="name">
+			
 						<h3 class="title">Orden de Salida {{$pv->tipo_comprobante}}-{{$pv->serie_comprobante}}-{{$pv->num_comprobante}}</h3>
 						{{$pv->fecha_hora}}
+					
 						<br>
 					</div>
 				</div>
@@ -141,7 +147,7 @@
                 </table>
 			</div>
 			<br><br>
-
+			--}}
 
 
 			<a href="{{ route('existencias.pdf') }}" class="btn btn-sm btn-primary">Descargar existencias de productos en PDF</a>

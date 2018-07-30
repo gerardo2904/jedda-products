@@ -206,7 +206,7 @@ class AlmproductController extends Controller
         ->groupBy('products.id','products.name','products.id_unidad_prod','products.ancho_prod', 'products.formula','products.roll_id','venta.id_empresa','detalle_venta.etiqueta','detalle_venta.preciov','venta.tipo_comprobante','venta.serie_comprobante','venta.num_comprobante','products.cantidad_prod','detalle_venta.cantidad','venta.fecha_hora')
         ->get();
 
-       
+    
         
         return view('almproducts.showlote')->with(compact('l','i','ps','ps2','ph','pv','pv2'));
     }
