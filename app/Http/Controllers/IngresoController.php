@@ -191,7 +191,7 @@ class IngresoController extends Controller
 
     	}catch(\Exception $e)
     	{
-            //return $e;
+            return $e;
             
             DB::rollback();
             Session::flash('message','Ha ocurrido un error...');
