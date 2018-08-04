@@ -27,6 +27,8 @@
         <thead style="background-color:#A9D0F5">
             <tr>
             <th>Artículo</th>
+            <th>Lote</th>
+            <th>Notas</th>
             <th>Cantidad</th>
             <th>Precio de venta</th>
             <th>Subtotal</th>
@@ -36,7 +38,9 @@
         <tbody>
             @foreach($detalles as $det)
                 <tr>
-                <td>{{$det->articulo}} {{$det->description}}  Lote: {{$det->etiqueta}} Notas: {{$venta->notas}}</td>
+                <td>{{$det->articulo}} {{$det->description}}</td>
+                <td>{{$det->etiqueta}}</td>
+                <td>{{$venta->notas}}</td>
                 <td>{{$det->cantidad}}</td>
                 <td>{{$det->preciov}}</td>
                 <td>{{$det->cantidad*$det->preciov}}</td>
@@ -48,15 +52,21 @@
             <tr>
             <th></th>
             <th></th>
+            <th></th>
+            <th></th>
             <th>SUB-TOTAL</th>
             <th><h4 id="subtotal">{{$venta->total_venta}}</h4></th>
             <tr>
+            <th></th>
+            <th></th>
             <th></th>
             <th></th>    
             <th>IMPUESTO</th>
             <th><h4 id="impuesto">{{$venta->total_venta*$venta->impuesto*0.01}}</h4></th>
             </tr>
             <tr>
+            <th></th>
+            <th></th>
             <th></th>
             <th></th>    
             <th>TOTAL</th>

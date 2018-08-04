@@ -16,6 +16,8 @@
         <thead style="background-color:#A9D0F5">
             <tr>
             <th>Artículo</th>
+            <th>Lote</th>
+            <th>Notas</th>
             <th>Cantidad</th>
             <th>Precio de compra</th>
             <th>Subtotal</th>
@@ -25,7 +27,9 @@
         <tbody>
             @foreach($detalles as $det)
                 <tr>
-                <td>{{$det->articulo}} {{$det->description}} Lote: {{$det->etiqueta}} Notas: {{$ingreso->notas}}</td>
+                <td>{{$det->articulo}} {{$det->description}}</td>
+                <td>{{$det->etiqueta}}</td>
+                <td>{{$ingreso->notas}}</td>
                 <td>{{$det->cantidad}}</td>
                 <td>{{$det->precioc}}</td>
                 <td>{{$det->cantidad*$det->precioc}}</td>

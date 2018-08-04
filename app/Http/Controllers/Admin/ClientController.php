@@ -75,6 +75,29 @@ class ClientController extends Controller
         	$client->activo = 0;
 
         $client->save(); //insert en tabla productos
+
+        $cli = Client::where('name',$client->name)->first();
+        $idc=$cli->id;
+
+        // Imagen por default....
+
+        $file  = 'user-default.png';
+        $path = public_path() . '/images/clients';
+        //$path = public_path();
+        $fileName = uniqid() . $file;
+        //$moved = $file->copy($path.'/'.$file, $path.'/'.$fileName);
+        $moved = \File::copy($path.'/'.$file, $path.'/'.$fileName);
+        
+        // crear 1 registro en la tabla category_images
+        if ($moved){
+            $clientImage = new ClientImage();
+            $clientImage->image = $fileName;
+            // $productImage->featured = false;   // Ya esta en la definicion de la tabla esta condicion, por eso se comenta.
+            $clientImage->client_id = $idc;
+            $clientImage->featured = 1;
+            $clientImage->save();  //INSERT
+        }
+
             
         return redirect('/admin/clients');
     }
