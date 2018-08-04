@@ -69,14 +69,21 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             <div class="form-group label-floating">
                                 <label class="control-label">Impuesto</label>
                                 <input type="number" class="form-control" name="impuesto" id="impuesto" required value="{{ old('impuesto','16')}}">
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
+                            <div class="form-group label-floating">
+                                <label class="control-label">Orden Trabajo</label>
+                                <input type="text" class="form-control" name="ordenp" id="ordenp" required value="{{ old('ordenp')}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
                             <div class="form-group label-floating">
                                 <label class="control-label">Nota</label>
                                 <input type="text" class="form-control" name="notas" id="notas" value="{{ old('notas')}}">
@@ -113,7 +120,7 @@
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Precio</label>
-                                        <input type="number" step="0.01" class="form-control" name="pprecioc" id="pprecioc"  >
+                                        <input type="number" step="0.0001" class="form-control" name="pprecioc" id="pprecioc"  >
                                     </div>
                                 </div>
                                 

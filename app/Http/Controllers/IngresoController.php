@@ -113,6 +113,7 @@ class IngresoController extends Controller
     		$ingreso->tipo_comprobante 	= $request->get('tipo_comprobante');
     		$ingreso->serie_comprobante	= $request->get('serie_comprobante');
     		$ingreso->num_comprobante 	= $request->get('num_comprobante');
+            $ingreso->ordenp            = $request->get('ordenp');
     		$mytime						= Carbon::now('America/Tijuana');
     		$ingreso->fecha_hora		= $mytime->toDateTimeString();
     		$ingreso->impuesto			= $request->get('impuesto');
@@ -208,7 +209,7 @@ class IngresoController extends Controller
     		 ->join('clients as p','i.idproveedor','=','p.id')
              ->join('client_images as ci','i.idproveedor','=','ci.client_id')
     		 ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-    		 ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas',DB::raw('sum(di.cantidad*precioc) as total'))
+    		 ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.ordenp','i.notas',DB::raw('sum(di.cantidad*precioc) as total'))
     		 ->where('i.idingreso','=',$id)
              ->groupBy('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
     		 ->first();
@@ -231,7 +232,7 @@ class IngresoController extends Controller
              ->join('clients as p','i.idproveedor','=','p.id')
              ->join('client_images as ci','i.idproveedor','=','ci.client_id')
              ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-             ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas',DB::raw('sum(di.cantidad*precioc) as total'))
+             ->select('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.ordenp','i.notas',DB::raw('sum(di.cantidad*precioc) as total'))
              ->where('i.idingreso','=',$id)
              ->groupBy('i.idingreso','i.fecha_hora','p.name','ci.image','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
              ->first();

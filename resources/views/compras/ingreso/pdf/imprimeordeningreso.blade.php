@@ -18,6 +18,9 @@
         <div class="col-sm-2">
             <p>Notas: {{ $ingreso->notas }}</p>
         </div>
+        <div class="col-sm-2">
+            <p>Orden de trabajo (Producción): {{ $ingreso->ordenp }}</p>
+        </div>
 
     </div>
 

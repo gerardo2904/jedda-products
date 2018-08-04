@@ -123,10 +123,11 @@ class VentaController extends Controller
     		$venta->tipo_comprobante 	= $request->get('tipo_comprobante');
     		$venta->serie_comprobante	= $request->get('serie_comprobante');
     		$venta->num_comprobante 	= $request->get('num_comprobante');
+            $venta->ordenq              = $request->get('ordenq');
     		$venta->total_venta			= $request->get('total_venta');
     		$mytime						= Carbon::now('America/Tijuana');
     		$venta->fecha_hora			= $mytime->toDateTimeString();
-    		$venta->impuesto			= '16';
+    		$venta->impuesto			= $request->get('impuesto');
     		$venta->estado				= 'A';
             $venta->notas               = $request->get('notas');
     		$venta->save();
@@ -222,7 +223,7 @@ class VentaController extends Controller
     		 ->join('clients as p','v.idcliente','=','p.id')
              ->join('client_images as ci','v.idcliente','=','ci.client_id')
     		 ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
-    		 ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.notas','v.estado','v.total_venta')
+    		 ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.notas','v.estado','v.total_venta','v.ordenq')
     		 ->where('v.idventa','=',$id)
              ->groupBy('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
     		 ->first();
@@ -245,7 +246,7 @@ class VentaController extends Controller
              ->join('clients as p','v.idcliente','=','p.id')
              ->join('client_images as ci','v.idcliente','=','ci.client_id')
              ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
-             ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.notas','v.estado','v.total_venta')
+             ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.notas','v.estado','v.total_venta','v.ordenq')
              ->where('v.idventa','=',$id)
              ->groupBy('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
              ->first();

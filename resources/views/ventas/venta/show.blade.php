@@ -25,6 +25,8 @@
 			</div>
 			<div class="description text-center">
 				<p>{{ $venta->tipo_comprobante.'-'.$venta->serie_comprobante.'-'.$venta->num_comprobante }}</p>
+                <br>
+                <p>Invoice QB: {{ $venta->ordenq }}</p>
 			</div>
 			
 			@if (session('notification'))

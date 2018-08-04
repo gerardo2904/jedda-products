@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModificarCampoNameUnicoProducts extends Migration
+class AgregarCampoOrdenpIngresoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ModificarCampoNameUnicoProducts extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-           DB::update(DB::raw('ALTER TABLE products ADD constraint name UNIQUE name'));
+         Schema::table('ingreso', function (Blueprint $table) {
+            $table->string('ordenp')->after('num_comprobante');
         });
     }
 
@@ -25,6 +25,8 @@ class ModificarCampoNameUnicoProducts extends Migration
      */
     public function down()
     {
-        DB::update(DB::raw('ALTER TABLE products MODIFY name  VARCHAR(191)'));
+        Schema::table('ingreso', function (Blueprint $table) {
+            $table->dropColumn('ordenp');
+        });
     }
 }

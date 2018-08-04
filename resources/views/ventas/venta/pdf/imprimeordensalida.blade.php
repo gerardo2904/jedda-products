@@ -18,7 +18,9 @@
         <div class="col-sm-2">
             <p>Notas: {{ $venta->notas }}</p>
         </div>
-
+        <div class="col-sm-2">
+            <p>Invoice QB: {{ $venta->ordenq }}</p>
+        </div>
     </div>
 
 	

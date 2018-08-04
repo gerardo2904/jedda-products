@@ -25,6 +25,8 @@
 			</div>
 			<div class="description text-center">
 				<p>{{ $ingreso->tipo_comprobante.'-'.$ingreso->serie_comprobante.'-'.$ingreso->num_comprobante }}</p>
+                <br>
+                <p>Orden de Trabajo (Producción): {{ $ingreso->ordenp }}</p>
 			</div>
 			
 			@if (session('notification'))
