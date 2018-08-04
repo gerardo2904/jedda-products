@@ -124,7 +124,7 @@
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Precio</label>
-                                        <input type="number" step="0.01" class="form-control" name="ppreciov" id="ppreciov"  >
+                                        <input type="number" step="0.0001" class="form-control" name="ppreciov" id="ppreciov"  >
                                         <input type="hidden" name="petiqueta" id="petiqueta" value="{{ old('petiqueta')}}">
                                     </div>
                                 </div>
