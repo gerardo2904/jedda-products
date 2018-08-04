@@ -25,7 +25,7 @@
         <tbody>
             @foreach($detalles as $det)
                 <tr>
-                <td>{{$det->articulo}} {{$det->description}}</td>
+                <td>{{$det->articulo}} {{$det->description}} Lote: {{$det->etiqueta}} Notas: {{$ingreso->notas}}</td>
                 <td>{{$det->cantidad}}</td>
                 <td>{{$det->precioc}}</td>
                 <td>{{$det->cantidad*$det->precioc}}</td>
