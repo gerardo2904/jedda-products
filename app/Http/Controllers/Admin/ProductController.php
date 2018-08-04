@@ -78,6 +78,7 @@ class ProductController extends Controller
         $messages = [
             'name.required' => 'Es necesario ingresar el nombre del producto',
             'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
+            'name.unique' => 'El nombre del producto que quieres capturar ya existe',
             'description.required' => 'La descripción corta es un campo obligatorio',
             'description.max' => 'La descripción corta solo admite hasta 200 caracteres',
             'unique' => 'Información repetida',

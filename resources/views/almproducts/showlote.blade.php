@@ -107,8 +107,7 @@
 			<br>
 			<br>
 
-			{{-- 
-			if ($pv)
+			@if (! empty($pv))
 			
 			<div class="row">
 				<div class="profile">
@@ -147,7 +146,7 @@
                 </table>
 			</div>
 			<br><br>
-			--}}
+			@endif
 
 
 			<a href="{{ route('existencias.pdf') }}" class="btn btn-sm btn-primary">Descargar existencias de productos en PDF</a>
