@@ -31,6 +31,7 @@
                                     <th class="col-md-2 text-center">Cantidad/Largo</th>
                                     <th class="col-md-2 text-center">Formula</th>
 									<th class="col-md-2 text-center">Precio de compra</th>
+									<th class="col-md-2 text-center">Cantidad</th>
 
                                 </tr>
                             </thead>
@@ -42,6 +43,7 @@
                                     <td class="text-center">{{ $prod2->cantidad_prod }}</td>
                                     <td class="text-center">{{ $prod2->formula }}</td>
                                     <td class="text-center">{{ $prod2->precioc }} </td>
+									<td class="text-center">{{ $prod2->cantidad }} </td>
                                     
                                 </tr>
 								@endforeach
@@ -130,6 +132,7 @@
                             <th class="col-md-2 text-center">Cantidad/Largo</th>
                             <th class="col-md-2 text-center">Formula</th>
  							<th class="col-md-2 text-center">Precio de compra</th>
+							<th class="col-md-2 text-center">Cantidad</th>
                         </tr>
                     </thead>
                     <tbody> 
@@ -140,6 +143,7 @@
                                 <td class="text-center">{{ $prodv2->cantidad_prod }}</td>
                                 <td class="text-center">{{ $prodv2->formula }}</td>
                                 <td class="text-center">{{ $prodv2->preciov }} </td>
+								<td class="text-center">{{ $prodv2->cantidad }} </td>
                             </tr>
 						@endforeach
                     </tbody>
