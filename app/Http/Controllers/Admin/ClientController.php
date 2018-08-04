@@ -39,12 +39,12 @@ class ClientController extends Controller
         $messages = [
             'name.required' => 'Es necesario ingresar el nombre',
             'name.min' => 'El nombre de usuario debe tener al menos 3 caracteres',
-            'email.unique'=>'El email ya esta dado de alta en la base de datos'
+            'email.required'=>'El email ya esta dado de alta en la base de datos'
         ];
         
         $rules = [
         	'name' => 'required|string|min:3|max:255',
-            'email' => 'required|string|email|max:255|unique:clients'
+            'email' => 'required|string|email|max:255'
 
 
         /*    'description' => 'required|max:200',
