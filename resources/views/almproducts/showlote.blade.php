@@ -15,9 +15,7 @@
 					<div class="avatar">
 					</div>
 					<div class="name">
-						<h3 class="title">Orden de Ingreso {{$ps->tipo_comprobante}}-{{$ps->serie_comprobante}}-{{$ps->num_comprobante}}</h3>
-						{{$ps->fecha_hora}}
-						<br>
+						<h3 class="title">Ingresos</h3>
 					</div>
 				</div>
 			</div>
@@ -26,10 +24,11 @@
                         <table class="table">
                             <thead>
                                 <tr>
+									<th class="col-md-2 text-center">Fecha</th>
+									<th class="col-md-2 text-center">Orden de Ingreso</th>
+									<th class="col-md-2 text-center">Lote</th>
                                     <th class="col-md-5 text-center">Articulo</th>
-                                    <th class="col-md-1 text-center">Ancho</th>
                                     <th class="col-md-2 text-center">Cantidad/Largo</th>
-                                    <th class="col-md-2 text-center">Formula</th>
 									<th class="col-md-2 text-center">Precio de compra</th>
 									<th class="col-md-2 text-center">Cantidad</th>
 
@@ -38,10 +37,11 @@
                             <tbody> 
 								@foreach ($ps2 as $prod2)                             
                                 <tr>
-                                    <td class="text-center">{{ $prod2->articulo }}</td>
-                                    <td class="text-center">{{ $prod2->ancho_prod }}</td>
+									<td class="text-center">{{ $prod2->fecha_hora }}</td>
+                                    <td class="text-center">{{ $prod2->serie_comprobante }}-{{$prod2->num_comprobante}}</td>
+									<td class="text-center">{{ $prod2->etiqueta }}</td>
+									<td class="text-center">{{ $prod2->articulo }}</td>
                                     <td class="text-center">{{ $prod2->cantidad_prod }}</td>
-                                    <td class="text-center">{{ $prod2->formula }}</td>
                                     <td class="text-center">{{ $prod2->precioc }} </td>
 									<td class="text-center">{{ $prod2->cantidad }} </td>
                                     
@@ -115,10 +115,7 @@
 				<div class="profile">
 					<div class="name">
 			
-						<h3 class="title">Orden de Salida {{$pv->tipo_comprobante}}-{{$pv->serie_comprobante}}-{{$pv->num_comprobante}}</h3>
-						{{$pv->fecha_hora}}
-					
-						<br>
+						<h3 class="title"> Salidas </h3>
 					</div>
 				</div>
 			</div>
@@ -127,21 +124,23 @@
                 <table class="table">
                     <thead>
                         <tr>
+							<th class="col-md-2 text-center">Fecha</th>
+							<th class="col-md-2 text-center">Orden de Salida</th>
+							<th class="col-md-2 text-center">Lote</th>
                             <th class="col-md-5 text-center">Articulo</th>
-                            <th class="col-md-1 text-center">Ancho</th>
                             <th class="col-md-2 text-center">Cantidad/Largo</th>
-                            <th class="col-md-2 text-center">Formula</th>
- 							<th class="col-md-2 text-center">Precio de compra</th>
+ 							<th class="col-md-2 text-center">Precio de venta</th>
 							<th class="col-md-2 text-center">Cantidad</th>
                         </tr>
                     </thead>
                     <tbody> 
 						@foreach ($pv2 as $prodv2)                             
                             <tr>
+								<td class="text-center">{{ $prodv2->fecha_hora }}</td>
+                                <td class="text-center">{{ $prodv2->serie_comprobante }}-{{$prodv2->num_comprobante}}</td>
+								<td class="text-center">{{ $prodv2->etiqueta }}</td>
                                 <td class="text-center">{{ $prodv2->articulo }}</td>
-                                <td class="text-center">{{ $prodv2->ancho_prod }}</td>
                                 <td class="text-center">{{ $prodv2->cantidad_prod }}</td>
-                                <td class="text-center">{{ $prodv2->formula }}</td>
                                 <td class="text-center">{{ $prodv2->preciov }} </td>
 								<td class="text-center">{{ $prodv2->cantidad }} </td>
                             </tr>
