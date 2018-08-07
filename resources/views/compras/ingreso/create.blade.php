@@ -127,7 +127,7 @@
                                 <div class="col-sm-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Etiqueta (lote)</label>
-                                        <input type="text" class="form-control" name="petiqueta" id="petiqueta"  >
+                                        <input type="text" class="form-control" name="petiqueta" id="petiqueta"  onkeyup="this.value=NumText(this.value)">
                                     </div>
                                 </div>
 
@@ -209,6 +209,7 @@
 
 @push('scripts')
 <script>
+
     $(document).ready(function(){
         $('#bt_add').click(function(){
             agregar();
@@ -227,6 +228,17 @@
     $("#pidarticulo").click(mostrarValores);
 
     $(document).ready(mostrarValores);
+
+    function NumText(string){//solo letras y numeros
+    var out = '';
+    //Se añaden las letras validas
+    var filtro = '_-abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
+	
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+	     out += string.charAt(i);
+    return out;
+    }
 
     function mostrarValores()
     {       
@@ -295,9 +307,6 @@
     } 
 
     function eliminar(index){
-
-        
-
 
         total=total-subtotal[index];
         
