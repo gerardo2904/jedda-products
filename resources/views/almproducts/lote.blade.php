@@ -60,10 +60,12 @@
                                 @foreach ($products as $product)
                                 <tr>
                                     <!-- <td class="text-center">{{ $product->id }}</td> -->
-                                    <td>{{ $product->name }}</td>
-                                    
                                     <td>
-                                    <a href="{{URL::action('Admin\AlmproductController@showlote',[urlencode($product->etiqueta_prod),$cia->id,$product->id])}}" class="btn btn-sm btn-primary" rel="tooltip" title="Historial">
+                                    <a href="{{URL::action('Admin\AlmproductController@showlote',[urlencode($product->etiqueta_prod),$cia->id,$product->id,'0'])}}" class="btn btn-sm btn-success" rel="tooltip" title="Historial por articulo">
+                                    {{ $product->name }}</td>
+                                    </a>
+                                    <td>
+                                    <a href="{{URL::action('Admin\AlmproductController@showlote',[urlencode($product->etiqueta_prod),$cia->id,$product->id,'1'])}}" class="btn btn-sm btn-info" rel="tooltip" title="Historial por articulo y lote">
                                     
 
                                     {{ $product->etiqueta_prod }}

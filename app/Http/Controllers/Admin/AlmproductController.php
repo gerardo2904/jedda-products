@@ -144,12 +144,12 @@ class AlmproductController extends Controller
         return $pdf->download('existencias.pdf');
     }
 
-    public function showlote($lote,$id,$prod){
+    public function showlote($lote,$id,$prod,$bandera){
         
         $l=$lote;
         $i=$id;
 
-        
+        if ($bandera=='0'){
         $ps = DB::table('detalle_ingreso')
         ->join('ingreso','detalle_ingreso.idingreso','=','ingreso.idingreso')
         ->join('products','detalle_ingreso.id_articulo','=','products.id')
@@ -170,6 +170,32 @@ class AlmproductController extends Controller
         ->groupBy('products.id','products.name','products.id_unidad_prod','products.ancho_prod', 'products.formula','products.roll_id','ingreso.id_empresa','detalle_ingreso.etiqueta','detalle_ingreso.precioc','ingreso.tipo_comprobante','ingreso.serie_comprobante','ingreso.num_comprobante','products.cantidad_prod','detalle_ingreso.cantidad','ingreso.fecha_hora')
         ->orderBy('ingreso.fecha_hora')
         ->get();
+        }
+        else{
+                $ps = DB::table('detalle_ingreso')
+        ->join('ingreso','detalle_ingreso.idingreso','=','ingreso.idingreso')
+        ->join('products','detalle_ingreso.id_articulo','=','products.id')
+        ->select(DB::raw('CONCAT(products.name," ",products.description," ",detalle_ingreso.etiqueta) AS articulo'),'products.id','products.name','products.description','products.id_unidad_prod','products.ancho_prod','products.activo','products.category_id','products.subcategory_id','products.formula','products.roll_id','ingreso.id_empresa','detalle_ingreso.precioc','products.cantidad_prod','detalle_ingreso.etiqueta','ingreso.tipo_comprobante','ingreso.serie_comprobante','ingreso.num_comprobante','detalle_ingreso.cantidad','ingreso.fecha_hora')
+        ->where('ingreso.id_empresa','=',$id)
+        ->where('detalle_ingreso.id_articulo','=',$prod)
+        ->where('detalle_ingreso.etiqueta','=',$lote)
+        ->groupBy('products.id','products.name','products.id_unidad_prod','products.ancho_prod', 'products.formula','products.roll_id','ingreso.id_empresa','detalle_ingreso.etiqueta','detalle_ingreso.precioc','ingreso.tipo_comprobante','ingreso.serie_comprobante','ingreso.num_comprobante','products.cantidad_prod','detalle_ingreso.cantidad','ingreso.fecha_hora')
+        ->orderBy('ingreso.fecha_hora')
+        ->first();
+        
+
+        $ps2 = DB::table('detalle_ingreso')
+        ->join('ingreso','detalle_ingreso.idingreso','=','ingreso.idingreso')
+        ->join('products','detalle_ingreso.id_articulo','=','products.id')
+        ->select(DB::raw('CONCAT(products.name," ",products.description," ",detalle_ingreso.etiqueta) AS articulo'),'products.id','products.name','products.description','products.id_unidad_prod','products.ancho_prod','products.activo','products.category_id','products.subcategory_id','products.formula','products.roll_id','ingreso.id_empresa','detalle_ingreso.precioc','products.cantidad_prod','detalle_ingreso.etiqueta','ingreso.tipo_comprobante','ingreso.serie_comprobante','ingreso.num_comprobante','detalle_ingreso.cantidad','ingreso.fecha_hora')
+        ->where('ingreso.id_empresa','=',$id)
+        ->where('detalle_ingreso.id_articulo','=',$prod)
+        ->where('detalle_ingreso.etiqueta','=',$lote)
+        ->groupBy('products.id','products.name','products.id_unidad_prod','products.ancho_prod', 'products.formula','products.roll_id','ingreso.id_empresa','detalle_ingreso.etiqueta','detalle_ingreso.precioc','ingreso.tipo_comprobante','ingreso.serie_comprobante','ingreso.num_comprobante','products.cantidad_prod','detalle_ingreso.cantidad','ingreso.fecha_hora')
+        ->orderBy('ingreso.fecha_hora')
+        ->get();
+        }
+
 
 
         
@@ -185,7 +211,7 @@ class AlmproductController extends Controller
         ->orderBy('almproducts_tempo.id_production','ASC')
         ->get();
 
-        
+        if ($bandera=='0'){
         $pv = DB::table('detalle_venta')
         ->join('venta','detalle_venta.idventa','=','venta.idventa')
         ->join('products','detalle_venta.id_articulo','=','products.id')
@@ -196,6 +222,7 @@ class AlmproductController extends Controller
         ->orderBy('venta.fecha_hora')
         ->first();
 
+
         $pv2 = DB::table('detalle_venta')
         ->join('venta','detalle_venta.idventa','=','venta.idventa')
         ->join('products','detalle_venta.id_articulo','=','products.id')
@@ -205,7 +232,31 @@ class AlmproductController extends Controller
         ->groupBy('products.id','products.name','products.id_unidad_prod','products.ancho_prod', 'products.formula','products.roll_id','venta.id_empresa','detalle_venta.etiqueta','detalle_venta.preciov','venta.tipo_comprobante','venta.serie_comprobante','venta.num_comprobante','products.cantidad_prod','detalle_venta.cantidad','venta.fecha_hora')
         ->orderBy('venta.fecha_hora')
         ->get();
+        }
+        else{
+            $pv = DB::table('detalle_venta')
+        ->join('venta','detalle_venta.idventa','=','venta.idventa')
+        ->join('products','detalle_venta.id_articulo','=','products.id')
+        ->select(DB::raw('CONCAT(products.name," ",products.description," ",detalle_venta.etiqueta) AS articulo'),'products.id','products.name','products.description','products.id_unidad_prod','products.ancho_prod','products.activo','products.category_id','products.subcategory_id','products.formula','products.roll_id','venta.id_empresa','detalle_venta.preciov','products.cantidad_prod','detalle_venta.etiqueta','venta.tipo_comprobante','venta.serie_comprobante','venta.num_comprobante','detalle_venta.cantidad','venta.fecha_hora')
+        ->where('venta.id_empresa','=',$id)
+        ->where('detalle_venta.id_articulo','=',$prod)
+        ->where('detalle_venta.etiqueta','=',$lote)
+        ->groupBy('products.id','products.name','products.id_unidad_prod','products.ancho_prod', 'products.formula','products.roll_id','venta.id_empresa','detalle_venta.etiqueta','detalle_venta.preciov','venta.tipo_comprobante','venta.serie_comprobante','venta.num_comprobante','products.cantidad_prod','detalle_venta.cantidad','venta.fecha_hora')
+        ->orderBy('venta.fecha_hora')
+        ->first();
 
+
+        $pv2 = DB::table('detalle_venta')
+        ->join('venta','detalle_venta.idventa','=','venta.idventa')
+        ->join('products','detalle_venta.id_articulo','=','products.id')
+        ->select(DB::raw('CONCAT(products.name," ",products.description," ",detalle_venta.etiqueta) AS articulo'),'products.id','products.name','products.description','products.id_unidad_prod','products.ancho_prod','products.activo','products.category_id','products.subcategory_id','products.formula','products.roll_id','venta.id_empresa','detalle_venta.preciov','products.cantidad_prod','detalle_venta.etiqueta','venta.tipo_comprobante','venta.serie_comprobante','venta.num_comprobante','detalle_venta.cantidad','venta.fecha_hora')
+        ->where('venta.id_empresa','=',$id)
+        ->where('detalle_venta.id_articulo','=',$prod)
+        ->where('detalle_venta.etiqueta','=',$lote)
+        ->groupBy('products.id','products.name','products.id_unidad_prod','products.ancho_prod', 'products.formula','products.roll_id','venta.id_empresa','detalle_venta.etiqueta','detalle_venta.preciov','venta.tipo_comprobante','venta.serie_comprobante','venta.num_comprobante','products.cantidad_prod','detalle_venta.cantidad','venta.fecha_hora')
+        ->orderBy('venta.fecha_hora')
+        ->get();   
+        }
     
         
         return view('almproducts.showlote')->with(compact('l','i','ps','ps2','ph','pv','pv2'));
