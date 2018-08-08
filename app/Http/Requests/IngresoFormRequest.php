@@ -31,7 +31,8 @@ class IngresoFormRequest extends FormRequest
             'num_comprobante' => 'required|max:10',
             'id_articulo' => 'required',
             'cantidad' => 'required',
-            'precioc' => 'required'
+            'precioc' => 'required',
+            'ordenp' => 'unique:ingreso'
         ];
     }
 
@@ -45,7 +46,8 @@ class IngresoFormRequest extends FormRequest
             'num_comprobante.required' => 'Numero de comprobante requerido',
             'id_articulo.required' => 'Articulo requerido',
             'cantidad.required' => 'Cantidad requerido',
-            'precioc.required' => 'Precio de compra requerido'
+            'precioc.required' => 'Precio de compra requerido',
+            'ordenp.unique' => 'Orden de producción repetida, favor de comprobar. Por seguridad, captura la orden correcta y vuelve a capturar los productos.'
         ];
     }
 }

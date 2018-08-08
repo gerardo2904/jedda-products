@@ -32,7 +32,8 @@ class VentaFormRequest extends FormRequest
             'id_articulo' => 'required',
             'cantidad' => 'required',
             'preciov' => 'required',
-            'total_venta' => 'required'
+            'total_venta' => 'required',
+            'ordenq' => 'unique:venta'
         ];
     }
 
@@ -47,7 +48,8 @@ class VentaFormRequest extends FormRequest
             'id_articulo.required' => 'Articulo requerido',
             'cantidad.required' => 'Cantidad requerido',
             'preciov.required' => 'Precio de venta requerido',
-            'total_venta.required' => 'Total de venta requerido'
+            'total_venta.required' => 'Total de venta requerido',
+            'ordenq.unique' => 'Orden de QuickBooks repetida, favor de comprobar. Por seguridad, captura la orden correcta y vuelve a capturar los productos.'
         ];
     }
 }
