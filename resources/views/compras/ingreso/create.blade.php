@@ -79,7 +79,7 @@
                         <div class="col-sm-2">
                             <div class="form-group label-floating">
                                 <label class="control-label">Orden Trabajo</label>
-                                <input type="text" class="form-control" name="ordenp" id="ordenp" required value="{{ old('ordenp')}}">
+                                <input type="text" class="form-control" name="ordenp" id="ordenp" required value="{{ old('ordenp')}}" onkeyup="this.value=NumText(this.value)">
                             </div>
                         </div>
 

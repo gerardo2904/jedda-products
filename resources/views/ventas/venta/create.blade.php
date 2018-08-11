@@ -79,7 +79,7 @@
                         <div class="col-sm-2">
                             <div class="form-group label-floating">
                                 <label class="control-label">Invoice QB</label>
-                                <input type="text" class="form-control" name="ordenq" id="ordenq" required value="{{ old('ordenq')}}">
+                                <input type="text" class="form-control" name="ordenq" id="ordenq" required value="{{ old('ordenq')}}" onkeyup="this.value=NumText(this.value)">
                             </div>
                         </div>
 
@@ -306,6 +306,7 @@
         $("#pcantidad").val("");
         $("#ppreciov").val("");
         $("#pdescuento").val("");
+        $(document).ready(mostrarValores);
     }
 
     function evaluar(){
