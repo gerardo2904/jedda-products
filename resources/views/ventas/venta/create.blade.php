@@ -159,6 +159,7 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
+                                            <th></th>
                                             <th>SUB-TOTAL</th>
                                             <th><h4 id="subtot">$ 0.00</h4><input type="hidden" name="total_venta" id="total_venta"></th>
                                         </tr>
@@ -167,11 +168,13 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
+                                            <th></th>
                                             <th>IMPUESTO</th>
                                             <th><h4 id="tax">$ 0.00</h4></th>
                                         </tr>
 
                                         <tr>
+                                            <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
