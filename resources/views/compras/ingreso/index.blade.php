@@ -42,7 +42,8 @@
                                     <th class="text-center">Fecha</th>
                                     <th class="text-center">Proveedor</th>
                                     <th class="text-center">Compañia</th>
-                                    <th class="text-center">comprobante</th>
+                                    <th class="text-center">Comprobante</th>
+                                    <th class="text-center">Orden Prod</th>
                                     <th class="text-right">Impuesto</th>
                                     <th class="text-right">Total</th>
                                     <th class="text-right">Estado</th>
@@ -58,6 +59,7 @@
                                     <td>{{ $ing->name }}</td>
                                     <td>{{ $ing->compan }}</td>
                                     <td>{{ $ing->tipo_comprobante.': '.$ing->serie_comprobante.'-'.$ing->num_comprobante }}</td>
+                                    <td>{{ $ing->ordenp }}</td>
                                     <td>{{ $ing->impuesto }}</td>
                                     <td>{{ $ing->total }}</td>
                                     <td>{{ $ing->estado }}</td>

@@ -211,6 +211,8 @@
 	    @include('includes.footer')
 
 @push('scripts')
+
+
 <script>
 
     $(document).ready(function(){

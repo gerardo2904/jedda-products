@@ -49,6 +49,7 @@ Route::get('phpinfo', function () {
 
 Route::middleware(['auth','admin'])->group(function(){
     Route::resource('compras/ingreso','IngresoController');
+    Route::get('compras/ingreso/lote/{lote}','IngresoController@checa_lote');
     Route::resource('ventas/venta','VentaController');
     Route::resource('productionorder/production','ProductionOrderController');
     Route::get('{id}/descargar-ingreso', 'IngresoController@pdf')->name('imprimeordeningreso.pdf');

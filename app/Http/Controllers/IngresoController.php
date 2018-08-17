@@ -40,7 +40,7 @@ class IngresoController extends Controller
     		 ->join('clients as p','i.idproveedor','=','p.id')
     		 ->join('companies as c','i.id_empresa','=','c.id')
     		 ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-    		 ->select('i.idingreso','i.fecha_hora','p.name','c.name as compan','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas',DB::raw('sum(di.cantidad*precioc) as total'))
+    		 ->select('i.idingreso','i.fecha_hora','p.name','c.name as compan','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas','i.ordenp',DB::raw('sum(di.cantidad*precioc) as total'))
              ->where('i.num_comprobante','LIKE','%'.$query.'%')
              ->where('i.id_empresa',$iu)
     		 ->orderBy('i.idingreso','desc')
@@ -249,6 +249,29 @@ class IngresoController extends Controller
         return $pdf->download('imprimeordeningreso.pdf');
     }
 
+    public function checa_lote($lote) {
+
+        echo $lote;
+        return false;
+        $longitud=strlen($lote);
+        
+        $l=substr($lote,1,$longitud-5);
+
+        $existe = DB::table('almproducts')
+        ->where('almproducts.etiqueta','LIKE','%'.$l.'%')
+        ->first();
+
+        if($existe)
+            echo "si";
+        else
+            echo "no";
+
+        echo $lote."<BR>";
+        echo $l."<BR>";
+        echo $longitud;
+        
+        return $existe;
+    }
 
 
     public function destroy($id)

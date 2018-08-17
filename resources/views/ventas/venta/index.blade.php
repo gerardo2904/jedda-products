@@ -43,6 +43,7 @@
                                     <th class="text-center">Cliente</th>
                                     <th class="text-center">Compañia</th>
                                     <th class="text-center">Comprobante</th>
+                                    <th class="text-center">Orden Quickbooks</th>
                                     <th class="text-right">Impuesto</th>
                                     <th class="text-right">Total</th>
                                     <th class="text-right">Estado</th>
@@ -58,6 +59,7 @@
                                     <td>{{ $vnt->name }}</td>
                                     <td>{{ $vnt->compan }}</td>
                                     <td>{{ $vnt->tipo_comprobante.': '.$vnt->serie_comprobante.'-'.$vnt->num_comprobante }}</td>
+                                    <td>{{ $vnt->ordenq }}</td>
                                     <td>{{ $vnt->impuesto }}</td>
                                     <td>{{ $vnt->total_venta }}</td>
                                     <td>{{ $vnt->estado }}</td>

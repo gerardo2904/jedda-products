@@ -198,6 +198,7 @@
 </body>
 	<!--   Core JS Files   -->
 	<script src="{{asset('js/jquery.min.js')}}" type="text/javascript"></script>
+
     
 
     @stack('scripts')
@@ -214,7 +215,10 @@
 	<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
 	<script src="{{asset('js/material-kit.js')}}" type="text/javascript"></script>
 
+
+
     
+
 
 
 
