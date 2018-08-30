@@ -156,7 +156,7 @@ class ProductionOrderController extends Controller
     		 ->join('clients as p','po.idcliente','=','p.id')
     		 ->join('companies as c','po.id_company','=','c.id')
     		 ->join('detalle_production_order as dpo','po.id_production','=','dpo.id_production')
-    		 ->select('po.id_production','po.fecha_hora','p.name','c.name as compan','po.estado')
+    		 ->select('po.id_production','po.fecha_hora','p.name','c.name as compan','po.estado','po.orden','po.orden_cliente')
     		 ->where('c.name','LIKE','%'.$query.'%')
              ->where('po.id_company','=',$iu)
     		 ->orderBy('po.id_production','desc')
