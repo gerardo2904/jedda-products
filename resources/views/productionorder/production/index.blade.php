@@ -40,8 +40,10 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Fecha</th>
+                                    <th class="text-center">Orden del Sistema</th>
                                     <th class="text-center">Cliente</th>
                                     <th class="text-center">Compañia</th>
+                                    <th class="text-center">Orden del Cliente</th>
                                     <th class="text-right">Estado</th>
                                     <th class="text-right">Opciones</th>
 
@@ -52,8 +54,10 @@
                                 <tr>
                                     
                                     <td>{{ $ord->fecha_hora }}</td>
+                                    <td>{{ $ord->orden }}</td>
                                     <td>{{ $ord->name }}</td>
                                     <td>{{ $ord->compan }}</td>
+                                    <td>{{ $ord->orden_cliente }}</td>
                                     <td>{{ $ord->estado }}</td>
 
                                     <td class="td-actions text-right">

@@ -50,6 +50,9 @@ Route::get('phpinfo', function () {
 Route::middleware(['auth','admin'])->group(function(){
     Route::resource('compras/ingreso','IngresoController');
     Route::get('compras/ingreso/lote/{lote}','IngresoController@checa_lote');
+    Route::get('compras/ingreso/{id}/edit','IngresoController@edit');  //Formulario edicion
+    Route::post('compras/ingreso/{id}/edit','IngresoController@update');  //Actualizar
+
     Route::resource('ventas/venta','VentaController');
     Route::resource('productionorder/production','ProductionOrderController');
     Route::get('{id}/descargar-ingreso', 'IngresoController@pdf')->name('imprimeordeningreso.pdf');
