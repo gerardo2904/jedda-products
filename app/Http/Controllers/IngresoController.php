@@ -228,7 +228,7 @@ class IngresoController extends Controller
 
         $detalles = DB::table('detalle_ingreso as d')
           ->join('products as a','d.id_articulo','=','a.id')
-          ->select('a.name as articulo','a.description','d.cantidad','d.precioc','d.etiqueta')
+          ->select('a.name as articulo','a.description','d.id_articulo','d.cantidad','d.precioc','d.etiqueta')
           ->where('d.idingreso','=',$id)
           ->get();
 
