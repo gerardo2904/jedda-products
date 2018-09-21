@@ -98,12 +98,20 @@ class IngresoController extends Controller
 
     public function store(IngresoFormRequest $request)
     {
+
     	try{
 
             $u  = Auth::user()->id;
             $iu = Auth::user()->empresa_id; 
 
+            $estado=$request->get('estado');
+
+            if (!$estado=="F"){
+                $estado="A";
+            }
+
     		DB::beginTransaction();
+
 
 
     		$ingreso = new Ingreso;
@@ -117,7 +125,7 @@ class IngresoController extends Controller
     		$mytime						= Carbon::now('America/Tijuana');
     		$ingreso->fecha_hora		= $mytime->toDateTimeString();
     		$ingreso->impuesto			= $request->get('impuesto');
-    		$ingreso->estado			= 'A';
+    		$ingreso->estado			= $estado;
             $ingreso->notas             = $request->get('notas');
     		$ingreso->save();
 
@@ -203,7 +211,9 @@ class IngresoController extends Controller
     	return Redirect::to('compras/ingreso')->with('status', 'noexito');
     }
 
-     public function edit($id)
+
+
+    public function edit($id)
     {
         $iu = Auth::user()->empresa_id;
         

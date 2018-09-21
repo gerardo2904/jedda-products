@@ -70,6 +70,11 @@
                                                 <i class="fa fa-info"></i>
                                         </a>
 
+
+                                        <a href = "{{ url('/compras/ingreso/'.$ing->idingreso.'/edit')}}" rel="tooltip" title="Editar Orden de Ingreso" class="btn btn-success btn-simple btn-xs">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+
                                         <a href="" data-target="#modal-delete-{{$ing->idingreso}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
                                     </td>
 

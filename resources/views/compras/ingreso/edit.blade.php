@@ -222,8 +222,24 @@
                
                 <div class="row">
                     <div class="col-sm-6" id="guardar">
+                        <div class="togglebutton">
+	                        <label>
+                                @if ($ingreso->estado=='A')
+    	                            <input type="checkbox" name="estado" id="estado" value="{{old('ordenp',$ingreso->estado)}}" >
+		                                <span style="color: rgba(0,0,0);">¿Finaliza orden? (Ya no se podra editar)</span>
+                                @else
+                                    <input type="checkbox" name="estado" id="estado" value="{{old('ordenp',$ingreso->estado)}}" checked disabled>
+		                                <span style="color: rgba(0,0,0);">¿Finaliza orden? (Ya no se podra editar)</span>
+                                @endif
+	                        </label>
+                        </div>
+
                         <div class="form-group label-floating">  
-                            <button class="btn btn-primary" >Registro de la orden de compra</button>
+                            @if ($ingreso->estado=='A')
+                                <button class="btn btn-primary" >Actualizar orden deingreso</button>
+                            @else
+                                <button class="btn btn-primary" disabled>Orden de ingreso no editable</button>
+                            @endif
                             <a href="{{url('/compras/ingreso')}}" class="btn btn-default">Cancelar</a>
                         </div>
                     </div>
@@ -247,6 +263,9 @@
         });
     });
 
+    $('[data-toggle="popover"]').popover();
+    
+
     var cont=0;
     total=0;
     tax=0;
@@ -254,7 +273,7 @@
     subtot=0;
     gt=0;
 
-    $("#guardar").hide();
+   // $("#guardar").hide();
 
     $("#pidarticulo").change(mostrarValores);
     $("#pidarticulo").click(mostrarValores);

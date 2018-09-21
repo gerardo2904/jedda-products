@@ -192,7 +192,13 @@
                             </div>
                         </div>
 
-                         <div class="col-sm-6" id="guardar">
+                         <div class="col-sm-10" id="guardar">
+                            <div class="togglebutton">
+	                            <label>
+    	                            <input type="checkbox" name="estado" id="estado" value="F">
+		                                ¿Finaliza orden? (Ya no se podra editar)
+	                            </label>
+                            </div>
                             <div class="form-group label-floating">  
                                 <button class="btn btn-primary" >Registro de la orden de compra</button>
                                 <a href="{{url('/compras/ingreso')}}" class="btn btn-default">Cancelar</a>

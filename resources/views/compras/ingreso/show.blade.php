@@ -95,7 +95,7 @@
                                     </table>
                                 </div>
                                 <a href="{{ route('imprimeordeningreso.pdf',$ingreso->idingreso)}}" class="btn btn-sm btn-primary">Descargar orden de ingreso en PDF</a>
-
+                                <a href="{{ url('/compras/ingreso/'.$ingreso->idingreso.'/edit')}}" class="btn btn-sm btn-success">Editar Orden de Ingreso</a>
 
 		</div>
 	</div>
