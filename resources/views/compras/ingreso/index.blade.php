@@ -44,10 +44,9 @@
                                     <th class="text-center">Compañia</th>
                                     <th class="text-center">Comprobante</th>
                                     <th class="text-center">Orden Prod</th>
-                                    <th class="text-right">Impuesto</th>
-                                    <th class="text-right">Total</th>
-                                    <th class="text-right">Estado</th>
-                                    <th class="text-right">Opciones</th>
+                                    <th class="text-center">Total</th>
+                                    <th class="text-center">Estado</th>
+                                    <th class="text-center">Opciones</th>
 
                                 </tr>
                             </thead>
@@ -60,9 +59,8 @@
                                     <td>{{ $ing->compan }}</td>
                                     <td>{{ $ing->tipo_comprobante.': '.$ing->serie_comprobante.'-'.$ing->num_comprobante }}</td>
                                     <td>{{ $ing->ordenp }}</td>
-                                    <td>{{ $ing->impuesto }}</td>
                                     <td>{{ $ing->total }}</td>
-                                    <td>{{ $ing->estado }}</td>
+                                    <td>{{ $ing->estado === "A" ? "Activa" : "Finalizada" }}</td>
 
                                     <td class="td-actions text-right">
 

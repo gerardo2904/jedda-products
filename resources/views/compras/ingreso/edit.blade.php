@@ -24,7 +24,8 @@
                     </div>
                 @endif
                     
-            <form method="post" name="forma" action="{{ url('compras/ingreso/{id}/edit')}}">
+            <form method="post" name="forma" action="{{ url('compras/ingreso/'.$ingreso->idingreso.'/edit')}}">
+                                                        
                 {{ csrf_field() }}                       
                 <div class="row">
                     <div class="col-sm-12">
@@ -162,6 +163,9 @@
                                                   <td><input type="hidden"  id="cantidad[]" name="cantidad[]" value="{{$det->cantidad}}">{{$det->cantidad}}</td>
                                                   <td><input type="hidden"  name="precioc[]" value="{{$det->precioc}}">{{$det->precioc}}</td> 
                                                   <td><input type="hidden"  name="etiqueta[]" value="{{$det->etiqueta}}">{{$det->etiqueta}}</td>  
+                                                  <input type="hidden"  name="unidad_prod[]" value="{{$det->id_unidad_prod}}">
+                                                  <input type="hidden"  name="cantidad_prod[]" value="{{$det->cantidad_prod}}">
+
                                                   <td>{{$det->precioc*$det->cantidad}}</td> 
                                                   <script type="text/javascript">
                                                     contadorJS = <?php echo $loop->iteration; ?> ;
@@ -225,12 +229,12 @@
                         <div class="togglebutton">
 	                        <label>
                                 @if ($ingreso->estado=='A')
-    	                            <input type="checkbox" name="estado" id="estado" value="{{old('ordenp',$ingreso->estado)}}" >
+    	                            <input type="checkbox" name="estado" id="estado" value="{{old('estado',$ingreso->estado)}}" onChange="alerta();">
 		                                <span style="color: rgba(0,0,0);">¿Finaliza orden? (Ya no se podra editar)</span>
                                 @else
-                                    <input type="checkbox" name="estado" id="estado" value="{{old('ordenp',$ingreso->estado)}}" checked disabled>
+                                    <input type="checkbox" name="estado" id="estado" value="{{old('estado',$ingreso->estado)}}" checked disabled>
 		                                <span style="color: rgba(0,0,0);">¿Finaliza orden? (Ya no se podra editar)</span>
-                                @endif
+                                @endif    
 	                        </label>
                         </div>
 
@@ -262,8 +266,6 @@
             agregar();
         });
     });
-
-    $('[data-toggle="popover"]').popover();
     
 
     var cont=0;
@@ -319,6 +321,15 @@
        if (filtro.indexOf(string.charAt(i)) != -1) 
 	     out += string.charAt(i);
     return out;
+    }
+
+    function alerta(){
+      if($("#estado").val()=="A"){
+        $("#estado").val("F");
+        alert('Se finalizara Orden y ya no se podra editar si Actualizas la información de la Orden de Ingreso...');
+      }else{
+        $("#estado").val("A");
+      }    
     }
 
     function mostrarValores()

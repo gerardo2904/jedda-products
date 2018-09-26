@@ -195,8 +195,13 @@
                          <div class="col-sm-10" id="guardar">
                             <div class="togglebutton">
 	                            <label>
-    	                            <input type="checkbox" name="estado" id="estado" value="F">
-		                                ¿Finaliza orden? (Ya no se podra editar)
+    	                             @if ($estado=='A')
+                                        <input type="checkbox" name="estado" id="estado" value="{{old('estado',$estado)}}" onChange="alerta();">
+                                        <span style="color: rgba(0,0,0);">¿Finaliza orden? (Ya no se podra editar)</span>
+                                    @else
+                                        <input type="checkbox" name="estado" id="estado" value="{{old('estado',$estado)}}" checked disabled>
+                                        <span style="color: rgba(0,0,0);">¿Finaliza orden? (Ya no se podra editar)</span>
+                                    @endif 
 	                            </label>
                             </div>
                             <div class="form-group label-floating">  
@@ -249,6 +254,15 @@
        if (filtro.indexOf(string.charAt(i)) != -1) 
 	     out += string.charAt(i);
     return out;
+    }
+    
+    function alerta(){
+      if($("#estado").val()=="A"){
+        $("#estado").val("F");
+        alert('Se finalizara Orden y ya no se podra editar si Actualizas la información de la Orden de Ingreso...');
+      }else{
+        $("#estado").val("A");
+      }    
     }
 
     function mostrarValores()

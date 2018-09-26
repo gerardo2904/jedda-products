@@ -40,8 +40,10 @@ class IngresoController extends Controller
     		 ->join('clients as p','i.idproveedor','=','p.id')
     		 ->join('companies as c','i.id_empresa','=','c.id')
     		 ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-    		 ->select('i.idingreso','i.fecha_hora','p.name','c.name as compan','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas','i.ordenp',DB::raw('sum(di.cantidad*precioc) as total'))
+    		 ->select('i.idingreso','i.fecha_hora','p.name','c.name as compan','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas','i.ordenp',DB::raw('sum(di.cantidad*precioc) as total'),'p.name')
              ->where('i.num_comprobante','LIKE','%'.$query.'%')
+             ->Orwhere('i.serie_comprobante','LIKE','%'.$query.'%') 
+             ->Orwhere('p.name','LIKE','%'.$query.'%') 
              ->where('i.id_empresa',$iu)
     		 ->orderBy('i.idingreso','desc')
     		 ->groupBy('i.idingreso','i.fecha_hora','p.name','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
@@ -93,7 +95,7 @@ class IngresoController extends Controller
 
         ////////////////////////////////////////////////////////////////////////
 
-    	return view('compras.ingreso.create',["clientes" => $clientes, "products" => $articulos, "units" => $units, "noi" => $ordeni,"nci" => $ncompi]);
+    	return view('compras.ingreso.create',["clientes" => $clientes, "products" => $articulos, "units" => $units, "noi" => $ordeni,"nci" => $ncompi,"estado" =>"A"]);
     }
 
     public function store(IngresoFormRequest $request)
@@ -151,44 +153,43 @@ class IngresoController extends Controller
                 //$detalle->cantidad_prod      = $cantidad_prod[$cont];
     			$detalle->save();
 
-                
-                //$cantproductos = almproducts::where('id_product',$id_articulo[$cont])->count();
-                $cantproductos = almproducts::where([['id_product', '=', $id_articulo[$cont]],
-                                                    ['etiqueta', '=', $etiqueta[$cont]],
-                                                    ['id_company', '=', $ingreso->id_empresa],
-                ])->count();
-                
-    
+                // Si se termina la orden de ingreso, se afecta al almacen...
+                if ($estado=="F"){
 
-
-                if ($cantproductos > 0){
-                    //$productos = almproducts::find($id_articulo[$cont]);
-                    $productos = almproducts::where([['id_product', '=', $id_articulo[$cont]],
-                                                    ['etiqueta', '=', $etiqueta[$cont]],
-                                                    ['id_company', '=', $ingreso->id_empresa],
-                ])->first();
-                    $exis=$productos->existencia;
-                    //dd($productos->all());
-
+                    //$cantproductos = almproducts::where('id_product',$id_articulo[$cont])->count();
+                    $cantproductos = almproducts::where([['id_product', '=', $id_articulo[$cont]],
+                                                        ['etiqueta', '=', $etiqueta[$cont]],
+                                                        ['id_company', '=', $ingreso->id_empresa],
+                    ])->count();
                     
-                    $productos->existencia    = $exis+$cantidad[$cont];
-                    //$productos->precioc       = $precioc[$cont];
-                    $productos->save(); 
-                }
-                else {
-                    $productos = new almproducts();
-                    $productos->id_company    = $ingreso->id_empresa;
-                    $productos->id_product    = $id_articulo[$cont];
-                    $productos->existencia    = $cantidad[$cont];
-                    $productos->precioc       = $precioc[$cont];
-                    $productos->preciov       = '0';
-                    $productos->id_unidad_prod= $unidad_prod[$cont];
-                    $productos->cantidad_prod = $cantidad_prod[$cont];
-                    $productos->etiqueta      = $etiqueta[$cont];
-                    $productos->save();
-                }
+                    if ($cantproductos > 0){
+                        //$productos = almproducts::find($id_articulo[$cont]);
+                        $productos = almproducts::where([['id_product', '=', $id_articulo[$cont]],
+                                                        ['etiqueta', '=', $etiqueta[$cont]],
+                                                        ['id_company', '=', $ingreso->id_empresa],
+                    ])->first();
+                        $exis=$productos->existencia;
+                        //dd($productos->all());
 
+                        
+                        $productos->existencia    = $exis+$cantidad[$cont];
+                        //$productos->precioc       = $precioc[$cont];
+                        $productos->save(); 
+                    }
+                    else {
+                        $productos = new almproducts();
+                        $productos->id_company    = $ingreso->id_empresa;
+                        $productos->id_product    = $id_articulo[$cont];
+                        $productos->existencia    = $cantidad[$cont];
+                        $productos->precioc       = $precioc[$cont];
+                        $productos->preciov       = '0';
+                        $productos->id_unidad_prod= $unidad_prod[$cont];
+                        $productos->cantidad_prod = $cantidad_prod[$cont];
+                        $productos->etiqueta      = $etiqueta[$cont];
+                        $productos->save();
+                    }
 
+                }
     			$cont = $cont + 1;
 
     		}
@@ -238,7 +239,7 @@ class IngresoController extends Controller
 
         $detalles = DB::table('detalle_ingreso as d')
           ->join('products as a','d.id_articulo','=','a.id')
-          ->select('a.name as articulo','a.description','d.id_articulo','d.cantidad','d.precioc','d.etiqueta')
+          ->select('a.name as articulo','a.description','d.id_articulo','d.cantidad','d.precioc','d.etiqueta','a.id_unidad_prod', 'a.cantidad_prod')
           ->where('d.idingreso','=',$id)
           ->get();
 
@@ -246,6 +247,158 @@ class IngresoController extends Controller
         return view('compras.ingreso.edit',["ingreso"=>$ingreso,"detalles"=>$detalles, "clientes" => $clientes, "products" => $articulos, "units" => $units, "noi" => $ordeni]);
     }
 
+    public function update(Request $request, $id)
+    {
+        try{
+
+            $u  = Auth::user()->id;
+            $iu = Auth::user()->empresa_id; 
+
+            $estado=$request->get('estado');
+
+            if (!$estado=="F"){
+                $estado="A";
+            }
+
+            DB::beginTransaction();
+
+            $ingreso = Ingreso::find($id);
+
+            $ingreso->idproveedor       = $request->get('idproveedor');
+            $ingreso->id_user           = $u;
+            $ingreso->tipo_comprobante  = $request->get('tipo_comprobante');
+            $ingreso->ordenp            = $request->get('ordenp');
+            $mytime                     = Carbon::now('America/Tijuana');
+            $ingreso->fecha_hora        = $mytime->toDateTimeString();
+            $ingreso->impuesto          = $request->get('impuesto');
+            $ingreso->estado            = $estado;
+            $ingreso->notas             = $request->get('notas');
+            $ingreso->save();
+
+
+            $id_articulo                = $request->get('id_articulo');
+            $cantidad                   = $request->get('cantidad');
+            $precioc                    = $request->get('precioc');
+            $unidad_prod                = $request->get('unidad_prod');
+            $cantidad_prod              = $request->get('cantidad_prod');
+            $etiqueta                   = $request->get('etiqueta');
+            
+            $cont = 0;
+            $numero_articulos_array = count($id_articulo);
+            $numero_articulos_tabla = DetalleIngreso::where([['idingreso', '=', $id]])->count();
+            $men=" ";
+
+            if($numero_articulos_array == $numero_articulos_tabla){
+                // Si si, posiblemente no cambio nada, se verifica y si todo esta igual
+                // no se modifican los articulos previamente capturados.
+                if ($this->verificaArticulos($id, $request, $numero_articulos_array)){
+                    //Se puede proseguir a grabar algun cambio en la caratula de la orden
+                    // o a finalizarla.
+                    $men="Actualización exitosa";
+                    
+                }else {
+                    
+                    $id_articulox                = $request->get('id_articulo');
+                    $cantidadx                   = $request->get('cantidad');
+                    $preciocx                    = $request->get('precioc');
+                    $etiquetax                   = $request->get('etiqueta');
+
+                    $contx = 0;
+                    while ($contx < $numero_articulos_array){
+                        $productosx = DetalleIngreso::where([['idingreso', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->count();
+
+                    if($productosx<>1){
+                        $men="No Exitoso";
+                        return $men;
+                        
+                    }else{
+                        $productosx1 = DetalleIngreso::where([['idingreso', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->first();
+
+                        $productosx1->cantidad = $cantidadx[$contx];
+                        $productosx1->precioc  = $preciocx[$contx];
+                        $productosx1->save(); 
+                    }
+                    $contx++;
+                    }
+                    $men="Actualización exitosa.";
+
+                }
+
+            }else{
+                $productosB = DetalleIngreso::where([['idingreso', '=', $id]])->delete();
+
+                $cont = 0;
+
+                while ($cont < count($id_articulo)){
+                    $detalle = new DetalleIngreso();
+                    $detalle->idingreso          = $ingreso->idingreso;
+                    $detalle->id_articulo        = $id_articulo[$cont];
+                    $detalle->cantidad           = $cantidad[$cont];
+                    $detalle->precioc            = $precioc[$cont];
+                    $detalle->etiqueta           = $etiqueta[$cont];
+                    $detalle->save();
+                    $cont++;
+                }
+
+                $men="Actualización exitosa.";
+
+            }
+
+        // Si se finaliza la OT, actualizar inventario...
+        //
+        $cont = 0;
+        if ($estado=="F"){
+
+            while ($cont < count($id_articulo)){
+                // Si se termina la orden de ingreso, se afecta al almacen...
+                
+                    $cantproductos = almproducts::where([['id_product', '=', $id_articulo[$cont]], ['etiqueta', '=', $etiqueta[$cont]], ['id_company', '=', $ingreso->id_empresa]])->count();
+                    
+                    if ($cantproductos > 0){
+                        $productos = almproducts::where([['id_product', '=', $id_articulo[$cont]],['etiqueta', '=', $etiqueta[$cont]],['id_company', '=', $ingreso->id_empresa]])->first();
+                        $exis=$productos->existencia;
+                        //dd($productos->all());
+                        
+                        $productos->existencia    = $exis+$cantidad[$cont];
+                        $productos->save(); 
+                    }
+                    else {
+                        $productos = new almproducts();
+                        $productos->id_company    = $ingreso->id_empresa;
+                        $productos->id_product    = $id_articulo[$cont];
+                        $productos->existencia    = $cantidad[$cont];
+                        $productos->precioc       = $precioc[$cont];
+                        $productos->preciov       = '0';
+                        $productos->id_unidad_prod= $unidad_prod[$cont];
+                        $productos->cantidad_prod = $cantidad_prod[$cont];
+                        $productos->etiqueta      = $etiqueta[$cont];
+                        $productos->save();
+                    }
+                    $cont = $cont + 1;
+            }
+            $men="Finalización exitosa.";
+        }
+
+        //
+        // Fin de actualizacion de inventario...
+    
+            DB::commit();
+            Session::flash('message',$men);
+            return redirect('/compras/ingreso')->with('status', 'exito');;
+
+
+        }catch(\Exception $e)
+        {
+            //return $e;
+            
+            DB::rollback();
+            Session::flash('message','Ha ocurrido un error...');
+            return redirect('/compras/ingreso');
+
+        }
+
+        return Redirect::to('compras/ingreso')->with('status', 'noexito');
+    }
 
     public function show($id)
     {
@@ -324,5 +477,50 @@ class IngresoController extends Controller
     	$ingreso->estado = 'C';
     	$ingreso->update();
     	return Redirect::to('compras/ingreso');
+    }
+
+    public function verificaArticulos($id, $request, $numero_articulos_array){
+
+        $id_articulox                = $request->get('id_articulo');
+        $cantidadx                   = $request->get('cantidad');
+        $preciocx                    = $request->get('precioc');
+        $etiquetax                   = $request->get('etiqueta');
+
+        $contx = 0;
+        while ($contx < $numero_articulos_array){
+
+        $productosx = DetalleIngreso::where([['idingreso', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['cantidad', '=', $cantidadx[$contx]], ['precioc', '=', $preciocx[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->count();
+
+        if($productosx<>1){
+            return false;
+        }
+        $contx++;
+        }
+        return true;
+    }
+
+    public function guardaDiferencias1($id, $request, $numero_articulos_array){
+
+        $id_articulox                = $request->get('id_articulo');
+        $cantidadx                   = $request->get('cantidad');
+        $preciocx                    = $request->get('precioc');
+        $etiquetax                   = $request->get('etiqueta');
+
+        $contx = 0;
+        while ($contx < $numero_articulos_array){
+            $productosx = DetalleIngreso::where([['idingreso', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->count();
+
+        if($productosx<>1){
+            return false;
+        }else{
+            $productosx1 = DetalleIngreso::where([['idingreso', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->first();
+
+            $productosx1->cantidad = $cantidadx[$contx];
+            $productosx1->precioc  = $preciocx[$contx];
+            $productosx1->save(); 
+        }
+        $contx++;
+        }
+        return true;
     }
 }
