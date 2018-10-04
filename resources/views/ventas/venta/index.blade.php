@@ -44,7 +44,6 @@
                                     <th class="text-center">Compañia</th>
                                     <th class="text-center">Comprobante</th>
                                     <th class="text-center">Orden Quickbooks</th>
-                                    <th class="text-right">Impuesto</th>
                                     <th class="text-right">Total</th>
                                     <th class="text-right">Estado</th>
                                     <th class="text-right">Opciones</th>
@@ -55,20 +54,23 @@
                                 @foreach ($ventas as $vnt)
                                 <tr>
                                     
-                                    <td>{{ $vnt->fecha_hora }}</td>
-                                    <td>{{ $vnt->name }}</td>
-                                    <td>{{ $vnt->compan }}</td>
-                                    <td>{{ $vnt->tipo_comprobante.': '.$vnt->serie_comprobante.'-'.$vnt->num_comprobante }}</td>
-                                    <td>{{ $vnt->ordenq }}</td>
-                                    <td>{{ $vnt->impuesto }}</td>
-                                    <td>{{ $vnt->total_venta }}</td>
-                                    <td>{{ $vnt->estado }}</td>
+                                    <td class="text-center">{{ $vnt->fecha_hora }}</td>
+                                    <td class="text-center">{{ $vnt->name }}</td>
+                                    <td class="text-center">{{ $vnt->compan }}</td>
+                                    <td class="text-center">{{ $vnt->tipo_comprobante.': '.$vnt->serie_comprobante.'-'.$vnt->num_comprobante }}</td>
+                                    <td class="text-center">{{ $vnt->ordenq }}</td>
+                                    <td class="text-center">{{ $vnt->total_venta }}</td>
+                                    <td class="text-center">{{ $vnt->estado === "A" ? "Activa" : "Finalizada" }}</td>
 
                                     <td class="td-actions text-right">
 
                                         <a href="{{URL::action('VentaController@show',$vnt->idventa)}}" rel="tooltip" title="Detalles" class="btn btn-info btn-simple btn-xs">
                                                 <i class="fa fa-info"></i>
-                                            </a>
+                                        </a>
+
+                                        <a href = "{{ url('/ventas/venta/'.$vnt->idventa.'/edit')}}" rel="tooltip" title="Editar Orden de Salida" class="btn btn-success btn-simple btn-xs">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
 
                                            
 

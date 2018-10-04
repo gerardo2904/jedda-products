@@ -125,7 +125,7 @@
                                     <div class="form-group label-floating">
                                         <label class="control-label">Precio</label>
                                         <input type="number" step="0.0001" class="form-control" name="ppreciov" id="ppreciov"  >
-                                        <input type="hidden" name="petiqueta" id="petiqueta" value="{{ old('petiqueta')}}">
+                                        <input type="hidden" name="ppreciov" id="ppreciov" value="{{ old('ppreciov')}}">
                                     </div>
                                 </div>
 
@@ -198,6 +198,19 @@
                         </div>
 
                          <div class="col-sm-6" id="guardar">
+                             <div class="togglebutton">
+	                            <label>
+    	                             @if ($estado=='A')
+                                        <input type="checkbox" name="estado" id="estado" value="{{old('estado',$estado)}}" onChange="alerta();">
+                                        <span style="color: rgba(0,0,0);">¿Finaliza orden? (Ya no se podra editar)</span>
+                                    @else
+                                        <input type="checkbox" name="estado" id="estado" value="{{old('estado',$estado)}}" checked disabled>
+                                        <span style="color: rgba(0,0,0);">¿Finaliza orden? (Ya no se podra editar)</span>
+                                    @endif 
+	                            </label>
+                            </div>
+
+
                             <div class="form-group label-floating">  
                                 <button class="btn btn-primary" >Registro de la orden de venta</button>
                                 <a href="{{url('/ventas/venta')}}" class="btn btn-default">Cancelar</a>
@@ -252,6 +265,16 @@
         $("#ppreciov").val(datosArticulo[2]);
         $("#petiqueta").val(datosArticulo[3]);
     }
+
+    function alerta(){
+      if($("#estado").val()=="A"){
+        $("#estado").val("F");
+        alert('Se finalizara Orden y ya no se podra editar si Actualizas la información de la Orden de Salida...');
+      }else{
+        $("#estado").val("A");
+      }    
+    }
+
 
     function agregar(){
         datosArticulo=document.getElementById('pidarticulo').value.split('_');

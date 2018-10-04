@@ -95,6 +95,7 @@
                                     </table>
                                 </div>
                                 <a href="{{ route('imprimeordensalida.pdf',$venta->idventa)}}" class="btn btn-sm btn-primary">Descargar orden de salida en PDF</a>
+                                <a href="{{ url('/ventas/venta/'.$venta->idventa.'/edit')}}" class="btn btn-sm btn-success">Editar Orden de Salida</a>
 
 
 		</div>

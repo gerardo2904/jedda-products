@@ -205,7 +205,7 @@
 	                            </label>
                             </div>
                             <div class="form-group label-floating">  
-                                <button class="btn btn-primary" >Registro de la orden de compra</button>
+                                <button class="btn btn-primary" >Registro de la orden de entrada</button>
                                 <a href="{{url('/compras/ingreso')}}" class="btn btn-default">Cancelar</a>
                             </div>
                         </div>

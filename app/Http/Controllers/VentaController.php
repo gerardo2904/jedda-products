@@ -101,7 +101,7 @@ class VentaController extends Controller
         ////////////////////////////////////////////////////////////////////////
 
 
-    	return view('ventas.venta.create',["clientes" => $clientes, "products" => $articulos, "units" => $units, "nov" => $ordenv,"ncv" => $ncompv]);
+    	return view('ventas.venta.create',["clientes" => $clientes, "products" => $articulos, "units" => $units, "nov" => $ordenv,"ncv" => $ncompv,"estado" =>"A"]);
     }
 
     public function store(VentaFormRequest $request)
@@ -111,6 +111,12 @@ class VentaController extends Controller
 
 			$u  = Auth::user()->id;
 			$iu = Auth::user()->empresa_id; 
+
+            $estado=$request->get('estado');
+
+            if (!$estado=="F"){
+                $estado="A";
+            }
 			
 
     		DB::beginTransaction();
@@ -128,7 +134,7 @@ class VentaController extends Controller
     		$mytime						= Carbon::now('America/Tijuana');
     		$venta->fecha_hora			= $mytime->toDateTimeString();
     		$venta->impuesto			= $request->get('impuesto');
-    		$venta->estado				= 'A';
+    		$venta->estado				= $estado;
             $venta->notas               = $request->get('notas');
     		$venta->save();
 
@@ -167,7 +173,7 @@ class VentaController extends Controller
                     $exis=$productos->existencia;
                     //dd($productos->all());
 
-                    
+                    $productos->preciov       = $preciov[$cont];
                     $productos->existencia    = $exis-$cantidad[$cont];
                     
                     if($productos->existencia>=0){
@@ -216,6 +222,298 @@ class VentaController extends Controller
 
     	return Redirect::to('ventas/venta')->with('status', 'noexito');;
     }
+
+
+    public function edit($id)
+    {
+        //$clientes = DB::table('clients')->where('tipo_persona','=','Proveedor')->get();
+
+        $iu = Auth::user()->empresa_id; 
+
+        $ordenv=$id;
+
+
+        $clientes =  DB::table('clients')->where('es_proveedor','=','0')->get();
+
+        $units =  DB::table('units')->get();
+
+        $articulos = DB::table('products as art')
+        ->join('almproducts as ap','ap.id_product','=','art.id')
+          ->select(DB::raw('CONCAT(art.name," ",art.description) AS articulo'), 'art.id','ap.id_product','ap.etiqueta','art.name','ap.preciov','ap.existencia','art.id_unidad_prod','art.cantidad_prod')
+          ->where('art.activo','=','1')
+          ->where('ap.id_company','=',$iu)
+          ->where('ap.existencia','>','0')
+          ->groupBy('art.id','art.name','art.description','ap.etiqueta','ap.preciov', 'ap.existencia')
+          ->get();
+
+
+
+         $venta = DB::table('venta as v')
+             ->join('clients as p','v.idcliente','=','p.id')
+             ->join('client_images as ci','v.idcliente','=','ci.client_id')
+             ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
+             ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.ordenq','v.notas',DB::raw('sum(dv.cantidad*preciov) as total'))
+             ->where('v.idventa','=',$ordenv)
+             ->groupBy('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
+             ->first();
+
+        $detalles = DB::table('detalle_venta as d')
+          ->join('products as a','d.id_articulo','=','a.id')
+          ->select('a.name as articulo','a.description','d.id_articulo','d.cantidad','d.preciov','d.etiqueta','a.id_unidad_prod', 'a.cantidad_prod')
+          ->where('d.idventa','=',$ordenv)
+          ->get();
+
+        return view('ventas.venta.edit',["venta"=>$venta,"detalles"=>$detalles, "clientes" => $clientes, "products" => $articulos, "units" => $units, "nov" => $ordenv]);
+
+    }
+
+    public function update(Request $request, $id)
+    {
+        try{
+
+            $u  = Auth::user()->id;
+            $iu = Auth::user()->empresa_id; 
+
+            $estado=$request->get('estado');
+
+            if (!$estado=="F"){
+                $estado="A";
+            }
+
+
+            DB::beginTransaction();
+
+
+            $venta = Venta::find($id);
+
+            $venta->idcliente           = $request->get('idcliente');
+            $venta->id_empresa          = $iu;
+            $venta->id_user             = $u;
+            $venta->tipo_comprobante    = $request->get('tipo_comprobante');
+            $venta->ordenq              = $request->get('ordenq');
+            $venta->total_venta         = $request->get('total_venta');
+            $mytime                     = Carbon::now('America/Tijuana');
+            $venta->fecha_hora          = $mytime->toDateTimeString();
+            $venta->impuesto            = $request->get('impuesto');
+            $venta->estado              = $estado;
+            $venta->notas               = $request->get('notas');
+            $venta->save();
+
+            $id_articulo                = $request->get('id_articulo');
+            $cantidad                   = $request->get('cantidad');
+            $preciov                    = $request->get('preciov');
+            $descuento                  = $request->get('descuento');
+            $etiqueta                   = $request->get('etiqueta');
+            
+            
+            $cont = 0;
+
+            
+
+            $numero_articulos_array = count($id_articulo);
+            $numero_articulos_tabla = DetalleVenta::where([['idventa', '=', $id]])->count();
+            $men=" ";
+
+            if($numero_articulos_array == $numero_articulos_tabla){
+                // Si si, posiblemente no cambio nada, se verifica y si todo esta igual
+                // no se modifican los articulos previamente capturados.
+                if ($this->verificaArticulos($id, $request, $numero_articulos_array)){
+                    //Se puede proseguir a grabar algun cambio en la caratula de la orden
+                    // o a finalizarla.
+                    $men="Actualización exitosa";
+                    
+                }else {
+                    
+                    $id_articulox                = $request->get('id_articulo');
+                    $cantidadx                   = $request->get('cantidad');
+                    $preciovx                    = $request->get('preciov');
+                    $etiquetax                   = $request->get('etiqueta');
+
+                    $contx = 0;
+                    while ($contx < $numero_articulos_array){
+                        $productosx = DetalleVenta::where([['idventa', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->count();
+
+                    if($productosx<>1){
+                        ///////////////
+                        $men="Actualizazión exitosa...";
+                                                
+                        // En esta funcion, se debe retornar un array con elementos a borrar...
+                        $resparreglo=$this->verificaArrayArticulos($id, $request, $numero_articulos_array);
+
+                        if (sizeof($resparreglo)==0) {
+                            $men = "Actualizazión exitosa...";
+                            //return $men;
+                        }
+                        else {
+                            // Si cambia el contenido de la orden de salida al editarle
+                            // Se actualiza mediante una comprobacion del arreglo (en memoria)
+                            // con el contenido de la tabla en mysql
+
+                            $men = "Actualizazión exitosa, aunque cambio el contenido original...";
+
+                            $apuntador = 0;
+                            while ($apuntador < sizeof($resparreglo)){
+                                $campos = explode("_", $resparreglo[$apuntador]);
+
+                                //$men=$men." id_articulo = ". $campos[0]." cantidad = ". $campos[1]." preciov = ". $campos[2]." etiqueta = ". $campos[3]."<BR>";
+
+                                $productosDetB = DetalleVenta::where([['idventa', '=', $venta->idventa], ['id_articulo', '=', $campos[0]], ['cantidad', '=', $campos[1]], ['preciov', '=', $campos[2]], ['etiqueta', '=', $campos[3]] ])->delete();
+
+                                $prod_almacenT = almproducts::where([['id_product', '=', $campos[0]],['etiqueta', '=', $campos[3]],['id_company', '=', $iu]])->first();
+
+                                if ($prod_almacenT){
+
+                                    $nuevaCantidad = $prod_almacenT->existencia + $campos[1];
+
+                                    $prod_almacenT->existencia = $nuevaCantidad;
+                                    $prod_almacenT->save();
+                                }
+                                $apuntador++;
+
+                                $detallen = new DetalleVenta();
+                                $detallen->idventa            = $venta->idventa;
+                                $detallen->id_articulo        = $id_articulox[$contx];
+                                $detallen->cantidad           = $cantidadx[$contx];
+                                $detallen->preciov            = $preciovx[$contx];
+                                $detallen->etiqueta           = $etiquetax[$contx];
+                                $detallen->save();
+
+                                $prod_almacenT2 = almproducts::where([['id_product', '=', $id_articulox[$contx]],['etiqueta', '=', $etiquetax[$contx]],['id_company', '=', $iu]])->first();
+
+                                if ($prod_almacenT2){
+
+                                    $nuevaCantidad = $prod_almacenT2->existencia - $cantidadx[$contx];
+
+                                    $prod_almacenT2->existencia = $nuevaCantidad;
+                                    $prod_almacenT2->save();
+                                }
+
+
+                            }
+                            //return $men;
+                        }
+                        //return $men;
+
+                        
+
+
+
+                        ////////////////
+                        
+                    }else{
+                        $productosx1 = DetalleVenta::where([['idventa', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->first();
+
+                        //Si lo encuentra, preguntamos si son iguales las cantidades y precios de venta
+                        //Si no son iguales, se actualiza inventario, si si, se deja igual...
+                        if($cantidadx[$contx] == $productosx1->cantidad && $preciovx[$contx] == $productosx1->preciov) {
+                            // TODO BIEN
+                        }else {
+                            // AQUI, SE TIENE QUE ACTUALIZAR EL INVENTARIO, ES DECIR, RESTAR LO QUE SE TIENE ACTUALMENTE 
+                            // EN LA TABLE DE DETALLE_VENTA Y SUMAR LO QUE SE TIENE EN LA VARIABLE $productosx1->cantidad
+                            // A SU VEZ, ACTUALIZAR EL PRECIO DE VENTA
+
+                            $prod_almacen = almproducts::where([['id_product', '=', $id_articulox[$contx]],['etiqueta', '=', $etiquetax[$contx]],['id_company', '=', $iu]])->first();
+
+                            $exis_almacen=$prod_almacen->existencia;
+                            $preciov_almacen=$prod_almacen->preciov;
+
+                            // SE RESTA LO QUE SE TIENE CAPTURADO EN DETALLE_VENTA
+                            $nueva_existencia_almacen=0;
+                            $nueva_existencia_almacen=$exis_almacen-$productosx1->cantidad;
+
+                            // SE SUMA LO QUE SE ACABA DE CAPTURAR
+                            $nueva_existencia_almacen=$nueva_existencia_almacen+$cantidadx[$contx];
+
+
+                            // SE ACTUALIZA NUEVO PRECIO DE VENTA
+                            $nueva_preciov_almacen=0;
+                            $nueva_preciov_almacen=$preciovx[$contx];
+
+
+
+                            //SE ACTUALIZAN CANTIDADES Y PRECIOES EN TABLA...
+                            $productosx1->cantidad = $nueva_existencia_almacen;
+                            $productosx1->preciov  = $nueva_preciov_almacen;
+                            $productosx1->save(); 
+                        }
+                    }
+                    $contx++;
+                    }
+                    $men="Actualización exitosa.";
+
+                }
+
+            }else{
+                
+                $productosActualizarDV = DetalleVenta::where([['idventa', '=', $id]])->get();
+
+                while($productosActualizarDV){
+                    $prod_almacenDV = almproducts::where([['id_product', '=', $productosActualizarDV->id_articulo],['etiqueta', '=', $productosActualizarDV->etiqueta],['id_company', '=', $iu]])->first();    
+                    
+                    $cantidad_temporal=$prod_almacenDV->existencia;
+
+                    $prod_almacenDV->existencia = $cantidad_temporal - $productosActualizarDV->cantidad;
+                    $prod_almacenDV->save();
+                }
+
+
+                $productosB = DetalleVenta::where([['idventa', '=', $id]])->delete();
+                //Hay que revisar esto porque hay que regresar el numero de articulos borrados al almacen...
+                ////////////////
+                ///////////////
+
+                $cont = 0;
+
+                while ($cont < count($id_articulo)){
+                    $detalle = new DetalleVenta();
+                    $detalle->idventa            = $venta->idventa;
+                    $detalle->id_articulo        = $id_articulo[$cont];
+                    $detalle->cantidad           = $cantidad[$cont];
+                    $detalle->preciov            = $preciov[$cont];
+                    $detalle->etiqueta           = $etiqueta[$cont];
+                    $detalle->save();
+
+                    $prod_almacenA = almproducts::where([['id_product', '=', $id_articulo[$cont]],['etiqueta', '=', $$etiqueta[$cont]],['id_company', '=', $iu]])->first(); 
+
+                    $cantidad_temporal=$prod_almacenA->existencia;
+                    $preciov_remporal=$prod_almacenA->preciov;
+
+
+                    $prod_almacenA->existencia = $cantidad_temporal+$cantidad[$cont];
+                    $prod_almacenA->preciov = $preciov[$cont];
+                    $prod_almacenA->save();
+
+
+                    $cont++;
+
+                     
+
+                }
+
+                $men="Actualización exitosa.";
+
+            }
+
+        
+    
+            DB::commit();
+            Session::flash('message',$men);
+            return redirect('/ventas/venta')->with('status', 'exito');;
+
+
+        }catch(\Exception $e)
+        {
+            return $e;
+            
+            DB::rollback();
+            Session::flash('message','Ha ocurrido un error...');
+            return redirect('/ventas/venta');
+
+        }
+
+        return Redirect::to('ventas/venta')->with('status', 'noexito');
+    }
+
 
     public function show($id)
     {
@@ -271,4 +569,81 @@ class VentaController extends Controller
     	$venta->update();
     	return Redirect::to('ventas/venta');
     }
+
+    public function verificaArticulos($id, $request, $numero_articulos_array){
+
+        $id_articulox                = $request->get('id_articulo');
+        $cantidadx                   = $request->get('cantidad');
+        $preciovx                    = $request->get('preciov');
+        $etiquetax                   = $request->get('etiqueta');
+
+        $contx = 0;
+        while ($contx < $numero_articulos_array){
+
+        $productosx = DetalleVenta::where([['idventa', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['cantidad', '=', $cantidadx[$contx]], ['preciov', '=', $preciovx[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->count();
+
+        if($productosx<>1){
+            return false;
+        }
+        $contx++;
+        }
+        return true;
+    }
+
+    public function verificaArrayArticulos($id, $request, $numero_articulos_array){
+
+        $productosBD = DetalleVenta::where([['idventa', '=', $id]])->get();
+
+
+            //dd($request);
+
+        foreach ($productosBD as $pbd) {
+
+            //echo $pbd->id_articulo;
+            //echo "si pasa...";
+
+            
+            // Variables para manejar valored de la BD
+            $id_articuloBD                = $pbd->id_articulo;
+            $cantidadBD                   = $pbd->cantidad;
+            $preciovBD                    = $pbd->preciov;
+            $etiquetaBD                   = $pbd->etiqueta;
+            
+            $contador=0;
+            
+            $id_articuloArray                = $request->get('id_articulo');
+            $cantidadArray                   = $request->get('cantidad');
+            $preciovArray                    = $request->get('preciov');
+            $etiquetaArray                   = $request->get('etiqueta');
+
+            $arreglo=[];
+            $apuntador=0;
+
+            while ($contador < $numero_articulos_array){
+                
+                if($id_articuloBD == $id_articuloArray[$contador] && $cantidadBD == $cantidadArray[$contador] && $preciovBD == $preciovArray[$contador] && $etiquetaBD == $etiquetaArray[$contador]  ){
+                    // Todo bien
+                } else {
+                    //Hay que borrar el articulo de la base de datos
+
+                    // Primero, se crea un array y se retorna para borrar lo relacionado a este array...
+
+                    $arreglo[$contador] = [
+                    "id_articulo"    => $id_articuloBD,
+                    "cantidad"       => $cantidadBD,
+                    "preciov"      => $preciovBD,
+                    "etiqueta"      => $etiquetaBD
+                    ];
+                    $arreglo[$contador] = implode("_",$arreglo[$contador]);
+                    $apuntador++;
+                }   
+
+                $contador++;
+            } 
+        }
+
+        return $arreglo;
+    }
+
+
 }

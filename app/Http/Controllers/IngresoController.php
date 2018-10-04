@@ -308,8 +308,44 @@ class IngresoController extends Controller
                         $productosx = DetalleIngreso::where([['idingreso', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->count();
 
                     if($productosx<>1){
-                        $men="No Exitoso";
-                        return $men;
+                        $men="Actualizazión exitosa...";
+                                                
+                        // En esta funcion, se debe retornar un array con elementos a borrar...
+                        $resparreglo=$this->verificaArrayArticulos($id, $request, $numero_articulos_array);
+
+                        if (sizeof($resparreglo)==0) {
+                            $men = "Actualizazión exitosa...";
+                            //return $men;
+                        }
+                        else {
+                            // Si cambia el contenido de la orden de ingreso al editarle
+                            // Se actualiza mediante una comprobacion del arreglo (en memoria)
+                            // con el contenido de la tabla en mysql
+
+                            $men = "Actualizazión exitosa, aunque cambio el contenido original...";
+
+                            $apuntador = 0;
+                            while ($apuntador < sizeof($resparreglo)){
+                                $campos = explode("_", $resparreglo[$apuntador]);
+
+                                //$men=$men." id_articulo = ". $campos[0]." cantidad = ". $campos[1]." precioc = ". $campos[2]." etiqueta = ". $campos[3]."<BR>";
+
+                                $productosDetB = DetalleIngreso::where([['idingreso', '=', $ingreso->idingreso], ['id_articulo', '=', $campos[0]], ['cantidad', '=', $campos[1]], ['precioc', '=', $campos[2]], ['etiqueta', '=', $campos[3]] ])->delete();
+
+
+                                $apuntador++;
+                            }
+                            //return $men;
+                        }
+                        //return $men;
+
+                        $detallen = new DetalleIngreso();
+                        $detallen->idingreso          = $ingreso->idingreso;
+                        $detallen->id_articulo        = $id_articulox[$contx];
+                        $detallen->cantidad           = $cantidadx[$contx];
+                        $detallen->precioc            = $preciocx[$contx];
+                        $detallen->etiqueta           = $etiquetax[$contx];
+                        $detallen->save();
                         
                     }else{
                         $productosx1 = DetalleIngreso::where([['idingreso', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->first();
@@ -389,7 +425,7 @@ class IngresoController extends Controller
 
         }catch(\Exception $e)
         {
-            //return $e;
+            return $e;
             
             DB::rollback();
             Session::flash('message','Ha ocurrido un error...');
@@ -499,28 +535,59 @@ class IngresoController extends Controller
         return true;
     }
 
-    public function guardaDiferencias1($id, $request, $numero_articulos_array){
+    public function verificaArrayArticulos($id, $request, $numero_articulos_array){
 
-        $id_articulox                = $request->get('id_articulo');
-        $cantidadx                   = $request->get('cantidad');
-        $preciocx                    = $request->get('precioc');
-        $etiquetax                   = $request->get('etiqueta');
+        $productosBD = DetalleIngreso::where([['idingreso', '=', $id]])->get();
 
-        $contx = 0;
-        while ($contx < $numero_articulos_array){
-            $productosx = DetalleIngreso::where([['idingreso', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->count();
 
-        if($productosx<>1){
-            return false;
-        }else{
-            $productosx1 = DetalleIngreso::where([['idingreso', '=', $id], ['id_articulo', '=', $id_articulox[$contx]], ['etiqueta', '=', $etiquetax[$contx]]])->first();
+            //dd($request);
 
-            $productosx1->cantidad = $cantidadx[$contx];
-            $productosx1->precioc  = $preciocx[$contx];
-            $productosx1->save(); 
+        foreach ($productosBD as $pbd) {
+
+            //echo $pbd->id_articulo;
+            //echo "si pasa...";
+
+            
+            // Variables para manejar valored de la BD
+            $id_articuloBD                = $pbd->id_articulo;
+            $cantidadBD                   = $pbd->cantidad;
+            $preciocBD                    = $pbd->precioc;
+            $etiquetaBD                   = $pbd->etiqueta;
+            
+            $contador=0;
+            
+            $id_articuloArray                = $request->get('id_articulo');
+            $cantidadArray                   = $request->get('cantidad');
+            $preciocArray                    = $request->get('precioc');
+            $etiquetaArray                   = $request->get('etiqueta');
+
+            $arreglo=[];
+            $apuntador=0;
+
+            while ($contador < $numero_articulos_array){
+                
+                if($id_articuloBD == $id_articuloArray[$contador] && $cantidadBD == $cantidadArray[$contador] && $preciocBD == $preciocArray[$contador] && $etiquetaBD == $etiquetaArray[$contador]  ){
+                    // Todo bien
+                } else {
+                    //Hay que borrar el articulo de la base de datos
+
+                    // Primero, se crea un array y se retorna para borrar lo relacionado a este array...
+
+                    $arreglo[$contador] = [
+                    "id_articulo"    => $id_articuloBD,
+                    "cantidad"       => $cantidadBD,
+                    "precioc"      => $preciocBD,
+                    "etiqueta"      => $etiquetaBD
+                    ];
+                    $arreglo[$contador] = implode("_",$arreglo[$contador]);
+                    $apuntador++;
+                }   
+
+                $contador++;
+            } 
         }
-        $contx++;
-        }
-        return true;
+
+        return $arreglo;
     }
+    
 }

@@ -240,7 +240,7 @@
 
                         <div class="form-group label-floating">  
                             @if ($ingreso->estado=='A')
-                                <button class="btn btn-primary" >Actualizar orden deingreso</button>
+                                <button class="btn btn-primary" >Actualizar orden de ingreso</button>
                             @else
                                 <button class="btn btn-primary" disabled>Orden de ingreso no editable</button>
                             @endif

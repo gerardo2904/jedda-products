@@ -38,7 +38,11 @@
 								@foreach ($ps2 as $prod2)                             
                                 <tr>
 									<td class="text-center">{{ $prod2->fecha_hora }}</td>
-                                    <td class="text-center">{{ $prod2->serie_comprobante }}-{{$prod2->num_comprobante}}</td>
+                                    <td class="text-center">
+									<a href="{{URL::action('IngresoController@show',$prod2->idingreso)}}" rel="tooltip" title="Detalles Orden de Ingreso" class="btn btn-sm btn-success">
+									{{ $prod2->serie_comprobante }}-{{$prod2->num_comprobante}}
+									</a>
+									</td>
 									<td class="text-center">{{ $prod2->etiqueta }}</td>
 									<td class="text-center">{{ $prod2->articulo }}</td>
                                     <td class="text-center">{{ $prod2->cantidad_prod }}</td>
@@ -137,7 +141,11 @@
 						@foreach ($pv2 as $prodv2)                             
                             <tr>
 								<td class="text-center">{{ $prodv2->fecha_hora }}</td>
-                                <td class="text-center">{{ $prodv2->serie_comprobante }}-{{$prodv2->num_comprobante}}</td>
+                                <td class="text-center">
+								<a href="{{URL::action('VentaController@show',$prodv2->idventa)}}" rel="tooltip" title="Detalles Orden de Salida" class="btn btn-sm btn-success">
+								{{ $prodv2->serie_comprobante }}-{{$prodv2->num_comprobante}}
+								</a>
+								</td>
 								<td class="text-center">{{ $prodv2->etiqueta }}</td>
                                 <td class="text-center">{{ $prodv2->articulo }}</td>
                                 <td class="text-center">{{ $prodv2->cantidad_prod }}</td>
