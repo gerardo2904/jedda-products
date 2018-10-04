@@ -447,13 +447,15 @@ class VentaController extends Controller
                 
                 $productosActualizarDV = DetalleVenta::where([['idventa', '=', $id]])->get();
 
-                while($productosActualizarDV){
-                    $prod_almacenDV = almproducts::where([['id_product', '=', $productosActualizarDV->id_articulo],['etiqueta', '=', $productosActualizarDV->etiqueta],['id_company', '=', $iu]])->first();    
-                    
-                    $cantidad_temporal=$prod_almacenDV->existencia;
+                if ($productosActualizarDV){
+                    while($productosActualizarDV){
+                        $prod_almacenDV = almproducts::where([['id_product', '=', $productosActualizarDV->id_articulo],['etiqueta', '=', $productosActualizarDV->etiqueta],['id_company', '=', $iu]])->first();    
+                        
+                        $cantidad_temporal=$prod_almacenDV->existencia;
 
-                    $prod_almacenDV->existencia = $cantidad_temporal - $productosActualizarDV->cantidad;
-                    $prod_almacenDV->save();
+                        $prod_almacenDV->existencia = $cantidad_temporal - $productosActualizarDV->cantidad;
+                        $prod_almacenDV->save();
+                    }
                 }
 
 
