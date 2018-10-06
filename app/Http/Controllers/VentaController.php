@@ -321,9 +321,7 @@ class VentaController extends Controller
                     //Se puede proseguir a grabar algun cambio en la caratula de la orden
                     // o a finalizarla.
                     $men="Actualización exitosa";
-                    
                 }else {
-                    
                     $id_articulox                = $request->get('id_articulo');
                     $cantidadx                   = $request->get('cantidad');
                     $preciovx                    = $request->get('preciov');
@@ -368,6 +366,7 @@ class VentaController extends Controller
                                     $prod_almacenT->existencia = $nuevaCantidad;
                                     $prod_almacenT->save();
                                 }
+                                
                                 $apuntador++;
 
                                 $detallen = new DetalleVenta();
@@ -409,32 +408,33 @@ class VentaController extends Controller
                             // TODO BIEN
                         }else {
                             // AQUI, SE TIENE QUE ACTUALIZAR EL INVENTARIO, ES DECIR, RESTAR LO QUE SE TIENE ACTUALMENTE 
-                            // EN LA TABLE DE DETALLE_VENTA Y SUMAR LO QUE SE TIENE EN LA VARIABLE $productosx1->cantidad
+                            // EN LA TABLA DE DETALLE_VENTA Y SUMAR LO QUE SE TIENE EN LA VARIABLE $productosx1->cantidad
                             // A SU VEZ, ACTUALIZAR EL PRECIO DE VENTA
 
                             $prod_almacen = almproducts::where([['id_product', '=', $id_articulox[$contx]],['etiqueta', '=', $etiquetax[$contx]],['id_company', '=', $iu]])->first();
 
-                            $exis_almacen=$prod_almacen->existencia;
-                            $preciov_almacen=$prod_almacen->preciov;
+                            if($prod_almacen){    
+                                $exis_almacen=$prod_almacen->existencia;
+                                $preciov_almacen=$prod_almacen->preciov;
 
-                            // SE RESTA LO QUE SE TIENE CAPTURADO EN DETALLE_VENTA
-                            $nueva_existencia_almacen=0;
-                            $nueva_existencia_almacen=$exis_almacen-$productosx1->cantidad;
+                                // SE RESTA LO QUE SE TIENE CAPTURADO EN DETALLE_VENTA
+                                $nueva_existencia_almacen=$exis_almacen+$productosx1->cantidad;
 
-                            // SE SUMA LO QUE SE ACABA DE CAPTURAR
-                            $nueva_existencia_almacen=$nueva_existencia_almacen+$cantidadx[$contx];
+                                // SE SUMA LO QUE SE ACABA DE CAPTURAR
+                                $nueva_existencia_almacen=$nueva_existencia_almacen-$cantidadx[$contx];
 
+                                // SE ACTUALIZA NUEVO PRECIO DE VENTA
+                                $nueva_preciov_almacen=$preciovx[$contx];
 
-                            // SE ACTUALIZA NUEVO PRECIO DE VENTA
-                            $nueva_preciov_almacen=0;
-                            $nueva_preciov_almacen=$preciovx[$contx];
+                                //SE ACTUALIZAN CANTIDADES Y PRECIOS EN TABLA...
+                                $prod_almacen->existencia = $nueva_existencia_almacen;
+                                $prod_almacen->preciov    = $nueva_preciov_almacen;
+                                $prod_almacen->save(); 
 
-
-
-                            //SE ACTUALIZAN CANTIDADES Y PRECIOES EN TABLA...
-                            $productosx1->cantidad = $nueva_existencia_almacen;
-                            $productosx1->preciov  = $nueva_preciov_almacen;
-                            $productosx1->save(); 
+                                $productosx1->cantidad = $cantidadx[$contx];
+                                $productosx1->preciov  = $preciovx[$contx];
+                                $productosx1->save(); 
+                            }
                         }
                     }
                     $contx++;
@@ -447,13 +447,16 @@ class VentaController extends Controller
                 
                 $productosActualizarDV = DetalleVenta::where([['idventa', '=', $id]])->get();
 
-                if ($productosActualizarDV){
-                    while($productosActualizarDV){
+                //dd($productosActualizarDV);
+                //return true;
+
+                if ($productosActualizarDV){ /// ??????
+                    foreach($productosActualizarDV as $productosActualizarDV){
                         $prod_almacenDV = almproducts::where([['id_product', '=', $productosActualizarDV->id_articulo],['etiqueta', '=', $productosActualizarDV->etiqueta],['id_company', '=', $iu]])->first();    
                         
                         $cantidad_temporal=$prod_almacenDV->existencia;
 
-                        $prod_almacenDV->existencia = $cantidad_temporal - $productosActualizarDV->cantidad;
+                        $prod_almacenDV->existencia = $cantidad_temporal + $productosActualizarDV->cantidad;
                         $prod_almacenDV->save();
                     }
                 }
@@ -475,13 +478,13 @@ class VentaController extends Controller
                     $detalle->etiqueta           = $etiqueta[$cont];
                     $detalle->save();
 
-                    $prod_almacenA = almproducts::where([['id_product', '=', $id_articulo[$cont]],['etiqueta', '=', $$etiqueta[$cont]],['id_company', '=', $iu]])->first(); 
+                    $prod_almacenA = almproducts::where([['id_product', '=', $id_articulo[$cont]],['etiqueta', '=', $etiqueta[$cont]],['id_company', '=', $iu]])->first(); 
 
                     $cantidad_temporal=$prod_almacenA->existencia;
                     $preciov_remporal=$prod_almacenA->preciov;
 
 
-                    $prod_almacenA->existencia = $cantidad_temporal+$cantidad[$cont];
+                    $prod_almacenA->existencia = $cantidad_temporal - $cantidad[$cont];
                     $prod_almacenA->preciov = $preciov[$cont];
                     $prod_almacenA->save();
 
