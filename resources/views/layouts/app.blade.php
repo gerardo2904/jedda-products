@@ -2,17 +2,7 @@
 <html lang="es">
 <head>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-37972029-11"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-37972029-11');
-    </script>
-
-
+    
 	<meta charset="utf-8" />
 	<link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" href="../assets/img/favicon.png">
@@ -206,10 +196,11 @@
         @yield('content')
     </div>
 
-
 </body>
 	<!--   Core JS Files   -->
 	<script src="{{asset('js/jquery.min.js')}}" type="text/javascript"></script>
+
+    
 
     
 
@@ -217,6 +208,7 @@
 	<script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
 	<script src="{{asset('js/material.min.js')}}"></script>
     <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
+    
 
 	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
 	<script src="{{asset('js/nouislider.min.js')}}" type="text/javascript"></script>
@@ -226,6 +218,8 @@
 
 	<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
 	<script src="{{asset('js/material-kit.js')}}" type="text/javascript"></script>
+
+    
 
 
 

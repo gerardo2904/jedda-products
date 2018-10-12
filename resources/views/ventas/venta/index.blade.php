@@ -15,6 +15,15 @@
         </div>
         @endif
 
+        // Se cargan los modals de cada una de las ordenes de salida...
+        // Modals para cancelar ordenes... 
+        // Llama a archivo modal.blade.php 
+        // Se hace aqui porque tiene que estar fuera de container ...
+
+        @foreach ($ventas as $vnt)
+            @include('ventas.venta.modal')
+        @endforeach
+
 		<div class="main main-raised">
 			<div class="container">
 		    	<div class="section text-center">
@@ -27,7 +36,7 @@
                             
                         </div>
                     @endif
-                    
+                                
 	                <h2 class="title">Ordenes de salida</h2>
                     @include('ventas.venta.search')  
 
@@ -72,14 +81,17 @@
                                             <i class="fa fa-edit"></i>
                                         </a>
 
-                                           
+                                        @if($vnt->estado == "A")
+                                            <a href="" data-target="#modal-delete-{{$vnt->idventa}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
+                                        @else
+                                            <button class="btn btn-danger btn-simple btn-xs" disabled ><i class="fa fa-times"></i></button>
+                                        @endif
 
-                                        <a href="" data-target="#modal-delete-{{$vnt->idventa}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
                                     </td>
 
 
                                 </tr>
-                                @include('ventas.venta.modal')
+                                
                                 @endforeach
                                 
                             </tbody>

@@ -286,6 +286,7 @@ class VentaController extends Controller
 
             $venta = Venta::find($id);
 
+
             $venta->idcliente           = $request->get('idcliente');
             $venta->id_empresa          = $iu;
             $venta->id_user             = $u;

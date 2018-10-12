@@ -1,5 +1,5 @@
-<div class="modal fade " aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$ing->idingreso}}" aria-labelledby="modal-delete-{{$ing->idingreso}}">
-	{{Form::Open(array('action'=>array('IngresoController@destroy',$ing->idingreso),'method'=>'delete'))}}
+<div class="modal fade " aria-hidden="true" role="dialog" tabindex="-1" id="modal2-delete-{{$ingreso->idingreso}}" aria-labelledby="modal2-delete-{{$ingreso->idingreso}}">
+	{{Form::Open(array('action'=>array('IngresoController@destroy',$ingreso->idingreso),'method'=>'delete'))}}
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

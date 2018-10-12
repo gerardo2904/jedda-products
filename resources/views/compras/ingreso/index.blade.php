@@ -4,6 +4,7 @@
 
 @section('body-class', 'product-page')
 
+
 @section('content')
 
 <div class="header header-filter" style="background-image: url('/img/imagen_principal2.png');">
@@ -14,6 +15,16 @@
         {{ session('status') }}
         </div>
         @endif
+
+        // Se cargan los modals de cada una de las ordenes de ingreso...
+        // Modals para cancelar ordenes... 
+        // Llama a archivo modal.blade.php 
+        // Se hace aqui porque tiene que estar fuera de container ...
+
+        @foreach ($ingresos as $ing)
+            @include('compras.ingreso.modal')
+        @endforeach
+
 
 		<div class="main main-raised">
 			<div class="container">
@@ -30,8 +41,6 @@
                     
 	                <h2 class="title">Ordenes de ingreso</h2>
                     @include('compras.ingreso.search')  
-
-
 
 					<div class="team">
 						<div class="row">
@@ -60,25 +69,23 @@
                                     <td>{{ $ing->tipo_comprobante.': '.$ing->serie_comprobante.'-'.$ing->num_comprobante }}</td>
                                     <td>{{ $ing->ordenp }}</td>
                                     <td>{{ $ing->total }}</td>
-                                    <td>{{ $ing->estado === "A" ? "Activa" : "Finalizada" }}</td>
+                                    <td>{{ $ing->estado === "A" ? "Activa" : ($ing->estado === "F" ? "Finalizada" : "Cancelada") }}</td>
 
                                     <td class="td-actions text-right">
-
                                         <a href="{{URL::action('IngresoController@show',$ing->idingreso)}}" rel="tooltip" title="Detalles" class="btn btn-info btn-simple btn-xs">
-                                                <i class="fa fa-info"></i>
+                                            <i class="fa fa-info"></i>
                                         </a>
-
-
                                         <a href = "{{ url('/compras/ingreso/'.$ing->idingreso.'/edit')}}" rel="tooltip" title="Editar Orden de Ingreso" class="btn btn-success btn-simple btn-xs">
                                             <i class="fa fa-edit"></i>
                                         </a>
-
-                                        <a href="" data-target="#modal-delete-{{$ing->idingreso}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
+                                        @if($ing->estado == "A")
+                                            <a href="" data-target="#modal-delete-{{$ing->idingreso}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
+                                        @else
+                                            <button class="btn btn-danger btn-simple btn-xs" disabled ><i class="fa fa-times"></i></button>
+                                        @endif
                                     </td>
-
-
                                 </tr>
-                                @include('compras.ingreso.modal')
+
                                 @endforeach
                                 
                             </tbody>
@@ -94,6 +101,8 @@
 
 		</div>
 
+
 	 @include('includes.footer')
 
 @endsection
+

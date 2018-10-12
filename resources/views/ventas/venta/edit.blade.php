@@ -2,7 +2,97 @@
 
 @section('title','Jedda')
 
+@include('ventas.venta.modal2')
+
 @section('body-class', 'product-page')
+
+@section('styles')
+<style>
+.datagrid table { 
+    border-collapse: collapse; 
+    text-align: left; 
+    width: 100%; } 
+.datagrid {
+    font: normal 12px/150% Arial, Helvetica, sans-serif; 
+    background: #fff; 
+    overflow: hidden; 
+    border: 1px solid #652299; 
+    -webkit-border-radius: 3px; 
+    -moz-border-radius: 3px; 
+    border-radius: 3px; }
+.datagrid table td, .datagrid table th { 
+    padding: 3px 10px; }
+.datagrid table thead th {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #652299), color-stop(1, #4D1A75) );
+    background:-moz-linear-gradient( center top, #652299 5%, #4D1A75 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#652299', endColorstr='#4D1A75');
+    background-color:#652299; 
+    color:#FFFFFF; 
+    font-size: 15px; 
+    font-weight: bold; 
+    border-left: 1px solid #714399; } 
+.datagrid table thead th:first-child { 
+    border: none; }
+.datagrid table tbody td { 
+    color: #4D1A75; 
+    border-left: 1px solid #E7BDFF;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: right; }
+.datagrid table tbody .alt td { 
+    background: #F4E3FF; 
+    color: #4D1A75; }
+.datagrid table tbody td:first-child { 
+    border-left: none; }
+.datagrid table tbody tr:last-child td { 
+    border-bottom: none; }
+
+.datagrid table tfoot td div { 
+    border-top: 1px solid #652299;
+    background: #F4E3FF;} 
+.datagrid table tfoot td {
+    font-weight: bold; 
+    text-align: right;
+}
+.datagrid table tfoot td { 
+    padding: 0; 
+    font-size: 12px } 
+.datagrid table tfoot td div{ 
+    padding: 2px; }
+.datagrid table tfoot td ul { 
+    margin: 0; 
+    padding:0; 
+    list-style: none; 
+    text-align: right; }
+.datagrid table tfoot td {
+    border-left: 1px solid #E7BDFF;
+}
+.datagrid table tfoot  li { 
+    display: inline; }
+.datagrid table tfoot li a { 
+    text-decoration: none; 
+    display: inline-block;  
+    padding: 2px 8px; 
+    margin: 1px;
+    color: #FFFFFF;
+    border: 1px solid #652299;
+    -webkit-border-radius: 3px; 
+    -moz-border-radius: 3px; 
+    border-radius: 3px; 
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #652299), color-stop(1, #4D1A75) );
+    background:-moz-linear-gradient( center top, #652299 5%, #4D1A75 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#652299', endColorstr='#4D1A75');
+    background-color:#652299; }
+.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { 
+    text-decoration: none;
+    border-color: #4D1A75; 
+    color: #FFFFFF; 
+    background: none; 
+    background-color:#652299;}
+div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
+</style>
+@endsection
+
 
 @section('content')
 
@@ -144,7 +234,8 @@
 
                             <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                 <div class="form-group label-floating">
-                                    <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+                                    <div class="datagrid">
+                                    <table id="detalles" >
                                         <thead style="background-color:#A9D0F5">
                                             <th>Opciones</th>
                                             <th>Artículo</th>
@@ -153,7 +244,7 @@
                                             <th>Etiqueta(Lote)</th>
                                             <th>Subtotal</th>
                                         </thead>
-                                        <tfoot>
+                                        <tbody>
                                             <script type="text/javascript">
                                                 var contadorJS=0;
                                                     cantidadJS=0;
@@ -167,15 +258,15 @@
 
                                             @foreach ($detalles as $det)
                                                 <tr class="selected" id="fila{{$loop->iteration}}">
-                                                  <td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar({{$loop->iteration}});"><i class="fa fa-times"></i></button></td>
-                                                  <td><input type="hidden"  name="id_articulo[]" value="{{$det->id_articulo}}">{{$det->articulo}}</td>
+                                                  <td><center><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar({{$loop->iteration}});"><i class="fa fa-times"></i></button></center></td>
+                                                  <td><center><input type="hidden"  name="id_articulo[]" value="{{$det->id_articulo}}">{{$det->articulo}}</center></td>
                                                   <td><input type="hidden"  id="cantidad[]" name="cantidad[]" value="{{$det->cantidad}}">{{$det->cantidad}}</td>
                                                   <td><input type="hidden"  name="preciov[]" value="{{$det->preciov}}">{{$det->preciov}}</td> 
-                                                  <td><input type="hidden"  name="etiqueta[]" value="{{$det->etiqueta}}">{{$det->etiqueta}}</td>  
+                                                  <td><center><input type="hidden"  name="etiqueta[]" value="{{$det->etiqueta}}">{{$det->etiqueta}}</center></td>  
                                                   <input type="hidden"  name="unidad_prod[]" value="{{$det->id_unidad_prod}}">
                                                   <input type="hidden"  name="cantidad_prod[]" value="{{$det->cantidad_prod}}">
 
-                                                  <td>{{$det->preciov*$det->cantidad}}</td> 
+                                                  <td class="especial">{{ bcdiv($det->preciov*$det->cantidad, '1', 4)}}</td> 
                                                   <script type="text/javascript">
                                                     contadorJS = <?php echo $loop->iteration; ?> ;
                                                     cantidadJS = <?php echo $det->cantidad; ?> ;
@@ -199,34 +290,37 @@
 
                                                 </tr>
                                             @endforeach
+                                            </tbody>
+                                            <tfoot>
                                             <tr>
-                                               <th></th>
-                                               <th></th>
-                                               <th></th>
-                                               <th></th>
-                                               <th>SUB-TOTAL</th>
-                                               <th><h4 id="subtot">$ 0.00</h4><input type="hidden" name="total_venta" id="total_venta"></th>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td>SUB-TOTAL</td>
+                                               <td id="subtot">$ 0.00<input type="hidden" name="total_venta" id="total_venta"></td>
                                             </tr>
                                             <tr>
-                                               <th></th>
-                                               <th></th>
-                                               <th></th>
-                                               <th></th>
-                                               <th>IMPUESTO</th>
-                                               <th><h4 id="tax">$ 0.00</h4></th>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td>IMPUESTO</td>
+                                               <td id="tax">$ 0.00</td>
                                             </tr>
                                             <tr>
-                                               <th></th>
-                                               <th></th>
-                                               <th></th>
-                                               <th></th>
-                                               <th>TOTAL</th>
-                                               <th><h4 id="gt">$ 0.00</h4></th>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td>TOTAL</td>
+                                               <td id="gt">$ 0.00</td>
                                             </tr>
                                         </tfoot>
-                                        <tbody>
-                                        </tbody>    
+                                        
+                                          
                                     </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +328,7 @@
                 </div>
                
                 <div class="row">
-                    <div class="col-sm-6" id="guardar">
+                    <div class="col-sm-10" id="guardar">
                         <div class="togglebutton">
 	                        <label>
                                 @if ($venta->estado=='A')
@@ -249,11 +343,18 @@
 
                         <div class="form-group label-floating">  
                             @if ($venta->estado=='A')
-                                <button class="btn btn-primary" >Actualizar orden de salida</button>
+                                <button class="btn btn-primary" > <i class="fa fa-floppy-o"></i> Actualizar orden de salida</button>
                             @else
                                 <button class="btn btn-primary" disabled>Orden de salida no editable</button>
                             @endif
-                            <a href="{{url('/ventas/venta')}}" class="btn btn-default">Cancelar</a>
+                            <a href="{{url('/ventas/venta')}}" class="btn btn-info"><i class="fa fa-undo"></i> Volver</a>
+
+                            @if ($venta->estado=='A')
+                                <a href="" data-target="#modal2-delete-{{$venta->idventa}}" data-toggle="modal"><button class="btn btn-danger"><i class="fa fa-times"></i> Cancelar Orden de Salida</button></a>
+                            @else
+                                <button class="btn btn-danger" disabled>Cancelar Orden de Salida</button>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -314,7 +415,7 @@
                 $("#gt").html("$ "+gt.toFixed(4));
                 $("#subtot").html("$ "+subtot.toFixed(4));
                 $("#total_venta").val(total);
-                $("#total_venta").html("$ "+total.toFixed(4));
+                //$("#total_venta").html("$ "+total.toFixed(4));
                 $("#tax").html("$ "+tax.toFixed(4));
 
 
@@ -369,18 +470,19 @@
             subtot=subtot+subtotal[cont];
             total=total+subtotal[cont];
 
-            tax=tax+(($("#impuesto").val()*0.001)*subtotal[cont]);
+            //tax=tax+(($("#impuesto").val()*0.001)*subtotal[cont]);
+            tax=(($("#impuesto").val()*0.01)*subtot);
             
             gt=subtot+tax;
 
-            var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden"  name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden"  name="preciov[]" value="'+preciov+'">'+preciov+'</td> <td><input type="hidden"  name="etiqueta[]" value="'+etiqueta+'">'+etiqueta+'</td>  <td>'+subtotal[cont]+'</td> <input type="hidden"  name="unidad_prod[]" value="'+unidad_prod+'"> <input type="hidden" name="cantidad_prod[]" value="'+cantidad_prod+'">';
+            var fila='<tr class="selected" id="fila'+cont+'"><td><center><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></center></td><td><center><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</center></td><td><input type="hidden"  name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden"  name="preciov[]" value="'+preciov+'">'+preciov+'</td> <td><center><input type="hidden"  name="etiqueta[]" value="'+etiqueta+'">'+etiqueta+'</center></td>  <td>'+subtotal[cont].toFixed(4)+'</td> <input type="hidden"  name="unidad_prod[]" value="'+unidad_prod+'"> <input type="hidden" name="cantidad_prod[]" value="'+cantidad_prod+'">';
             
             cont++;
             limpiar();
             $("#total_venta").val(total);
             $("#gt").html("$ "+gt.toFixed(4));
             $("#subtot").html("$ "+subtot.toFixed(4));
-            $("#total_venta").html("$ "+subtot.toFixed(4));
+            //$("#total_venta").html("$ "+subtot.toFixed(4));
             $("#tax").html("$ "+tax.toFixed(4));
             evaluar();
             $('#detalles').append(fila);
@@ -419,14 +521,15 @@
         
         subtot=subtot-subtotal[index];
         
-        tax=tax-(($("#impuesto").val()*0.01)*subtotal[index]);
+        //tax=tax-(($("#impuesto").val()*0.01)*subtotal[index]);
+        tax=(($("#impuesto").val()*0.01)*subtot);
             
         gt=subtot+tax;
         
         $("#gt").html("$ "+gt.toFixed(4));
         $("#subtot").html("$ "+subtot.toFixed(4));
         $("#total_venta").val(total);
-        $("#total_venta").html("$ "+total.toFixed(4));
+        //$("#total_venta").html("$ "+total.toFixed(4));
         $("#tax").html("$ "+tax.toFixed(4));
 
         $("#fila" + index).remove();
