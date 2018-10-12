@@ -394,6 +394,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                 $("#gt").html("$ "+gt);
                 $("#subtot").html("$ "+subtot);
                 $("#total_venta").val(total);
+                //alert($("#total_venta").val());
                 $("#tax").html("$ "+tax);
                 evaluar();
                 $('#detalles').append(fila);

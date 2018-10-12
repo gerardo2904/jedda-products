@@ -50,7 +50,8 @@
 .datagrid table tfoot td div { 
     border-top: 1px solid #652299;
     background: #F4E3FF;} 
-.datagrid table tfoot td {
+.datagrid table tfoot td h6{
+    font-size: 12px;
     font-weight: bold; 
     text-align: right;
 }
@@ -297,24 +298,24 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                                <td></td>
                                                <td></td>
                                                <td></td>
-                                               <td>SUB-TOTAL</td>
-                                               <td id="subtot">$ 0.00<input type="hidden" name="total_venta" id="total_venta"></td>
+                                               <td><h6>SUB-TOTAL</h6></td>
+                                               <td><h6 id="subtot">$ 0.00</h6><input type="hidden" name="total_venta" id="total_venta"></td>
                                             </tr>
                                             <tr>
                                                <td></td>
                                                <td></td>
                                                <td></td>
                                                <td></td>
-                                               <td>IMPUESTO</td>
-                                               <td id="tax">$ 0.00</td>
+                                               <td><h6>IMPUESTO</h6></td>
+                                               <td><h6 id="tax">$ 0.00</h6></td>
                                             </tr>
                                             <tr>
                                                <td></td>
                                                <td></td>
                                                <td></td>
                                                <td></td>
-                                               <td>TOTAL</td>
-                                               <td id="gt">$ 0.00</td>
+                                               <td><h6>TOTAL</h6></td>
+                                               <td><h6 id="gt">$ 0.00</h6></td>
                                             </tr>
                                         </tfoot>
                                         
@@ -415,7 +416,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                 $("#gt").html("$ "+gt.toFixed(4));
                 $("#subtot").html("$ "+subtot.toFixed(4));
                 $("#total_venta").val(total);
-                //$("#total_venta").html("$ "+total.toFixed(4));
+                $("#total_venta").html("$ "+total);
                 $("#tax").html("$ "+tax.toFixed(4));
 
 
@@ -461,11 +462,14 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
         etiqueta=$("#petiqueta").val();
         unidad_prod=$("#pid_unidad_prod").val();
         cantidad_prod=$("#pcantidad_prod").val();
+        existencia=$("#pexistencia").val();
         
         
 
         if(idarticulo!="" && cantidad!="" && cantidad>0 && preciov!="")
         {
+        if (parseFloat(existencia) >= parseFloat(cantidad))
+            {
             subtotal[cont]=(cantidad*preciov);
             subtot=subtot+subtotal[cont];
             total=total+subtotal[cont];
@@ -480,12 +484,17 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
             cont++;
             limpiar();
             $("#total_venta").val(total);
+            
             $("#gt").html("$ "+gt.toFixed(4));
             $("#subtot").html("$ "+subtot.toFixed(4));
             //$("#total_venta").html("$ "+subtot.toFixed(4));
             $("#tax").html("$ "+tax.toFixed(4));
             evaluar();
             $('#detalles').append(fila);
+        }
+            else {
+                alert("La cantidad que se quiere vender supera la existencia.");
+            }
         }
         else
         {
