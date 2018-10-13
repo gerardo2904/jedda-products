@@ -259,7 +259,7 @@ class VentaController extends Controller
 
         $detalles = DB::table('detalle_venta as d')
           ->join('products as a','d.id_articulo','=','a.id')
-          ->select('a.name as articulo','a.description','d.id_articulo','d.cantidad','d.preciov','d.etiqueta','a.id_unidad_prod', 'a.cantidad_prod')
+          ->select('a.name as articulo','a.description','d.id_articulo','d.cantidad','d.preciov','d.descuento','d.etiqueta','a.id_unidad_prod', 'a.cantidad_prod')
           ->where('d.idventa','=',$ordenv)
           ->get();
 
@@ -445,28 +445,28 @@ class VentaController extends Controller
                 }
 
             }else{
-                
+
+                // Se bo borra lo que se tiene en el detalle y se actualiza inventario en almacen...
                 $productosActualizarDV = DetalleVenta::where([['idventa', '=', $id]])->get();
 
                 //dd($productosActualizarDV);
                 //return true;
 
-                if ($productosActualizarDV){ /// ??????
+                if ($productosActualizarDV){ 
                     foreach($productosActualizarDV as $productosActualizarDV){
                         $prod_almacenDV = almproducts::where([['id_product', '=', $productosActualizarDV->id_articulo],['etiqueta', '=', $productosActualizarDV->etiqueta],['id_company', '=', $iu]])->first();    
-                        
-                        $cantidad_temporal=$prod_almacenDV->existencia;
+                        if($prod_almacenDV){
+                            $cantidad_temporal=$prod_almacenDV->existencia;
 
-                        $prod_almacenDV->existencia = $cantidad_temporal + $productosActualizarDV->cantidad;
-                        $prod_almacenDV->save();
+                            $prod_almacenDV->existencia = $cantidad_temporal + $productosActualizarDV->cantidad;
+                            $prod_almacenDV->save();
+                        }
                     }
                 }
 
 
                 $productosB = DetalleVenta::where([['idventa', '=', $id]])->delete();
-                //Hay que revisar esto porque hay que regresar el numero de articulos borrados al almacen...
-                ////////////////
-                ///////////////
+                
 
                 $cont = 0;
 
@@ -481,13 +481,15 @@ class VentaController extends Controller
 
                     $prod_almacenA = almproducts::where([['id_product', '=', $id_articulo[$cont]],['etiqueta', '=', $etiqueta[$cont]],['id_company', '=', $iu]])->first(); 
 
-                    $cantidad_temporal=$prod_almacenA->existencia;
-                    $preciov_remporal=$prod_almacenA->preciov;
+                    if( $prod_almacenA){
+                        $cantidad_temporal=$prod_almacenA->existencia;
+                        $preciov_remporal=$prod_almacenA->preciov;
 
 
-                    $prod_almacenA->existencia = $cantidad_temporal - $cantidad[$cont];
-                    $prod_almacenA->preciov = $preciov[$cont];
-                    $prod_almacenA->save();
+                        $prod_almacenA->existencia = $cantidad_temporal - $cantidad[$cont];
+                        $prod_almacenA->preciov = $preciov[$cont];
+                        $prod_almacenA->save();
+                    }
 
 
                     $cont++;
@@ -570,9 +572,31 @@ class VentaController extends Controller
 
     public function destroy($id)
     {
-    	$venta  = Venta::findOrFail($id);
+        $u  = Auth::user()->id;
+        $iu = Auth::user()->empresa_id; 
+
+    	// Se actualiza el estadp en la orden de Salida...
+        $venta  = Venta::findOrFail($id);
     	$venta->estado = 'C';
     	$venta->update();
+
+        // Se actualiza inventario en almacen...
+        $productosActualizarDV = DetalleVenta::where([['idventa', '=', $id]])->get();
+
+        if ($productosActualizarDV){ 
+            foreach($productosActualizarDV as $productosActualizarDV){
+                $prod_almacenDV = almproducts::where([['id_product', '=', $productosActualizarDV->id_articulo],['etiqueta', '=', $productosActualizarDV->etiqueta],['id_company', '=', $iu]])->first();    
+                
+                if ($prod_almacenDV){        
+                    $cantidad_temporal=$prod_almacenDV->existencia;
+
+                    $prod_almacenDV->existencia = $cantidad_temporal + $productosActualizarDV->cantidad;
+                    $prod_almacenDV->save();
+                }
+            }
+        }
+
+
     	return Redirect::to('ventas/venta');
     }
 

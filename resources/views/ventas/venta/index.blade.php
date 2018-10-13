@@ -69,7 +69,7 @@
                                     <td class="text-center">{{ $vnt->tipo_comprobante.': '.$vnt->serie_comprobante.'-'.$vnt->num_comprobante }}</td>
                                     <td class="text-center">{{ $vnt->ordenq }}</td>
                                     <td class="text-center">{{ $vnt->total_venta }}</td>
-                                    <td class="text-center">{{ $vnt->estado === "A" ? "Activa" : "Finalizada" }}</td>
+                                    <td class="text-center">{{ $vnt->estado === "A" ? "Activa" : ($vnt->estado === "F" ? "Finalizada" : "Cancelada") }}</td>
 
                                     <td class="td-actions text-right">
 

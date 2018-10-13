@@ -2,7 +2,7 @@
 
 @section('title','Jedda')
 
-@include('ventas.venta.modal2')
+
 
 @section('body-class', 'product-page')
 
@@ -202,6 +202,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                     <input type="hidden" name="pcantidad_prod" id="pcantidad_prod"  >
                                     <input type="hidden" name="pid_articulo" id="pid_articulo"  >
                                     <input type="hidden" name="petiqueta" id="petiqueta"  >
+                                    
                                 </div>
                             </div>
 
@@ -241,8 +242,9 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                             <th>Opciones</th>
                                             <th>Artículo</th>
                                             <th>Cantidad</th>
-                                            <th>Precio de vemta</th>
+                                            <th>Precio de venta</th>
                                             <th>Etiqueta(Lote)</th>
+                                            <th>Descuento</th>
                                             <th>Subtotal</th>
                                         </thead>
                                         <tbody>
@@ -264,18 +266,21 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                                   <td><input type="hidden"  id="cantidad[]" name="cantidad[]" value="{{$det->cantidad}}">{{$det->cantidad}}</td>
                                                   <td><input type="hidden"  name="preciov[]" value="{{$det->preciov}}">{{$det->preciov}}</td> 
                                                   <td><center><input type="hidden"  name="etiqueta[]" value="{{$det->etiqueta}}">{{$det->etiqueta}}</center></td>  
+                                                  <td><input type="hidden"  name="descuento[]" value="{{$det->descuento}}">{{$det->descuento}}</td> 
                                                   <input type="hidden"  name="unidad_prod[]" value="{{$det->id_unidad_prod}}">
                                                   <input type="hidden"  name="cantidad_prod[]" value="{{$det->cantidad_prod}}">
 
-                                                  <td class="especial">{{ bcdiv($det->preciov*$det->cantidad, '1', 4)}}</td> 
+                                                  <td class="especial">{{ bcdiv(($det->preciov*$det->cantidad)-$det->descuento, '1', 4)}}</td> 
                                                   <script type="text/javascript">
                                                     contadorJS = <?php echo $loop->iteration; ?> ;
                                                     cantidadJS = <?php echo $det->cantidad; ?> ;
                                                     preciocJS = <?php echo $det->preciov; ?> ;
                                                     ImpuestoJS = <?php echo $venta->impuesto; ?> ;
-                                                    
+                                                    DescuentoJS = <?php echo (is_null($det->descuento) ? 0 : $det->descuento); ?>;
 
-                                                    subtotalJS[contadorJS]=(cantidadJS*preciocJS);
+                                                    DescuentoJS = parseFloat(DescuentoJS);
+                                                    subtotalJS[contadorJS]=(cantidadJS*preciocJS)-(DescuentoJS);
+                                                    
                                                     subtotJS=subtotJS+subtotalJS[contadorJS];
                                                     totalJS=totalJS+subtotalJS[contadorJS];
                                                     taxJS=taxJS+(ImpuestoJS*0.01)*subtotalJS[contadorJS];
@@ -298,6 +303,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                                <td></td>
                                                <td></td>
                                                <td></td>
+                                               <td></td>
                                                <td><h6>SUB-TOTAL</h6></td>
                                                <td><h6 id="subtot">$ 0.00</h6><input type="hidden" name="total_venta" id="total_venta"></td>
                                             </tr>
@@ -306,10 +312,12 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                                <td></td>
                                                <td></td>
                                                <td></td>
+                                               <td></td>
                                                <td><h6>IMPUESTO</h6></td>
                                                <td><h6 id="tax">$ 0.00</h6></td>
                                             </tr>
                                             <tr>
+                                               <td></td>
                                                <td></td>
                                                <td></td>
                                                <td></td>
@@ -364,6 +372,8 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
         </div>
     </div>
 </div>
+
+@include('ventas.venta.modal2')
 
 @include('includes.footer')
 
@@ -460,6 +470,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
         cantidad=$("#pcantidad").val();
         preciov=$("#ppreciov").val();
         etiqueta=$("#petiqueta").val();
+        descuento=$("#pdescuento").val();
         unidad_prod=$("#pid_unidad_prod").val();
         cantidad_prod=$("#pcantidad_prod").val();
         existencia=$("#pexistencia").val();
@@ -470,7 +481,12 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
         {
         if (parseFloat(existencia) >= parseFloat(cantidad))
             {
-            subtotal[cont]=(cantidad*preciov);
+            
+            if(descuento == 'undefined' || descuento == null){
+                descuento = 0;
+            }
+                                                    
+            subtotal[cont]=(cantidad*preciov)-(descuento);
             subtot=subtot+subtotal[cont];
             total=total+subtotal[cont];
 
@@ -479,7 +495,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
             
             gt=subtot+tax;
 
-            var fila='<tr class="selected" id="fila'+cont+'"><td><center><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></center></td><td><center><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</center></td><td><input type="hidden"  name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden"  name="preciov[]" value="'+preciov+'">'+preciov+'</td> <td><center><input type="hidden"  name="etiqueta[]" value="'+etiqueta+'">'+etiqueta+'</center></td>  <td>'+subtotal[cont].toFixed(4)+'</td> <input type="hidden"  name="unidad_prod[]" value="'+unidad_prod+'"> <input type="hidden" name="cantidad_prod[]" value="'+cantidad_prod+'">';
+            var fila='<tr class="selected" id="fila'+cont+'"><td><center><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></center></td><td><center><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</center></td><td><input type="hidden"  name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden"  name="preciov[]" value="'+preciov+'">'+preciov+'</td> <td><center><input type="hidden"  name="etiqueta[]" value="'+etiqueta+'">'+etiqueta+'</center></td><td><input type="hidden" step="0.01" name="descuento[]" value="'+descuento+'">'+descuento+' </td>  <td>'+subtotal[cont].toFixed(4)+'</td> <input type="hidden"  name="unidad_prod[]" value="'+unidad_prod+'"> <input type="hidden" name="cantidad_prod[]" value="'+cantidad_prod+'">';
             
             cont++;
             limpiar();

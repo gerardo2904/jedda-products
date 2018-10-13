@@ -52,9 +52,13 @@
     font-weight: bold; 
     text-align: right;
 }
-.datagrid table tfoot td { 
+.datagrid table tfoot td h6{ 
     padding: 0; 
-    font-size: 12px } 
+    font-size: 12px; 
+    font-weight: bold; 
+    text-align: right;
+} 
+
 .datagrid table tfoot td div{ 
     padding: 2px; }
 .datagrid table tfoot td ul { 
@@ -233,7 +237,8 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
 
                                 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                 <div class="form-group label-floating">
-                                    <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+                                <div class="datagrid">
+                                    <table id="detalles" >
                                         <thead style="background-color:#A9D0F5">
                                             <th>Opciones</th>
                                             <th>Artículo</th>
@@ -242,42 +247,38 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                             <th>Descuento</th>
                                             <th>Subtotal</th>
                                         </thead>
+                                        <tbody>
+                                        </tbody> 
                                         <tfoot>
                                         <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>SUB-TOTAL</th>
-                                            <th><h4 id="subtot">$ 0.00</h4><input type="hidden" name="total_venta" id="total_venta"></th>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>SUB-TOTAL</td>
+                                            <td><h6 id="subtot">$ 0.00</h6><input type="hidden" name="total_venta" id="total_venta"></td>
                                         </tr>
                                             
                                         <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>IMPUESTO</th>
-                                            <th><h4 id="tax">$ 0.00</h4></th>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>IMPUESTO</td>
+                                            <td><h6 id="tax">$ 0.00</h6></td>
                                         </tr>
 
                                         <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>TOTAL</th>
-                                            <th><h4 id="gt">$ 0.00</h4></th>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>TOTAL</td>
+                                            <td><h6 id="gt">$ 0.00</h6></td>
                                         </tr>
-
-
-                                        </tfoot>
-                                        <tbody>
-                                            
-
-                                        </tbody>    
-                                        
+                                        </tfoot>   
                                     </table>
+                                </div>
                                 </div>
                                 </div>
 
@@ -387,15 +388,15 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                 
                 gt=subtot+tax;
                 /* AQUI AGREGAR ETIQUETA PARA SALIDA (LOTE) Y AGREGAR A REPORTE POR LOTE*/
-                var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></td><td><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" step="0.01" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" step="0.01" name="preciov[]" value="'+preciov+'">'+preciov+'</td><td><input type="hidden" step="0.01" name="descuento[]" value="'+descuento+'">'+descuento+' </td> <td>'+subtotal[cont]+'</td> <input type="hidden" name="etiqueta[]" value="'+et+'">';
+                var fila='<tr class="selected" id="fila'+cont+'"><td><center><button type="button" class="btn btn-danger btn-simple btn-xs" onclick="eliminar('+cont+');"><i class="fa fa-times"></i></button></center></td><td><center><input type="hidden" name="id_articulo[]" value="'+idarticulo+'">'+articulo+'</center></td><td><input type="hidden" step="0.01" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" step="0.01" name="preciov[]" value="'+preciov+'">'+preciov+'</td><td><input type="hidden" step="0.01" name="descuento[]" value="'+descuento+'">'+descuento+' </td> <td>'+subtotal[cont].toFixed(4)+'</td> <input type="hidden" name="etiqueta[]" value="'+et+'">';
                 
                 cont++;
                 limpiar();
-                $("#gt").html("$ "+gt);
-                $("#subtot").html("$ "+subtot);
-                $("#total_venta").val(total);
+                $("#gt").html("$ "+gt.toFixed(4));
+                $("#subtot").html("$ "+subtot.toFixed(4));
+                $("#total_venta").val(total.toFixed(4));
                 //alert($("#total_venta").val());
-                $("#tax").html("$ "+tax);
+                $("#tax").html("$ "+tax.toFixed(4));
                 evaluar();
                 $('#detalles').append(fila);
 
@@ -448,10 +449,10 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
             
         gt=subtot+tax;
         
-        $("#gt").html("$ "+gt);
-        $("#subtot").html("$ "+subtot);
-        $("#tax").html("$ "+tax);
-        $("#total_venta").val(total);
+        $("#gt").html("$ "+gt.toFixed(4));
+        $("#subtot").html("$ "+subtot.toFixed(4));
+        $("#tax").html("$ "+tax.toFixed(4));
+        $("#total_venta").val(total.toFixed(4));
 
         $("#fila" + index).remove();
         evaluar();

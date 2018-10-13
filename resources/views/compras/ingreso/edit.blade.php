@@ -2,7 +2,7 @@
 
 @section('title','Jedda')
 
-@include('compras.ingreso.modal2')
+
 
 @section('body-class', 'product-page')
 
@@ -347,7 +347,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
         </div>
     </div>
 </div>
-
+@include('compras.ingreso.modal2')
 @include('includes.footer')
 
 @push('scripts')
@@ -409,7 +409,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
     function NumText(string){//solo letras y numeros
     var out = '';
     //Se añaden las letras validas
-    var filtro = '_-abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
+    var filtro = '-abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
 	
     for (var i=0; i<string.length; i++)
        if (filtro.indexOf(string.charAt(i)) != -1) 
