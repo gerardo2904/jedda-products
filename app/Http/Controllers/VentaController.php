@@ -41,7 +41,7 @@ class VentaController extends Controller
     		 ->join('clients as p','v.idcliente','=','p.id')
     		 ->join('companies as c','v.id_empresa','=','c.id')
     		 ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
-    		 ->select('v.idventa','v.fecha_hora','p.name','c.name as compan','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.notas','v.ordenq','total_venta')
+    		 ->select('v.idventa','v.fecha_hora','p.name','c.name as compan','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.notas','v.ordenq',DB::raw('(total_venta)+(total_venta*impuesto*0.01) as total_venta'))
 			 ->where('v.num_comprobante','LIKE','%'.$query.'%')
 			 ->where('v.id_empresa',$iu)
     		 ->orderBy('v.idventa','desc')
@@ -51,6 +51,7 @@ class VentaController extends Controller
     	}
 
     }
+    
 
     public function create()
     {
@@ -259,7 +260,7 @@ class VentaController extends Controller
 
         $detalles = DB::table('detalle_venta as d')
           ->join('products as a','d.id_articulo','=','a.id')
-          ->select('a.name as articulo','a.description','d.id_articulo','d.cantidad','d.preciov','d.descuento','d.etiqueta','a.id_unidad_prod', 'a.cantidad_prod')
+          ->select(DB::raw('CONCAT(a.name," ",a.description) AS articulo'),'a.description','d.id_articulo','d.cantidad','d.preciov','d.descuento','d.etiqueta','a.id_unidad_prod', 'a.cantidad_prod')
           ->where('d.idventa','=',$ordenv)
           ->get();
 

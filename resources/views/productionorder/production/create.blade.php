@@ -4,6 +4,95 @@
 
 @section('body-class', 'product-page')
 
+@section('styles')
+<style>
+.datagrid table { 
+    border-collapse: collapse; 
+    text-align: left; 
+    width: 100%; } 
+.datagrid {
+    font: normal 12px/150% Arial, Helvetica, sans-serif; 
+    background: #fff; 
+    overflow: hidden; 
+    border: 1px solid #652299; 
+    -webkit-border-radius: 3px; 
+    -moz-border-radius: 3px; 
+    border-radius: 3px; }
+.datagrid table td, .datagrid table th { 
+    padding: 3px 10px; }
+.datagrid table thead th {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #652299), color-stop(1, #4D1A75) );
+    background:-moz-linear-gradient( center top, #652299 5%, #4D1A75 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#652299', endColorstr='#4D1A75');
+    background-color:#652299; 
+    color:#FFFFFF; 
+    font-size: 15px; 
+    font-weight: bold; 
+    border-left: 1px solid #714399; } 
+.datagrid table thead th:first-child { 
+    border: none; }
+.datagrid table tbody td { 
+    color: #4D1A75; 
+    border-left: 1px solid #E7BDFF;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: right; }
+.datagrid table tbody .alt td { 
+    background: #F4E3FF; 
+    color: #4D1A75; }
+.datagrid table tbody td:first-child { 
+    border-left: none; }
+.datagrid table tbody tr:last-child td { 
+    border-bottom: none; }
+
+.datagrid table tfoot td div { 
+    border-top: 1px solid #652299;
+    background: #F4E3FF;} 
+.datagrid table tfoot td h6{
+    font-size: 12px;
+    font-weight: bold; 
+    text-align: right;
+}
+.datagrid table tfoot td { 
+    padding: 0; 
+    font-size: 12px } 
+.datagrid table tfoot td div{ 
+    padding: 2px; }
+.datagrid table tfoot td ul { 
+    margin: 0; 
+    padding:0; 
+    list-style: none; 
+    text-align: right; }
+.datagrid table tfoot td {
+    border-left: 1px solid #E7BDFF;
+}
+.datagrid table tfoot  li { 
+    display: inline; }
+.datagrid table tfoot li a { 
+    text-decoration: none; 
+    display: inline-block;  
+    padding: 2px 8px; 
+    margin: 1px;
+    color: #FFFFFF;
+    border: 1px solid #652299;
+    -webkit-border-radius: 3px; 
+    -moz-border-radius: 3px; 
+    border-radius: 3px; 
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #652299), color-stop(1, #4D1A75) );
+    background:-moz-linear-gradient( center top, #652299 5%, #4D1A75 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#652299', endColorstr='#4D1A75');
+    background-color:#652299; }
+.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { 
+    text-decoration: none;
+    border-color: #4D1A75; 
+    color: #FFFFFF; 
+    background: none; 
+    background-color:#652299;}
+div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
+</style>
+@endsection
+
+
 @section('content')
 
 <div class="header header-filter" style="background-image: url('/img/imagen_principal2.png');">
@@ -49,8 +138,9 @@
 
                 <div class="tab-content tab-space">
                     <div class="tab-pane active" id="pill1">
-
-                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
+                        <div class="panel panel-primary">
+                        <div class="panel-body">
+                        <div class="row" >
                             <div class="col-sm-2">
                                 <div class="form-group ">
                                     <label class="control-label" style="color: rgba(0,0,0);">Orden de Producción</label>
@@ -80,23 +170,27 @@
                             <div class="col-sm-2">
                                 <div class="form-group ">
                                     <label class="control-label" style="color: rgba(0,0,0);">Orden de compra cliente</label>
-                                    <input type="text" class="form-control" name="orden_cliente" value="{{ old('orden_cliente')}}">
+                                    <input type="text" class="form-control" name="orden_cliente" value="{{ old('orden_cliente')}}" onkeyup="this.value=NumText(this.value)">
                                 </div>
                             </div>
                         </div>    
 
-                        <div class="row" style="background: #F8F8FF; box-shadow: 10px 10px;">
+                        <div class="row" >
                             <div class="col-sm-12">
                                 <div class="form-group ">
                                 </div>
                             </div>
-                        </div>    
+                        </div>   
+                    </div>
+                    </div> 
 
                     </div>
 
                     <div class="tab-pane" id="pill2">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
 
-                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
+                        <div class="row" >
                             <div class="col-sm-3">
                                 <div class="form-group label-floating">
                                     <label class="control-label" style="color: rgba(0,0,0);">Materia prima</label>
@@ -155,7 +249,7 @@
                             </div>
                         </div>
 
-                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
+                        <div class="row" >
                             <div class="col-sm-2">
                                 <div class="form-group label-floating">
                                     <label class="control-label" style="color: rgba(0,0,0);">Dirección</label>
@@ -174,7 +268,7 @@
                             </div>
                         </div>
                         
-                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
+                        <div class="row" >
                             <div class="col-sm-3">
                                 <div class="form-group label-floating">
                                     <label class="control-label " style="color: rgba(0,0,0);">Core</label>
@@ -218,7 +312,7 @@
                             </div>
                         </div>
 
-                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
+                        <div class="row" >
                             <div class="col-sm-3">
                                 <div class="form-group ">
                                     <label class="control-label" style="color: rgba(0,0,0);">Leader Inicio</label>
@@ -273,7 +367,7 @@
                             </div>
                         </div>
 
-                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
+                        <div class="row" >
                             <div class="col-sm-3">
                                 <div class="form-group ">
                                     <label class="control-label" style="color: rgba(0,0,0);">Leader Final</label>
@@ -325,7 +419,7 @@
                             </div>
                         </div>
 
-                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
+                        <div class="row" >
                             <div class="col-sm-3">
                                 <div class="form-group ">
                                     <label class="control-label"  style="color: rgba(0,0,0);">Leader Envoltura</label>
@@ -379,7 +473,7 @@
                         </div>
 
 
-                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
+                        <div class="row" >
                             <div class="col-sm-3">
                                 <div class="form-group ">
                                     <label class="control-label" style="color: rgba(0,0,0);">Etiqueta</label>
@@ -421,14 +515,15 @@
                             </div>
                         </div>
 
-                        <div class="row" style="background: #F8F8FF;box-shadow: 10px 10px;">
+                        <div class="row" >
                             <div class="col-sm-12">
                                 <div class="form-group ">
                                 </div>
                             </div>
                         </div>    
                     </div>
-                
+                </div>
+                </div>
 
                     <div class="tab-pane" id="pill3">
 
@@ -494,6 +589,108 @@
                                 </div>
                             </div>
 
+                            
+
+
+                        </div>
+                    </div>                
+                    
+                        <div class="row">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div id="panel1">
+                                        <div class="col-sm-3">
+                                            <div class="form-group" >
+                                                <label class="control-label" style="color: rgba(0,0,0);">Artículo</label>
+                                                <select class="form-control " name="pid_producto_pt" id="pid_producto_pt" data-live-search="true" data-style="btn-info">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
+                                                <input type="number" readonly step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
+                                                <input type="number" step="0.01" class="form-control" name="pcantidad_pt" id="pcantidad_pt"  >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group label-floating">
+                                                <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                             
+
+                            <!--ESTE ES EL PANEL SI SOBRA MATERIAL DE UNA CORRIDA-->
+
+                                    <div style="display:none;" id="panel2" >
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Artículo</label>
+                                                <select class="form-control " name="pid_producto_pt2" id="pid_producto_pt2" data-live-search="true" data-style="btn-info">
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
+                                                <input type="number" readonly step="0.01" class="form-control" name="pancho_prod2" id="pancho_prod2"  >
+                                                <input type="hidden" step="0.01" class="form-control" name="pcantidad_pt2" id="pcantidad_pt2" value="1" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group label-floating">
+                                                <button type="button" id="bt_add2" class="btn btn-primary">Agregar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="form-group label-floating">
+                                            <div class="datagrid">
+                                            <table id="detalles">
+                                                <thead style="background-color:#A9D0F5">
+                                                    <th>Opciones</th>
+                                                    <th>Artículo</th>
+                                                    <th>Ancho</th>
+                                                    <th>Largo</th>
+                                                    <th>Cantidad</th>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>            
+                                                <tfoot>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="tab-pane" id="pill4">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
                             <div class="row">                
                                 <div class="col-sm-4">
                                     <div class="form-group ">
@@ -675,109 +872,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                        </div>
-                    </div>                
-                    
-                        <div class="row">
-                            <div class="panel panel-primary">
-                                <div class="panel-body">
-                                    <div id="panel1">
-                                        <div class="col-sm-3">
-                                            <div class="form-group" >
-                                                <label class="control-label" style="color: rgba(0,0,0);">Artículo</label>
-                                                <select class="form-control " name="pid_producto_pt" id="pid_producto_pt" data-live-search="true" data-style="btn-info">
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-2">
-                                            <div class="form-group">
-                                                <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
-                                                <input type="number" readonly step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-2">
-                                            <div class="form-group">
-                                                <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
-                                                <input type="number" step="0.01" class="form-control" name="pcantidad_pt" id="pcantidad_pt"  >
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-2">
-                                            <div class="form-group label-floating">
-                                                <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                             
-
-                            <!--ESTE ES EL PANEL SI SOBRA MATERIAL DE UNA CORRIDA-->
-
-                                    <div style="display:none;" id="panel2" >
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="control-label" style="color: rgba(0,0,0);">Artículo</label>
-                                                <select class="form-control " name="pid_producto_pt2" id="pid_producto_pt2" data-live-search="true" data-style="btn-info">
-                                                    
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-2">
-                                            <div class="form-group">
-                                                <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
-                                                <input type="number" readonly step="0.01" class="form-control" name="pancho_prod2" id="pancho_prod2"  >
-                                                <input type="hidden" step="0.01" class="form-control" name="pcantidad_pt2" id="pcantidad_pt2" value="1" >
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-2">
-                                            <div class="form-group label-floating">
-                                                <button type="button" id="bt_add2" class="btn btn-primary">Agregar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                        <div class="form-group label-floating">
-                                            <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
-                                                <thead style="background-color:#A9D0F5">
-                                                    <th>Opciones</th>
-                                                    <th>Artículo</th>
-                                                    <th>Ancho</th>
-                                                    <th>Largo</th>
-                                                    <th>Cantidad</th>
-                                                </thead>
-                                                <tfoot>
-                                                <tr>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                                </tfoot>
-
-                                                <tbody>
-
-                                                </tbody>            
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                <div class="tab-pane" id="pill4">
-
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                            <div class="row">  
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -890,6 +984,18 @@
     $(document).ready(desp_izq);
 
     $(document).ready(mostrarValores);
+
+    function NumText(string){//solo letras y numeros
+    var out = '';
+    //Se añaden las letras validas
+    var filtro = '_-abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
+	
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+	     out += string.charAt(i);
+    return out;
+    }
+
 
     function mostrarValores()
     {   
@@ -1042,7 +1148,7 @@
                 //var resto = operador1 % operador2; 
 
                 amp=$("#ancho_mp").val();
-                at=parseFloat(amp)-parseFloat(total_desp);
+                at=parseFloat(amp)-parseFloat($("#total_desp").val());
                 rollos_materia_prima=Math.trunc(at/parseFloat(ancho));
                 $("#rollos_materia_prima").val(rollos_materia_prima);
 

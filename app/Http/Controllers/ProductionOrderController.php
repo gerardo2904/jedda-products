@@ -198,13 +198,15 @@ class ProductionOrderController extends Controller
             $ordenp=$no_ordenp->orden;
         }else {
             $comp = DB::table('companies')
-            ->select(DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-1") as orden'))
+            ->select(DB::raw('CONCAT(UPPER(SUBSTRING(companies.name,1,3)),"-PRO-",DATE_FORMAT(NOW( ), "%H%i%S" ),"-1") as orden'))
             ->where('companies.id','=',$iu)
             ->first();
             $ordenp=$comp->orden;
         }
 
         $fecha_actual=Carbon::now()->format('m/d/Y');
+
+
 
         ////////////////////////////////////////////////////////////////////////
 

@@ -44,7 +44,7 @@
 
 					<div class="team">
 						<div class="row">
-                          <a href="{{url('/ventas/venta/create')}}" class="btn btn-primary btn-round">Nueva orden de salida</a>
+                          <a href="{{url('/ventas/venta/create')}}" class="btn btn-primary btn-round"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Nueva orden de salida</a>
                         <table class="table">
                             <thead>
                                 <tr>

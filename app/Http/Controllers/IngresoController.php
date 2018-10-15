@@ -40,7 +40,7 @@ class IngresoController extends Controller
     		 ->join('clients as p','i.idproveedor','=','p.id')
     		 ->join('companies as c','i.id_empresa','=','c.id')
     		 ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-    		 ->select('i.idingreso','i.fecha_hora','p.name','c.name as compan','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas','i.ordenp',DB::raw('sum(di.cantidad*precioc) as total'),'p.name')
+    		 ->select('i.idingreso','i.fecha_hora','p.name','c.name as compan','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado','i.notas','i.ordenp',DB::raw('sum((di.cantidad*precioc)+((di.cantidad*precioc)*(impuesto*0.01))) as total'),'p.name')
              ->where('i.num_comprobante','LIKE','%'.$query.'%')
              ->Orwhere('i.serie_comprobante','LIKE','%'.$query.'%') 
              ->Orwhere('p.name','LIKE','%'.$query.'%') 
@@ -239,7 +239,7 @@ class IngresoController extends Controller
 
         $detalles = DB::table('detalle_ingreso as d')
           ->join('products as a','d.id_articulo','=','a.id')
-          ->select('a.name as articulo','a.description','d.id_articulo','d.cantidad','d.precioc','d.etiqueta','a.id_unidad_prod', 'a.cantidad_prod')
+          ->select(DB::raw('CONCAT(a.name," ",a.description) AS articulo'),'a.description','d.id_articulo','d.cantidad','d.precioc','d.etiqueta','a.id_unidad_prod', 'a.cantidad_prod')
           ->where('d.idingreso','=',$id)
           ->get();
 
