@@ -105,6 +105,9 @@
                                     <li>
                                         <a href="{{ url('/productionorder/production')}}">Ordenes de producción</a>
                                     </li>
+                                    <li>
+                                        <a href="{{ url('/productionorder/production_orden')}}">Ordenes de trabajo</a>
+                                    </li>
 
                                  @endif
                                     

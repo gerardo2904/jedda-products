@@ -662,6 +662,16 @@ class ProductionOrderController extends Controller
     	return Redirect::to('productionorder/production')->with('status', 'noexito');
     }
 
+    public function edit($id)
+    {
+        return true;
+    }
+
+    public function update(Request $request, $id)
+    {
+        return redirect('/productionorder/production')->with('status', 'noexito');
+    }
+
 
     public function show($id)
     {

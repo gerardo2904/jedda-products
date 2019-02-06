@@ -1131,7 +1131,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
         cantidad=$("#pcantidad_pt").val();
         total_ancho=cantidad*ancho;
         //ancho=$("#pancho_pt").val();
-
+        
                 
         if(idarticulo!="" && cantidad!="" && cantidad>0)
         {
@@ -1149,8 +1149,14 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
 
                 amp=$("#ancho_mp").val();
                 at=parseFloat(amp)-parseFloat($("#total_desp").val());
+                at=at.toFixed(3);
                 rollos_materia_prima=Math.trunc(at/parseFloat(ancho));
                 $("#rollos_materia_prima").val(rollos_materia_prima);
+
+                //alert("ancho: "+ancho);
+                //alert("Ancho materia prima: "+amp);
+                //alert("Ancho total: "+at);
+                //alert("Rollos materia prima: "+rollos_materia_prima);
 
                 ver_residuo=parseFloat(cantidad) % parseFloat(rollos_materia_prima);
 

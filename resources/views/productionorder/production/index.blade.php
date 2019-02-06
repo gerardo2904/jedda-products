@@ -15,6 +15,16 @@
         </div>
         @endif
 
+        // Se cargan los modals de cada una de las ordenes de salida...
+        // Modals para cancelar ordenes... 
+        // Llama a archivo modal.blade.php 
+        // Se hace aqui porque tiene que estar fuera de container ...
+
+        @foreach ($ordenesp as $ord)
+            @include('productionorder.production.modal')
+        @endforeach
+
+
 		<div class="main main-raised">
 			<div class="container">
 		    	<div class="section text-center">
@@ -67,7 +77,16 @@
                                                 <i class="fa fa-info"></i>
                                             </a>
 
-                                        <a href="" data-target="#modal-delete-{{$ord->id_production}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
+                                        <a href = "{{ url('/productionorder/production/'.$ord->id_production.'/edit')}}" rel="tooltip" title="Editar Orden de Producción" class="btn btn-success btn-simple btn-xs">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+
+                                         @if($ord->estado == "A")
+                                            <a href="" data-target="#modal-delete-{{$ord->id_production}}" data-toggle="modal"><button class="btn btn-danger btn-simple btn-xs"><i class="fa fa-times"></i></button></a>
+                                        @else
+                                            <button class="btn btn-danger btn-simple btn-xs" disabled ><i class="fa fa-times"></i></button>
+                                        @endif
+
                                     </td>
 
 

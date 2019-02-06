@@ -60,6 +60,11 @@ Route::middleware(['auth','admin'])->group(function(){
 
 
     Route::resource('productionorder/production','ProductionOrderController');
+    Route::get('productionorder/production/{id}/edit','ProductionOrderController@edit');  //Formulario edicion
+    Route::post('productionorder/production/{id}/edit','ProductionOrderController@update');  //Actualizar    
+
+    Route::resource('productionorder/production_orden','ProductionOrderController');
+
     Route::get('{id}/descargar-ingreso', 'IngresoController@pdf')->name('imprimeordeningreso.pdf');
     Route::get('{id}/descargar-salida', 'VentaController@pdf')->name('imprimeordensalida.pdf');
 });
