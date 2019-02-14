@@ -124,7 +124,10 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                             <label class="control-label">Cliente</label>
                             <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-primary">
                                 @foreach ($clientes as $cliente)
-                                    <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
+                                    <option value="{{ $cliente->id }}"> @if($cliente->idcliente == old('idcliente',$op->idcliente)) selected @endif> {{ $cliente->name }}</option>
+
+                                     
+
                                 @endforeach
                             </select>
                             <input type="hidden" name="id_empresa" id="id_empresa" value="{{ auth()->user()->empresa_id}}">

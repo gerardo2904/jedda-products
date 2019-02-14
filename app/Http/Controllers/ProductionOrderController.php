@@ -664,7 +664,37 @@ class ProductionOrderController extends Controller
 
     public function edit($id)
     {
-        return true;
+        $iu = Auth::user()->empresa_id; 
+
+        $ordenp=$id;
+
+
+        $clientes =  DB::table('clients')->where('es_proveedor','=','0')->get();
+
+        $units =  DB::table('units')->get();
+
+         $op = DB::table('production_order as op')
+             ->join('clients as p','op.idcliente','=','p.id')
+             ->join('client_images as ci','op.idcliente','=','ci.client_id')
+             ->join('detalle_production_order as dop','op.id_production','=','dop.id_production')
+             ->select('op.orden','op.id_production','op.fecha_hora','p.name','ci.image','op.estado','op.orden_cliente','op.idcliente')
+             ->where('op.id_production','=',$ordenp)
+             ->groupBy('op.id_production','op.fecha_hora','p.name','ci.image','op.estado')
+             ->first();
+
+        $materiaprima = DB::table('products as art')
+        ->join('almproducts as ap','ap.id_product','=','art.id')
+        ->join('units as un','art.id_unidad_prod','=','un.id')
+          ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'ap.id','ap.id_product','art.name','art.ancho_prod','ap.cantidad_prod','ap.cantidad_prod as largo','art.formula','ap.existencia','ap.etiqueta','un.name as unidad', 'un.id as id_unidad','ap.precioc','ap.preciov')
+          ->where('art.activo','=','1')
+          ->where('ap.id_company','=',$iu)
+          ->where('ap.existencia','>','0')
+          ->where('art.roll_id','=','2')  // Es materia prima
+          ->groupBy('articulo','ap.id','ap.etiqueta', 'ap.existencia', 'ap.cantidad_prod', 'unidad','precioc','preciov')
+          ->get();
+
+
+        return view('productionorder.production.edit',["op"=>$op, "clientes" => $clientes, "units" => $units, "materiaprima" => $materiaprima, "nop" => $ordenp]);
     }
 
     public function update(Request $request, $id)

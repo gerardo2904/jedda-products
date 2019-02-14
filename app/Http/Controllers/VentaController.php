@@ -253,7 +253,7 @@ class VentaController extends Controller
              ->join('clients as p','v.idcliente','=','p.id')
              ->join('client_images as ci','v.idcliente','=','ci.client_id')
              ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
-             ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.ordenq','v.notas',DB::raw('sum(dv.cantidad*preciov) as total'))
+             ->select('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado','v.ordenq','v.notas','v.idcliente',DB::raw('sum(dv.cantidad*preciov) as total'))
              ->where('v.idventa','=',$ordenv)
              ->groupBy('v.idventa','v.fecha_hora','p.name','ci.image','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.impuesto','v.estado')
              ->first();
