@@ -693,8 +693,20 @@ class ProductionOrderController extends Controller
           ->groupBy('articulo','ap.id','ap.etiqueta', 'ap.existencia', 'ap.cantidad_prod', 'unidad','precioc','preciov')
           ->get();
 
+          $core = DB::table('products as art')
+        ->join('almproducts as ap','ap.id_product','=','art.id')
+        ->join('units as un','art.id_unidad_prod','=','un.id')
+          ->select(DB::raw('CONCAT(art.name," ",art.description," ",ap.etiqueta) AS articulo'), 'art.id','ap.id_product','art.name','art.ancho_prod','ap.cantidad_prod','art.formula','ap.existencia','ap.etiqueta','ap.existencia','un.name as unidad','un.id as id_unidad','ap.precioc','ap.preciov')
+          ->where('art.activo','=','1')
+          ->where('ap.id_company','=',$iu)
+          ->where('ap.existencia','>','0')
+          ->where('art.roll_id','=','3')  // Es core
+          ->groupBy('articulo','art.id','ap.etiqueta', 'ap.existencia','ap.cantidad_prod', 'unidad','precioc','preciov')
+          ->get();
 
-        return view('productionorder.production.edit',["op"=>$op, "clientes" => $clientes, "units" => $units, "materiaprima" => $materiaprima, "nop" => $ordenp]);
+
+
+        return view('productionorder.production.edit',["op"=>$op, "clientes" => $clientes, "units" => $units, "materiaprima" => $materiaprima, "core" => $core, "nop" => $ordenp]);
     }
 
     public function update(Request $request, $id)

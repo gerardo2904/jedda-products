@@ -139,391 +139,388 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                 <div class="tab-content tab-space">
                     <div class="tab-pane active" id="pill1">
                         <div class="panel panel-primary">
-                        <div class="panel-body">
-                        <div class="row" >
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Orden de Producción</label>
-                                    <input type="text" class="form-control" readonly id="orden" name="orden" value="{{ $nop }}">
-                                </div>
-                            </div>
+                            <div class="panel-body">
+                                <div class="row" >
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label" style="color: rgba(0,0,0);">Orden de Producción</label>
+                                            <input type="text" class="form-control" readonly id="orden" name="orden" value="{{ $nop }}">
+                                        </div>
+                                    </div>
 
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Fecha</label>
-                                    <input class="datepicker form-control" type="text" name="fecha_hora" id="fecha_hora" value="{{ $fecha_actual }}"/>
-                                </div>
-                            </div>
-                    
-                            <div class="col-sm-6">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Cliente</label>
-                                    <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-primary">
-                                        @foreach ($clientes as $cliente)
-                                            <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
-                                </div>
-                            </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label" style="color: rgba(0,0,0);">Fecha</label>
+                                            <input class="datepicker form-control" type="text" name="fecha_hora" id="fecha_hora" value="{{ $fecha_actual }}"/>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="col-sm-6">
+                                        <div class="form-group ">
+                                            <label class="control-label" style="color: rgba(0,0,0);">Cliente</label>
+                                            <select class="form-control selectpicker" name="idcliente" id="idcliente" data-live-search="true" data-style="btn-primary">
+                                                @foreach ($clientes as $cliente)
+                                                    <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
+                                        </div>
+                                    </div>
 
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Orden de compra cliente</label>
-                                    <input type="text" class="form-control" name="orden_cliente" value="{{ old('orden_cliente')}}" onkeyup="this.value=NumText(this.value)">
-                                </div>
-                            </div>
-                        </div>    
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label" style="color: rgba(0,0,0);">Orden de compra cliente</label>
+                                            <input type="text" class="form-control" name="orden_cliente" value="{{ old('orden_cliente')}}" onkeyup="this.value=NumText(this.value)">
+                                        </div>
+                                    </div>
+                                </div>    
 
-                        <div class="row" >
-                            <div class="col-sm-12">
-                                <div class="form-group ">
-                                </div>
+                                <div class="row" >
+                                    <div class="col-sm-12">
+                                        <div class="form-group ">
+                                        </div>
+                                    </div>
+                                </div>   
                             </div>
-                        </div>   
-                    </div>
-                    </div> 
-
+                        </div> 
                     </div>
 
                     <div class="tab-pane" id="pill2">
                     <div class="panel panel-primary">
                         <div class="panel-body">
 
-                        <div class="row" >
-                            <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Materia prima</label>
-                                    <select class="form-control " name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-default">
-                                        @foreach ($materiaprima as $materia)
-                                            <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}_{{ $materia->articulo }}_{{ $materia->id_unidad }}_{{ $materia->precioc }}_{{ $materia->preciov }}_{{$materia->id_product}}_{{$materia->largo}}">{{ $materia->articulo }}</option>
-                                        @endforeach
-                                    </select>                                  
-                                    <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
+                            <div class="row" >
+                                <div class="col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Materia prima</label>
+                                        <select class="form-control " name="id_producto_mp" id="id_producto_mp" data-live-search="true" data-style="btn-default">
+                                            @foreach ($materiaprima as $materia)
+                                                <option value="{{ $materia->id }}_{{ $materia->etiqueta }}_{{ $materia->ancho_prod }}_{{ $materia->cantidad_prod }}_{{ $materia->formula }}_{{ $materia->unidad }}_{{ $materia->articulo }}_{{ $materia->id_unidad }}_{{ $materia->precioc }}_{{ $materia->preciov }}_{{$materia->id_product}}_{{$materia->largo}}">{{ $materia->articulo }}</option>
+                                            @endforeach
+                                        </select>                                  
+                                        <input type="hidden" name="id_company" id="id_company" value="{{ auth()->user()->empresa_id}}">
 
-                                    <input type="hidden" name="tempo_id_producto_mp" id="tempo_id_producto_mp" value="{{ old('tempo_id_producto_mp')}}">
+                                        <input type="hidden" name="tempo_id_producto_mp" id="tempo_id_producto_mp" value="{{ old('tempo_id_producto_mp')}}">
 
-                                    <input type="hidden" name="tempo_id_unidad_mp" id="tempo_id_unidad_mp" value="{{ old('tempo_id_unidad_mp')}}">
+                                        <input type="hidden" name="tempo_id_unidad_mp" id="tempo_id_unidad_mp" value="{{ old('tempo_id_unidad_mp')}}">
 
-                                    <input type="hidden" name="tempo_precioc_mp" id="tempo_precioc_mp" value="{{ old('tempo_precioc_mp')}}">
+                                        <input type="hidden" name="tempo_precioc_mp" id="tempo_precioc_mp" value="{{ old('tempo_precioc_mp')}}">
 
-                                    <input type="hidden" name="tempo_preciov_mp" id="tempo_preciov_mp" value="{{ old('tempo_preciov_mp')}}">
-
-                 
+                                        <input type="hidden" name="tempo_preciov_mp" id="tempo_preciov_mp" value="{{ old('tempo_preciov_mp')}}">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
-                                    <input type="text" readonly class="form-control" id="etiqueta_mp" name="etiqueta_mp" value="{{ old('etiqueta_mp')}}">
+                                <div class="col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
+                                        <input type="text" readonly class="form-control" id="etiqueta_mp" name="etiqueta_mp" value="{{ old('etiqueta_mp')}}">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
-                                    <input type="text" readonly class="form-control" id="ancho_mp" name="ancho_mp" value="{{ old('ancho_mp')}}">
+                                <div class="col-sm-1">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
+                                        <input type="text" readonly class="form-control" id="ancho_mp" name="ancho_mp" value="{{ old('ancho_mp')}}">
+                                    </div>
                                 </div>
-                            </div>
-                                
-                            <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
-                                    <input type="number" step="0.001" readonly class="form-control" id="largo_mp" name="largo_mp" value="{{ old('largo_mp')}}">
-                                </div>
-                            </div>
-                        
-                            <div class="col-sm-2">
-                                <div class="form-group label-floating">
-                                    <label class="control-label"> </label>
-                                    <input type="text" readonly class="form-control" id="total_mp" name="total_mp" value="{{ old('total_mp')}}">
-                                </div>
-                            </div>
-                        
-                            <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label"> </label>
-                                    <input type="text" readonly class="form-control" id="unidad_mp" name="unidad_mp" value="{{ old('unidad_mp')}}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" >
-                            <div class="col-sm-2">
-                                <div class="form-group label-floating">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Dirección</label>
-                                    <select class="form-control " name="direction" id="direction" data-live-search="true" data-style="btn-primary">
-                                        <option value="In">In</option>
-                                        <option value="Out">Out</option>
-                                    </select>      
-                                </div>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <div class="form-group label-floating">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Formula</label>
-                                    <input type="text" readonly class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row" >
-                            <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label " style="color: rgba(0,0,0);">Core</label>
-                                    <select class="form-control " name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-primary">
-                                        @foreach ($core as $co)
-                                            <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}_{{ $co->articulo }}_{{ $co->id_unidad }}_{{ $co->precioc }}_{{ $co->preciov }}">{{ $co->articulo }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    <input type="hidden" name="tempo_id_producto_core" id="tempo_id_producto_core" value="{{ old('tempo_id_producto_core')}}">
-
-                                    <input type="hidden" name="tempo_id_unidad_core" id="tempo_id_unidad_core" value="{{ old('tempo_id_unidad_core')}}">
-
-                                    <input type="hidden" name="tempo_precioc_core" id="tempo_precioc_core" value="{{ old('tempo_precioc_core')}}">
-
-                                    <input type="hidden" name="tempo_preciov_core" id="tempo_preciov_core" value="{{ old('tempo_preciov_core')}}">
-
-                                </div>
-                            </div>
-
-
-                            <div class="col-sm-3">
-                                <div class="form-group label-floating">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
-                                    <input type="text" class="form-control" id="etiqueta_core" name="etiqueta_core" value="{{ old('etiqueta_core')}}">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <div class="form-group label-floating">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
-                                    <input type="text" readonly class="form-control" id="cantidad_core" name="cantidad_core" value="{{ old('cantidad_core')}}">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-1">
-                                <div class="form-group label-floating">
-                                    <label class="control-label"> </label>
-                                    <input type="text" readonly class="form-control" id="unidad_core" name="unidad_core" value="{{ old('unidad_core')}}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" >
-                            <div class="col-sm-3">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Leader Inicio</label>
-                                    <select class="form-control " name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
-                                        @foreach ($leader as $le)
-                                            <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}_{{ $le->id_product }}">{{ $le->articulo }}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" name="tempo_id_producto_leader1" id="tempo_id_producto_leader1" value="{{ old('tempo_id_producto_leader1')}}">
-                                    <input type="hidden" name="tempo_id_unidad_leader1" id="tempo_id_unidad_leader1" value="{{ old('tempo_id_unidad_leader1')}}">
-
-                                    <input type="hidden" name="tempo_precioc_leader1" id="tempo_precioc_leader1" value="{{ old('tempo_precioc_leader1')}}">
-
-                                    <input type="hidden" name="tempo_preciov_leader1" id="tempo_preciov_leader1" value="{{ old('tempo_preciov_leader1')}}">
-
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
-                                    <input type="text" class="form-control" id="etiqueta_leader1" name="etiqueta_leader1" value="{{ old('etiqueta_leader1')}}">
-                                </div>
-                            </div>
-                        
-                            <div class="col-sm-1">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
-                                    <input type="text" readonly class="form-control" id="ancho_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
-                                </div>
-                            </div>
-                                
-                            <div class="col-sm-1">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
-                                    <input type="text" readonly class="form-control" id="largo_leader1" name="largo_leader1" value="{{ old('largo_leader1')}}">
-                                </div>
-                            </div>
-                        
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label"> </label>
-                                    <input type="text" readonly class="form-control" id="total_leader1" name="total_leader1" value="{{ old('total_leader1')}}">
-                                </div>
-                            </div>
-                        
-                            <div class="col-sm-1">
-                                <div class="form-group ">
-                                    <label class="control-label"> </label>
-                                    <input type="text" readonly class="form-control" id="unidad_leader1" name="unidad_leader1" value="{{ old('unidad_leader1')}}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" >
-                            <div class="col-sm-3">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Leader Final</label>
-                                    <select class="form-control " name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-primary">
-
-                                    </select>
-                                    <input type="hidden" name="tempo_id_producto_leader2" id="tempo_id_producto_leader2" value="{{ old('tempo_id_producto_leader2')}}">
-                                    <input type="hidden" name="tempo_id_unidad_leader2" id="tempo_id_unidad_leader2" value="{{ old('tempo_id_unidad_leader2')}}">
-
-                                    <input type="hidden" name="tempo_precioc_leader2" id="tempo_precioc_leader2" value="{{ old('tempo_precioc_leader2')}}">
-
-                                    <input type="hidden" name="tempo_preciov_leader2" id="tempo_preciov_leader2" value="{{ old('tempo_preciov_leader2')}}">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
-                                    <input type="text" class="form-control" id="etiqueta_leader2" name="etiqueta_leader2" value="{{ old('etiqueta_leader2')}}">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-1">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
-                                    <input type="text" readonly class="form-control" id="ancho_leader2" name="ancho_leader2" value="{{ old('ancho_leader2')}}">
-                                </div>
-                            </div>
-                                
-                            <div class="col-sm-1">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
-                                    <input type="text" readonly class="form-control" id="largo_leader2" name="largo_leader2" value="{{ old('largo_leader2')}}">
-                                </div>
-                            </div>
-                            
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label">.</label>
-                                    <input type="text" readonly class="form-control" id="total_leader2" name="total_leader2" value="{{ old('total_leader2')}}">
-                                </div>
-                            </div>
-                        
-                            <div class="col-sm-1">
-                                <div class="form-group ">
-                                    <label class="control-label">.</label>
-                                    <input type="text" readonly class="form-control" id="unidad_leader2" name="unidad_leader2" value="{{ old('unidad_leader2')}}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" >
-                            <div class="col-sm-3">
-                                <div class="form-group ">
-                                    <label class="control-label"  style="color: rgba(0,0,0);">Leader Envoltura</label>
-                                    <select class="form-control " name="id_producto_leader3" id="id_producto_leader3" data-live-search="true" data-style="btn-primary">
-                                        
-                                    </select>
-                                    <input type="hidden" name="tempo_id_producto_leader3" id="tempo_id_producto_leader3" value="{{ old('tempo_id_producto_leader3')}}">
-
-                                    <input type="hidden" name="tempo_id_unidad_leader3" id="tempo_id_unidad_leader3" value="{{ old('tempo_id_unidad_leader3')}}">
-
-                                    <input type="hidden" name="tempo_precioc_leader3" id="tempo_precioc_leader3" value="{{ old('tempo_precioc_leader3')}}">
-
-                                    <input type="hidden" name="tempo_preciov_leader3" id="tempo_preciov_leader3" value="{{ old('tempo_preciov_leader3')}}">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group ">
-                                    <label class="control-label"  style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
-                                    <input type="text" class="form-control" id="etiqueta_leader3" name="etiqueta_leader3" value="{{ old('etiqueta_leader3')}}">
-                                </div>
-                            </div>
-                        
-                            <div class="col-sm-1">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
-                                    <input type="text" readonly class="form-control" id="ancho_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
-                                </div>
-                            </div>
                                     
-                            <div class="col-sm-1">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
-                                    <input type="text" readonly class="form-control" id="largo_leader3" name="largo_leader3" value="{{ old('largo_leader3')}}">
+                                <div class="col-sm-1">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
+                                        <input type="number" step="0.001" readonly class="form-control" id="largo_mp" name="largo_mp" value="{{ old('largo_mp')}}">
+                                    </div>
+                                </div>
+                            
+                                <div class="col-sm-2">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> </label>
+                                        <input type="text" readonly class="form-control" id="total_mp" name="total_mp" value="{{ old('total_mp')}}">
+                                    </div>
+                                </div>
+                            
+                                <div class="col-sm-1">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> </label>
+                                        <input type="text" readonly class="form-control" id="unidad_mp" name="unidad_mp" value="{{ old('unidad_mp')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" >
+                                <div class="col-sm-2">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Dirección</label>
+                                        <select class="form-control " name="direction" id="direction" data-live-search="true" data-style="btn-primary">
+                                            <option value="In">In</option>
+                                            <option value="Out">Out</option>
+                                        </select>      
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Formula</label>
+                                        <input type="text" readonly class="form-control" id="formula" name="formula" value="{{ old('formula')}}">
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label"> </label>
-                                    <input type="text" readonly class="form-control" id="total_leader3" name="total_leader3" value="{{ old('total_leader3')}}">
+                            <div class="row" >
+                                <div class="col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label " style="color: rgba(0,0,0);">Core</label>
+                                        <select class="form-control " name="id_producto_core" id="id_producto_core" data-live-search="true" data-style="btn-primary">
+                                            @foreach ($core as $co)
+                                                <option value="{{ $co->id }}_{{ $co->etiqueta }}_{{ $co->ancho_prod }}_{{ $co->cantidad_prod }}_{{ $co->formula }}_{{ $co->unidad }}_{{ $co->articulo }}_{{ $co->id_unidad }}_{{ $co->precioc }}_{{ $co->preciov }}">{{ $co->articulo }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        <input type="hidden" name="tempo_id_producto_core" id="tempo_id_producto_core" value="{{ old('tempo_id_producto_core')}}">
+
+                                        <input type="hidden" name="tempo_id_unidad_core" id="tempo_id_unidad_core" value="{{ old('tempo_id_unidad_core')}}">
+
+                                        <input type="hidden" name="tempo_precioc_core" id="tempo_precioc_core" value="{{ old('tempo_precioc_core')}}">
+
+                                        <input type="hidden" name="tempo_preciov_core" id="tempo_preciov_core" value="{{ old('tempo_preciov_core')}}">
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
+                                        <input type="text" class="form-control" id="etiqueta_core" name="etiqueta_core" value="{{ old('etiqueta_core')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
+                                        <input type="text" readonly class="form-control" id="cantidad_core" name="cantidad_core" value="{{ old('cantidad_core')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> </label>
+                                        <input type="text" readonly class="form-control" id="unidad_core" name="unidad_core" value="{{ old('unidad_core')}}">
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="row" >
+                                <div class="col-sm-3">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Leader Inicio</label>
+                                        <select class="form-control " name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
+                                            @foreach ($leader as $le)
+                                                <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}_{{ $le->id_product }}">{{ $le->articulo }}</option>
+                                            @endforeach
+                                        </select>
+                                        <input type="hidden" name="tempo_id_producto_leader1" id="tempo_id_producto_leader1" value="{{ old('tempo_id_producto_leader1')}}">
+                                        <input type="hidden" name="tempo_id_unidad_leader1" id="tempo_id_unidad_leader1" value="{{ old('tempo_id_unidad_leader1')}}">
+
+                                        <input type="hidden" name="tempo_precioc_leader1" id="tempo_precioc_leader1" value="{{ old('tempo_precioc_leader1')}}">
+
+                                        <input type="hidden" name="tempo_preciov_leader1" id="tempo_preciov_leader1" value="{{ old('tempo_preciov_leader1')}}">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
+                                        <input type="text" class="form-control" id="etiqueta_leader1" name="etiqueta_leader1" value="{{ old('etiqueta_leader1')}}">
+                                    </div>
+                                </div>
                             
-                            <div class="col-sm-1">
-                                <div class="form-group ">
-                                    <label class="control-label"> </label>
-                                    <input type="text" readonly class="form-control" id="unidad_leader3" name="unidad_leader3" value="{{ old('unidad_leader3')}}">
+                                <div class="col-sm-1">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
+                                        <input type="text" readonly class="form-control" id="ancho_leader1" name="ancho_leader1" value="{{ old('ancho_leader1')}}">
+                                    </div>
+                                </div>
+                                    
+                                <div class="col-sm-1">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
+                                        <input type="text" readonly class="form-control" id="largo_leader1" name="largo_leader1" value="{{ old('largo_leader1')}}">
+                                    </div>
+                                </div>
+                            
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label"> </label>
+                                        <input type="text" readonly class="form-control" id="total_leader1" name="total_leader1" value="{{ old('total_leader1')}}">
+                                    </div>
+                                </div>
+                            
+                                <div class="col-sm-1">
+                                    <div class="form-group ">
+                                        <label class="control-label"> </label>
+                                        <input type="text" readonly class="form-control" id="unidad_leader1" name="unidad_leader1" value="{{ old('unidad_leader1')}}">
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="row" >
+                                <div class="col-sm-3">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Leader Final</label>
+                                        <select class="form-control " name="id_producto_leader2" id="id_producto_leader2" data-live-search="true" data-style="btn-primary">
+
+                                        </select>
+                                        <input type="hidden" name="tempo_id_producto_leader2" id="tempo_id_producto_leader2" value="{{ old('tempo_id_producto_leader2')}}">
+                                        <input type="hidden" name="tempo_id_unidad_leader2" id="tempo_id_unidad_leader2" value="{{ old('tempo_id_unidad_leader2')}}">
+
+                                        <input type="hidden" name="tempo_precioc_leader2" id="tempo_precioc_leader2" value="{{ old('tempo_precioc_leader2')}}">
+
+                                        <input type="hidden" name="tempo_preciov_leader2" id="tempo_preciov_leader2" value="{{ old('tempo_preciov_leader2')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
+                                        <input type="text" class="form-control" id="etiqueta_leader2" name="etiqueta_leader2" value="{{ old('etiqueta_leader2')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
+                                        <input type="text" readonly class="form-control" id="ancho_leader2" name="ancho_leader2" value="{{ old('ancho_leader2')}}">
+                                    </div>
+                                </div>
+                                    
+                                <div class="col-sm-1">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
+                                        <input type="text" readonly class="form-control" id="largo_leader2" name="largo_leader2" value="{{ old('largo_leader2')}}">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label">.</label>
+                                        <input type="text" readonly class="form-control" id="total_leader2" name="total_leader2" value="{{ old('total_leader2')}}">
+                                    </div>
+                                </div>
+                            
+                                <div class="col-sm-1">
+                                    <div class="form-group ">
+                                        <label class="control-label">.</label>
+                                        <input type="text" readonly class="form-control" id="unidad_leader2" name="unidad_leader2" value="{{ old('unidad_leader2')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" >
+                                <div class="col-sm-3">
+                                    <div class="form-group ">
+                                        <label class="control-label"  style="color: rgba(0,0,0);">Leader Envoltura</label>
+                                        <select class="form-control " name="id_producto_leader3" id="id_producto_leader3" data-live-search="true" data-style="btn-primary">
+                                            
+                                        </select>
+                                        <input type="hidden" name="tempo_id_producto_leader3" id="tempo_id_producto_leader3" value="{{ old('tempo_id_producto_leader3')}}">
+
+                                        <input type="hidden" name="tempo_id_unidad_leader3" id="tempo_id_unidad_leader3" value="{{ old('tempo_id_unidad_leader3')}}">
+
+                                        <input type="hidden" name="tempo_precioc_leader3" id="tempo_precioc_leader3" value="{{ old('tempo_precioc_leader3')}}">
+
+                                        <input type="hidden" name="tempo_preciov_leader3" id="tempo_preciov_leader3" value="{{ old('tempo_preciov_leader3')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group ">
+                                        <label class="control-label"  style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
+                                        <input type="text" class="form-control" id="etiqueta_leader3" name="etiqueta_leader3" value="{{ old('etiqueta_leader3')}}">
+                                    </div>
+                                </div>
+                            
+                                <div class="col-sm-1">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
+                                        <input type="text" readonly class="form-control" id="ancho_leader3" name="ancho_leader3" value="{{ old('ancho_leader3')}}">
+                                    </div>
+                                </div>
+                                        
+                                <div class="col-sm-1">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Largo</label>
+                                        <input type="text" readonly class="form-control" id="largo_leader3" name="largo_leader3" value="{{ old('largo_leader3')}}">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label"> </label>
+                                        <input type="text" readonly class="form-control" id="total_leader3" name="total_leader3" value="{{ old('total_leader3')}}">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-1">
+                                    <div class="form-group ">
+                                        <label class="control-label"> </label>
+                                        <input type="text" readonly class="form-control" id="unidad_leader3" name="unidad_leader3" value="{{ old('unidad_leader3')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row" >
+                                <div class="col-sm-3">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Etiqueta</label>
+                                        <select class="form-control " name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-primary">
+                                            @foreach ($sticker as $sti)
+                                                <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}_{{ $sti->articulo }}_{{ $sti->id_unidad }}_{{ $sti->precioc }}_{{ $sti->preciov }}">{{ $sti->articulo }}</option>
+                                            @endforeach
+                                        </select>
+                                        <input type="hidden" name="tempo_id_producto_sticker" id="tempo_id_producto_sticker" value="{{ old('tempo_id_producto_sticker')}}">
+
+                                        <input type="hidden" name="tempo_id_unidad_sticker" id="tempo_id_unidad_sticker" value="{{ old('tempo_id_unidad_sticker')}}">
+
+                                        <input type="hidden" name="tempo_precioc_sticker" id="tempo_precioc_sticker" value="{{ old('tempo_precioc_sticker')}}">
+
+                                        <input type="hidden" name="tempo_preciov_sticker" id="tempo_preciov_sticker" value="{{ old('tempo_preciov_sticker')}}">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
+                                        <input type="text" class="form-control" id="etiqueta_sticker" name="etiqueta_sticker" value="{{ old('etiqueta_sticker')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
+                                        <input type="text" readonly class="form-control" id="cantidad_sticker" name="cantidad_sticker" value="{{ old('cantidad_sticker')}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <div class="form-group ">
+                                        <label class="control-label" style="color: rgba(0,0,0);"> </label>
+                                        <input type="text" readonly class="form-control" id="unidad_sticker" name="unidad_sticker" value="{{ old('unidad_sticker')}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" >
+                                <div class="col-sm-12">
+                                    <div class="form-group ">
+                                    </div>
+                                </div>
+                            </div>    
                         </div>
-
-
-                        <div class="row" >
-                            <div class="col-sm-3">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta</label>
-                                    <select class="form-control " name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-primary">
-                                        @foreach ($sticker as $sti)
-                                            <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}_{{ $sti->articulo }}_{{ $sti->id_unidad }}_{{ $sti->precioc }}_{{ $sti->preciov }}">{{ $sti->articulo }}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" name="tempo_id_producto_sticker" id="tempo_id_producto_sticker" value="{{ old('tempo_id_producto_sticker')}}">
-
-                                    <input type="hidden" name="tempo_id_unidad_sticker" id="tempo_id_unidad_sticker" value="{{ old('tempo_id_unidad_sticker')}}">
-
-                                    <input type="hidden" name="tempo_precioc_sticker" id="tempo_precioc_sticker" value="{{ old('tempo_precioc_sticker')}}">
-
-                                    <input type="hidden" name="tempo_preciov_sticker" id="tempo_preciov_sticker" value="{{ old('tempo_preciov_sticker')}}">
-
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
-                                    <input type="text" class="form-control" id="etiqueta_sticker" name="etiqueta_sticker" value="{{ old('etiqueta_sticker')}}">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
-                                    <input type="text" readonly class="form-control" id="cantidad_sticker" name="cantidad_sticker" value="{{ old('cantidad_sticker')}}">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-1">
-                                <div class="form-group ">
-                                    <label class="control-label" style="color: rgba(0,0,0);"> </label>
-                                    <input type="text" readonly class="form-control" id="unidad_sticker" name="unidad_sticker" value="{{ old('unidad_sticker')}}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" >
-                            <div class="col-sm-12">
-                                <div class="form-group ">
-                                </div>
-                            </div>
-                        </div>    
                     </div>
-                </div>
-                </div>
+                    </div>
 
                     <div class="tab-pane" id="pill3">
 
@@ -588,10 +585,6 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                     </div>
                                 </div>
                             </div>
-
-                            
-
-
                         </div>
                     </div>                
                     
