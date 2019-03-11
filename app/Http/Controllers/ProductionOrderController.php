@@ -111,20 +111,7 @@ class ProductionOrderController extends Controller
         
         $empresa=almproducts::where('id',$id)->first();
         $emp=$empresa->id_company;
-        /*
-        $pt = DB::table('products as art')
-        ->join('units as un','art.id_unidad_prod','=','un.id')
-        ->join('almproducts as almp','art.id','=','almp.id_product')
-          ->select(DB::raw('CONCAT(art.name," - ",art.description) AS articulo'), 'almp.id','art.name','art.id_unidad_prod','art.cantidad_prod','art.ancho_prod','art.formula','almp.etiqueta','un.name as unidad')
-          ->where('art.activo','=','1')
-          ->where('art.roll_id','=','4')  // Es Leader
-          ->where('almp.id','<>',$id)
-          ->where('almp.id','<>',$id2)
-          ->where('almp.existencia','>','0')
-          ->where('almp.id_company','=',$emp)
-          ->groupBy('articulo','almp.id','unidad')
-          ->get();
-         */
+
         $pt = DB::table('products as art')
         ->join('almproducts as almp','almp.id_product','=','art.id')
         ->join('units as un','art.id_unidad_prod','=','un.id')

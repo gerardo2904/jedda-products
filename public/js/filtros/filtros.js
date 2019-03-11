@@ -78,6 +78,7 @@ function onSelectLeader1Change() {
 	datosl1=document.getElementById("id_producto_leader1").value.split('_');
     leader1_id = datosl1[0];
 
+
     $.get('/api/'+leader1_id+'/products3', function (data){
     	var html_select = '';
     	for (var i=0; i<data.length; i++)
@@ -97,6 +98,10 @@ function onSelectLeader2Change() {
 
     datosl2=document.getElementById("id_producto_leader2").value.split('_');
     leader2_id = datosl2[0];
+
+    l2_id = datosl1[11];
+    l2_et = datosl1[12];
+
 
     console.log(leader2_id);
 

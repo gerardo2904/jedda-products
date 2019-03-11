@@ -310,11 +310,17 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                 <div class="row" >
                                     <div class="col-sm-3">
                                         <div class="form-group ">
-                                            <label class="control-label" style="color: rgba(0,0,0);">Leader Inicio</label>
+                                            <label class="control-label" style="color: rgba(0,0,0);">Leader Inicio {{$op->etiqueta_leader2}} {{$op->id_producto_leader2}}</label>
                                             <select class="form-control " name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
-                                                @foreach ($leader as $le)
-                                                    <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}_{{ $le->id_product }}" @if($le->id_product == $op->id_producto_leader1 and $le->etiqueta == $op->etiqueta_leader1) selected @endif>{{ $le->articulo }}</option>
-                                                @endforeach
+                                                @if (isset($op->id_producto_leader2))
+                                                    @foreach ($leader as $le)
+                                                        <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}_{{ $le->id_product }}_{{$op->id_producto_leader2}}_{{$op->etiqueta_leader2}}" @if($le->id_product == $op->id_producto_leader1 and $le->etiqueta == $op->etiqueta_leader1) selected @endif>{{ $le->articulo }}</option>
+                                                    @endforeach
+                                                @else
+                                                    @foreach ($leader as $le)
+                                                        <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}_{{ $le->id_product }}" @if($le->id_product == $op->id_producto_leader1 and $le->etiqueta == $op->etiqueta_leader1) selected @endif>{{ $le->articulo }}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                             <input type="hidden" name="tempo_id_producto_leader1" id="tempo_id_producto_leader1" value="{{ old('tempo_id_producto_leader1')}}">
                                             <input type="hidden" name="tempo_id_unidad_leader1" id="tempo_id_unidad_leader1" value="{{ old('tempo_id_unidad_leader1')}}">
