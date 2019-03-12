@@ -78,16 +78,52 @@ function onSelectLeader1Change() {
 	datosl1=document.getElementById("id_producto_leader1").value.split('_');
     leader1_id = datosl1[0];
 
+    if (datosl1[11] && datosl1[12]){
+        l2_id = datosl1[11];
+        l2_et = datosl1[12];    
+    }
+    else {
+        l2_id = "";
+        l2_et = "";
+    }
+
+    bandera=0;
+    vtempo="";
+    
+
+    console.log("l2_id = "+l2_id);
+    console.log("l2_et = "+l2_et);
 
     $.get('/api/'+leader1_id+'/products3', function (data){
     	var html_select = '';
-    	for (var i=0; i<data.length; i++)
-   			html_select+='<option value="'+data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+"_"+data[i].articulo+"_"+data[i].id_unidad+"_"+data[i].precioc+"_"+data[i].preciov+"_"+data[i].id_product+' '+((data[i].id = leader1_id) ? 'selected' : '')+' '+'">'+""+data[i].articulo+'</option>';
+    	for (var i=0; i<data.length; i++){
+   			html_select+='<option value="'+data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+"_"+data[i].articulo+"_"+data[i].id_unidad+"_"+data[i].precioc+"_"+data[i].preciov+"_"+data[i].id_product+'">'+""+data[i].articulo+'</option>';
+        }
 
+        for (var i=0; i<data.length; i++) {
+
+            if(data[i].id_product==l2_id && data[i].etiqueta==l2_et){
+                vtempo = data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+"_"+data[i].articulo+"_"+data[i].id_unidad+"_"+data[i].precioc+"_"+data[i].preciov+"_"+data[i].id_product;
+                bandera=1; 
+            }
+        }
+
+
+
+//' '+((data[i].id = 75) ? 'selected' : '')+' '+
             //' '+((data[i].id = leader1_id) ? 'selected' : '')+' ' 
 
+
     	$('#id_producto_leader2').html(html_select);
+
+        if (bandera==1)
+            $("#id_producto_leader2").val(vtempo);
+            //$("#id_producto_leader2").value = vtempo;
+
     	console.log(html_select);
+        console.log("bandera= "+bandera);
+        console.log("vtempo= "+vtempo);
+        console.log(document.getElementById("id_producto_leader2").value);        
     });
 }
 
@@ -99,21 +135,47 @@ function onSelectLeader2Change() {
     datosl2=document.getElementById("id_producto_leader2").value.split('_');
     leader2_id = datosl2[0];
 
-    l2_id = datosl1[11];
-    l2_et = datosl1[12];
+    //console.log(document.getElementById("id_producto_leader2").value.split('_'));
+    //console.log("leader1 = "+leader1_id);
+    //console.log("leader2 = "+leader2_id);
 
+    /*if (datosl1[11] && datosl1[12]){
+        l2_id = datosl1[11];
+        l2_et = datosl1[12];    
+    }
+    else {
+        l2_id = "";
+        l2_et = "";
+    }
+    
 
-    console.log(leader2_id);
+    console.log("l2_id = "+l2_id);
+    console.log("l2_et = "+l2_et);
+    
+    */
 
-
+    //console.log(leader2_id);
+    
     $.get('/api/'+leader1_id+'/'+leader2_id+'/products4', function (data){
     	var html_select = '';
     	for (var i=0; i<data.length; i++)
-   			html_select+='<option value="'+data[i].id+"_"+data[i].etiqueta+"_"+data[i].ancho_prod+"_"+data[i].cantidad_prod+"_"+data[i].formula+"_"+data[i].unidad+"_"+data[i].articulo+"_"+data[i].id_unidad+"_"+data[i].precioc+"_"+data[i].preciov+"_"+data[i].id_product+' '+((data[i].id = leader2_id) ? 'selected' : '')+' '+'">'+""+data[i].articulo+'</option>';
+   			html_select+='<option value="'+data[i].id+"_"+
+                                           data[i].etiqueta+"_"+
+                                           data[i].ancho_prod+"_"+
+                                           data[i].cantidad_prod+"_"+
+                                           data[i].formula+"_"+
+                                           data[i].unidad+"_"+
+                                           data[i].articulo+"_"+
+                                           data[i].id_unidad+"_"+
+                                           data[i].precioc+"_"+
+                                           data[i].preciov+"_"+
+                                           data[i].id_product+' '+
+                                           ((data[i].id_product = l2_id) && (data[i].etiqueta = l2_et) ? 'selected' : '')+' '
+                                           +'">'+""+data[i].articulo+'</option>';
         
         //' '+((data[i].id = leader2_id) ? 'selected' : '')+' ' 
 
     	$('#id_producto_leader3').html(html_select);
-    	console.log(html_select);
+    	//console.log(html_select);
     });
 }
