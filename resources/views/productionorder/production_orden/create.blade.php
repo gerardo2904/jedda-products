@@ -525,7 +525,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                 </div>
                 </div>
 
-                    <div class="tab-pane" id="pill3">
+                <div class="tab-pane" id="pill3">
 
                     <div class="panel panel-primary">
                         <div class="panel-body">

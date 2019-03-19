@@ -312,9 +312,9 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                         <div class="form-group ">
                                             <label class="control-label" style="color: rgba(0,0,0);">Leader Inicio {{$op->etiqueta_leader2}} {{$op->id_producto_leader2}}</label>
                                             <select class="form-control " name="id_producto_leader1" id="id_producto_leader1" data-live-search="true" data-style="btn-primary">
-                                                @if (isset($op->id_producto_leader2))
+                                                @if (isset($op->id_producto_leader2) && isset($op->id_producto_leader3))
                                                     @foreach ($leader as $le)
-                                                        <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}_{{ $le->id_product }}_{{$op->id_producto_leader2}}_{{$op->etiqueta_leader2}}" @if($le->id_product == $op->id_producto_leader1 and $le->etiqueta == $op->etiqueta_leader1) selected @endif>{{ $le->articulo }}</option>
+                                                        <option value="{{ $le->id }}_{{ $le->etiqueta }}_{{ $le->ancho_prod }}_{{ $le->cantidad_prod }}_{{ $le->formula }}_{{ $le->unidad }}_{{ $le->articulo }}_{{ $le->id_unidad }}_{{ $le->precioc }}_{{ $le->preciov }}_{{ $le->id_product }}_{{$op->id_producto_leader2}}_{{$op->etiqueta_leader2}}_{{$op->id_producto_leader3}}_{{$op->etiqueta_leader3}}" @if($le->id_product == $op->id_producto_leader1 and $le->etiqueta == $op->etiqueta_leader1) selected @endif>{{ $le->articulo }}</option>
                                                     @endforeach
                                                 @else
                                                     @foreach ($leader as $le)
@@ -473,7 +473,209 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                     </div>
                                 </div>
 
+                                <div class="row" >
+                                    <div class="col-sm-3">
+                                        <div class="form-group ">
+                                            <label class="control-label" style="color: rgba(0,0,0);">Etiqueta</label>
+                                            <select class="form-control " name="id_producto_sticker" id="id_producto_sticker" data-live-search="true" data-style="btn-primary">
+                                                @foreach ($sticker as $sti)
+                                                    <option value="{{ $sti->id }}_{{ $sti->etiqueta }}_{{ $sti->ancho_prod }}_{{ $sti->cantidad_prod }}_{{ $sti->formula }}_{{ $sti->unidad }}_{{ $sti->articulo }}_{{ $sti->id_unidad }}_{{ $sti->precioc }}_{{ $sti->preciov }}" @if($sti->id == $op->id_producto_sticker and $sti->etiqueta == $op->etiqueta_sticker) selected @endif>{{ $sti->articulo }}</option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" name="tempo_id_producto_sticker" id="tempo_id_producto_sticker" value="{{ old('tempo_id_producto_sticker')}}">
+
+                                            <input type="hidden" name="tempo_id_unidad_sticker" id="tempo_id_unidad_sticker" value="{{ old('tempo_id_unidad_sticker')}}">
+
+                                            <input type="hidden" name="tempo_precioc_sticker" id="tempo_precioc_sticker" value="{{ old('tempo_precioc_sticker')}}">
+
+                                            <input type="hidden" name="tempo_preciov_sticker" id="tempo_preciov_sticker" value="{{ old('tempo_preciov_sticker')}}">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group ">
+                                            <label class="control-label" style="color: rgba(0,0,0);">Etiqueta(Lote)</label>
+                                            <input type="text" class="form-control" id="etiqueta_sticker" name="etiqueta_sticker" value="{{ old('etiqueta_sticker')}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
+                                            <input type="text" readonly class="form-control" id="cantidad_sticker" name="cantidad_sticker" value="{{ old('cantidad_sticker')}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <div class="form-group ">
+                                            <label class="control-label" style="color: rgba(0,0,0);"> </label>
+                                            <input type="text" readonly class="form-control" id="unidad_sticker" name="unidad_sticker" value="{{ old('unidad_sticker')}}">
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div> 
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="pill3">
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                                <div class="row">                
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label">Desperdicio lado derecho</label>
+                                            <input type="number" step="0.001" class="form-control" name="desp_der" id="desp_der" value="0.010" >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label">Desperdicio lado izquierdo</label>
+                                            <input type="number" step="0.001" class="form-control" name="desp_izq" id="desp_izq"  value="0.010" >
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label">Desperdicio por corrida </label>
+                                            <input type="number" step="0.001" readonly class="form-control" id="total_desp" name="total_desp" value="{{ old('total_desp')}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label">Desperdicio extra por corrida </label>
+                                            <input type="number" step="0.001" readonly class="form-control" id="total_desp_corrida" name="total_desp_corrida" value="{{ old('total_desp_corrida')}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label">Desperdicio total por corrida </label>
+                                            <input type="number" step="0.001" readonly class="form-control" id="dt_corrida" name="dt_corrida" value="{{ old('dt_corrida')}}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">                
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label">Rollos por corrida </label>
+                                            <input type="number" step="0.001" readonly class="form-control" id="rollos_materia_prima" name="rollos_materia_prima" value="{{ old('rollos_materia_prima')}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label">Corridas necesarias </label>
+                                            <input type="number" step="0.001" readonly class="form-control" id="corridas_materia_prima" name="corridas_materia_prima" value="{{ old('corridas_materia_prima')}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group ">
+                                            <label class="control-label">Rollos Totales </label>
+                                            <input type="number" step="0.001" readonly class="form-control" id="rollos_totales" name="rollos_totales" value="{{ old('rollos_totales')}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                
+                    
+
+                        <div class="row">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div id="panel1">
+                                        <div class="col-sm-3">
+                                            <div class="form-group" >
+                                                <label class="control-label" style="color: rgba(0,0,0);">Artículo</label>
+                                                <select class="form-control " name="pid_producto_pt" id="pid_producto_pt" data-live-search="true" data-style="btn-info">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
+                                                <input type="number" readonly step="0.01" class="form-control" name="pancho_prod" id="pancho_prod"  >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Cantidad</label>
+                                                <input type="number" step="0.01" class="form-control" name="pcantidad_pt" id="pcantidad_pt"  >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group label-floating">
+                                                <button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                             
+
+                            <!--ESTE ES EL PANEL SI SOBRA MATERIAL DE UNA CORRIDA-->
+
+                                    <div style="display:none;" id="panel2" >
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Artículo</label>
+                                                <select class="form-control " name="pid_producto_pt2" id="pid_producto_pt2" data-live-search="true" data-style="btn-info">
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" style="color: rgba(0,0,0);">Ancho</label>
+                                                <input type="number" readonly step="0.01" class="form-control" name="pancho_prod2" id="pancho_prod2"  >
+                                                <input type="hidden" step="0.01" class="form-control" name="pcantidad_pt2" id="pcantidad_pt2" value="1" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group label-floating">
+                                                <button type="button" id="bt_add2" class="btn btn-primary">Agregar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="form-group label-floating">
+                                            <div class="datagrid">
+                                                <table id="detalles">
+                                                    <thead style="background-color:#A9D0F5">
+                                                        <th>Opciones</th>
+                                                        <th>Artículo</th>
+                                                        <th>Ancho</th>
+                                                        <th>Largo</th>
+                                                        <th>Cantidad</th>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>            
+                                                    <tfoot>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -517,10 +719,9 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
         
     });
 
-    
         
 
-
+    var globalv="";
 
 
     var cont=0;
