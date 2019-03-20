@@ -639,6 +639,7 @@ div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; }
                                                 <input type="hidden" step="0.01" class="form-control" name="pcantidad_pt2" id="pcantidad_pt2" value="1" >
                                             </div>
                                         </div>
+                                        
 
                                         <div class="col-sm-2">
                                             <div class="form-group label-floating">
